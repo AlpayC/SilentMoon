@@ -5,7 +5,7 @@
   "main": "./backend/server.js",
   "type": "module",
   "scripts": {
-    "dev:server": "npm run dev --prefix backend",
+    "dev:server": "npm run dev2 --prefix backend",
     "dev:vite": "npm run dev --prefix frontend",
     "dev": "concurrently \"npm:dev:*\"",
     "start": "npm run build --prefix frontend && npm start --prefix backend",
