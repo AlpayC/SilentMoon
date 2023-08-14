@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { UserContext } from "./UserContext";
 
 export default function Login() {
@@ -17,6 +16,9 @@ export default function Login() {
     try {
       await axios.post("/api/user/login", data);
       refetch();
+      // Hier muss ein Context gespeichert werden, der den token von spotify generiert wird
+      // mit createContext, refresh, und ein if else, welcher prüft, ob das token noch gültig ist oder nicht
+      // evtl mit einer funktion wie in zeile 18 eine gesonderte function starten
     } catch (e) {
       console.log(e);
       setError("An Error occured, try again later");

@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "node --watch .",
+    "dev2": "nodemon .",
     "start": "node .",
     "debugging": "node --inspect-brk ."
   },
@@ -20,6 +21,7 @@
     "jsonwebtoken": "^9.0.1",
     "mailgun.js": "^9.2.0",
     "mongoose": "^7.4.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.1"
   }
 }
