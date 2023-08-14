@@ -1,4 +1,4 @@
-import "./MeditationPlayer.css";
+import "./MediationPlayer.css";
 
 const MeditationPlayer = () => {
   return (
