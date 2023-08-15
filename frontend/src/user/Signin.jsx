@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext";
 import { UserDataContext } from "../context/UserDataContext";
 
-
 export default function Signin() {
   const { refetch } = useContext(UserContext);
   const { userData, setUserData } = useContext(UserDataContext);
@@ -39,8 +38,18 @@ export default function Signin() {
       <BackButon />
       <h1 className="center padding-top-bottom">Welcome Back!</h1>
       <form className="column" onSubmit={submit}>
-        <input name="email" type="email" placeholder="EMAIL" />
-        <input name="password" type="password" placeholder="PASSWORD" />
+        <input
+          className="input"
+          name="email"
+          type="email"
+          placeholder="EMAIL"
+        />
+        <input
+          className="input"
+          name="password"
+          type="password"
+          placeholder="PASSWORD"
+        />
         {error && <small style={{ color: "red" }}>{error}</small>}
         <Button text="login" />
         <p className="center grey-text">

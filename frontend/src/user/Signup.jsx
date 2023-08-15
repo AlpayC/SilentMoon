@@ -35,10 +35,25 @@ export default function Signup() {
       <BackButon />
       <h1 className="center padding-top-bottom">Create your account</h1>
       <form className="column" onSubmit={submit}>
-        <input name="name" type="text" placeholder="FIRST NAME" />
-        <input name="surname" type="text" placeholder="LAST NAME" />
-        <input name="email" type="text" placeholder="MAIL" />
-        <input name="password" type="password" placeholder="PASSWORD" />
+        <input
+          className="input"
+          name="name"
+          type="text"
+          placeholder="FIRST NAME"
+        />
+        <input
+          className="input"
+          name="surname"
+          type="text"
+          placeholder="LAST NAME"
+        />
+        <input className="input" name="email" type="text" placeholder="MAIL" />
+        <input
+          className="input"
+          name="password"
+          type="password"
+          placeholder="PASSWORD"
+        />
         {error && <small style={{ color: "red" }}>{error}</small>}
         <Button text="register" />
       </form>
