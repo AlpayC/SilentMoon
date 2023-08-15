@@ -25,3 +25,67 @@
 	border-radius: 50%;
 	cursor: pointer;
 }
+
+.reminder h2 {
+	color: var(--darkgreen);
+	width: 65vw;
+	margin-bottom: 2rem;
+}
+
+.reminder p {
+	width: 70vw;
+	margin-bottom: 2rem;
+}
+/* Timepicker Styles */
+
+.time-picker-div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8.5rem 0;
+	margin-bottom: 2rem;
+	cursor: pointer;
+}
+
+.react-ios-time-picker-input {
+	border-radius: 3rem !important;
+	padding: 2rem !important;
+	border: 0.1rem solid var(--pink) !important;
+}
+.react-ios-time-picker-input {
+	text-align: center !important;
+	color: var(--grey) !important;
+	font-family: "sspro-semibold" !important;
+	font-size: 1.6rem !important;
+	letter-spacing: 0.05rem !important;
+}
+
+.react-ios-time-picker-container,
+.react-ios-time-picker-btn-container {
+	background-color: white !important;
+}
+
+.react-ios-time-picker-btn-cancel,
+.react-ios-time-picker-btn {
+	color: var(--darkgreen) !important;
+}
+
+.react-ios-time-picker-selected-overlay {
+	background-color: var(--lightgreen) !important;
+}
+
+.react-ios-time-picker-cell-inner-hour:hover,
+.react-ios-time-picker-cell-inner-minute:hover,
+.react-ios-time-picker-cell-inner-hour-format:hover {
+	background-color: var(--darkgreen) !important;
+	color: white !important;
+}
+
+.react-ios-time-picker-popup {
+	bottom: 42.5% !important;
+}
+
+.btn-wrapper a {
+	text-align: center;
+	text-decoration: none;
+}
