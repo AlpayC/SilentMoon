@@ -7,8 +7,9 @@ export const GeneratePexelDataProvider = ({ children }) => {
   const [pexelData, setPexelData] = useState([]);
   const query = "yoga exercise";
   //   const apiUrl2 = `https://api.pexels.com/videos/search?query=${query}&orientation=landscape`;
+  const apiKey = import.meta.env.VITE_PIXABAY_API;
   const apiUrl =
-    `http://pixabay.com/api/videos/?key=36815996-aa926cadda8d303d9cfe5178f&q=` +
+    `http://pixabay.com/api/videos/?key=${apiKey}&q=` +
     encodeURIComponent(query);
 
   useEffect(() => {
