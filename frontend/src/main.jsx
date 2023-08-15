@@ -6,18 +6,18 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 
 import { UserProvider } from "./user/UserContext.jsx";
-import { GeneratePexelDataProvider } from "./context/GeneratePexelDataContext.jsx";
+import { VideoDataProvider } from "./context/VideoDataContext.jsx";
 import { UserDataProvider } from "./context/UserDataContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <UserDataProvider>
-        <GeneratePexelDataProvider>
+        <VideoDataProvider>
           <UserProvider>
             <App />
           </UserProvider>
-        </GeneratePexelDataProvider>
+        </VideoDataProvider>
       </UserDataProvider>
     </BrowserRouter>
   </React.StrictMode>
