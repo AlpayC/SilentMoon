@@ -1,5 +1,6 @@
+
 import { useContext } from "react";
-import { UserContext } from "../../user/UserContext";
+import { useUserData } from "../../context/UserDataContext";
 import { NavLink } from "react-router-dom";
 import Logo from "../../components/Logo/Logo";
 import Button from "../../components/Button/Button";
@@ -7,7 +8,7 @@ import "./WelcomePage.css";
 import WelcomeImage from "../../assets/img/WelcomePage/bg-person.png";
 
 const WelcomePage = () => {
-  const { user } = useContext(UserContext);
+  const { userData } = useUserData();
   return (
     <>
       <section>
@@ -18,7 +19,7 @@ const WelcomePage = () => {
           <div className="main-wrapper">
             <Logo className="logo-white" />
             <div className="welcomeText">
-              <h1>Hi Leon {user}, welcome to Silent Moon</h1>
+              <h1>Hi {userData}, welcome to Silent Moon</h1>
             </div>
           </div>
         </section>

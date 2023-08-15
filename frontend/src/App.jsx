@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useContext } from "react";
-
+import { useContext, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { UserContext } from "./user/UserContext";
 
 // Routes
@@ -8,7 +8,6 @@ import Home from "./pages/Home/Home";
 import Signup from "./user/Signup";
 import Login from "./user/Login";
 import Profile from "./pages/Profile/Profile";
-
 import "./App.css";
 import ResetPassword from "./user/ResetPassword";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
@@ -28,8 +27,8 @@ function App() {
     <>
       {isLoggedIn && (
         <>
-          <a href="/profile">Profile</a>
-          <a href="/home">Home</a>
+          <NavLink to="/profile"> Profile</NavLink>
+          <NavLink to="/home"> Home</NavLink>
 
           <button type="button" onClick={logout}>
             Logout
