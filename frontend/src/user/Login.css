@@ -1,0 +1,51 @@
+.main-wrapper{
+    padding: 1rem;
+}
+
+.loginPage{
+    background-repeat: no-repeat;
+    height: 60vh;
+}
+
+.logo-black{
+    color: var(--darkgreen);
+    padding: 2rem 0;
+    margin: 0;
+}
+.logo-white{
+    margin: 0;
+}
+
+.loginContainer{
+    text-align: center;
+    height: 40vh;
+}
+
+.loginContainer h1{
+    color: var(--darkgreen);
+    padding: 7%;
+    width: 88%;
+    margin: 0 auto;
+}
+.loginContainer p{
+    color: var(--grey);
+    width: 92%;
+    margin: 0 auto;
+    padding-bottom: 15%;
+}
+
+.signingLinks{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.navLink{
+    color: var(--grey);
+    text-decoration: none;
+    padding: 1.5rem;
+}
+
+span{
+    color: var(--pink);
+}

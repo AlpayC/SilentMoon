@@ -1,12 +1,11 @@
 import "./Logo.css";
-import { Link } from "react-router-dom";
 
-const Logout = () => {
+const Logo = () => {
   return (
     <>
-      <h1 className="logo">Logo</h1>
+      <p className="logo-white logo-black">SILENT MOON</p>
     </>
   );
 };
 
-export default Logout;
+export default Logo;
