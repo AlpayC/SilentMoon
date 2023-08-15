@@ -126,6 +126,9 @@ const Reminder = () => {
 					<label htmlFor='S'>S</label>
 				</div>
 			</div>
+			<button>Save</button>
+			<br />
+			<button>No thanks</button>
 		</div>
 	);
 };
