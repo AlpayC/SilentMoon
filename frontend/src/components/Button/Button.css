@@ -1,0 +1,11 @@
+.main-btn {
+    border-radius: 3rem;
+    text-transform: uppercase;
+    padding: 2rem;
+    border: none;
+    background-color: var(--pink);
+    color: white;
+    font-family: "sspro-semibold";
+    font-size: 1.6rem;
+}
+

@@ -37,7 +37,7 @@ html {
 }
 
 a {
-	text-decoration: none;
+  color: var(--pink);
 }
 
 img {
@@ -49,6 +49,7 @@ h1 {
 	font-size: 3.6rem;
 	line-height: 120%;
 	font-family: "sspro-black";
+  color: var(--darkgreen);
 }
 h2 {
 	font-size: 2.4rem;
@@ -82,4 +83,67 @@ p {
 	font-size: 1.1rem;
 	line-height: 120%;
 	font-family: "sspro-semibold";
+}
+
+input {
+  border-radius: 3rem;
+  text-transform: uppercase;
+  padding: 2rem;
+  border: 0.1rem solid var(--pink);
+  background-color: transparent;
+  text-align: center;
+  color: var(--grey);
+  font-family: "sspro-semibold";
+  font-size: 1.6rem;
+  letter-spacing: 0.05rem;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.grey-text {
+  color: var(--grey);
+  font-family: "sspro-semibold";
+}
+
+.main-wrapper {
+  padding: 1rem;
+  margin: auto 0;
+  padding-top: 3rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.background-signinup {
+  background-image: url(./assets/img/Login/background.svg);
+  background-repeat: no-repeat;
+}
+
+.padding-top-bottom {
+padding: 4rem 0rem 3rem 0rem;
+}
+
+form {
+padding-top: 7rem;
+}
+
+/* Placeholder styling for input fields */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--grey);
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: var(--grey);
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--grey);
 }

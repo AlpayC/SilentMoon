@@ -1,9 +1,10 @@
-import "./BackButon.css";
+import backImg from "../../assets/img/Icons/back.svg"
+import "../BackButton/BackButton.css"
 
 const BackButon = () => {
   return (
     <>
-      <button>Back</button>
+      <button className="back-btn"><img src={backImg}/></button>
     </>
   );
 };
