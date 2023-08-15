@@ -22,10 +22,10 @@ const Login = () => {
           classes.
         </p>
         <div className="signingLinks">
-          <NavLink to={"./signin"} className="navLink">
+          <NavLink to={"./signup"} className="navLink">
             <Button text="SIGN UP" />
           </NavLink>
-          <NavLink to={"./signup"} className="navLink">
+          <NavLink to={"./signin"} className="navLink">
             ALREADY HAVE AN ACCOUNT? <span>LOG IN</span>
           </NavLink>
         </div>
