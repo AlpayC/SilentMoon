@@ -1,0 +1,27 @@
+.back-btn {
+    border-radius: 100%;
+    text-transform: uppercase;
+    border: none;
+    background-color: transparent;
+    border: 0.1rem solid var(--cream);
+    color: white;
+    font-family: "sspro-semibold";
+    font-size: 1.6rem;
+    width: 5.5rem;
+    height: 5.5rem;
+}
+
+.back-btn img {
+    width: 2rem;
+}
+
+.back-btn-atl {
+    border-radius: 3rem;
+    text-transform: uppercase;
+    padding: 2rem;
+    border: none;
+    background-color: var(--pink);
+    color: white;
+    font-family: "sspro-semibold";
+    font-size: 1.6rem;
+}
