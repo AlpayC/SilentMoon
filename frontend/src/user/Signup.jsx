@@ -32,7 +32,7 @@ export default function Signup() {
 
   return (
     <div className="main-wrapper background-signinup">
-      <BackButon />
+      <BackButon relativeClass="back-btn" />
       <h1 className="center padding-top-bottom">Create your account</h1>
       <form className="column" onSubmit={submit}>
         <input

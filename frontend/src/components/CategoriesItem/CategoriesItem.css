@@ -1,0 +1,40 @@
+.category-item-container {
+  width: 6.5rem;
+}
+
+.category-frame {
+  padding: 2rem;
+  background-color: var(--grey);
+  width: 6.5rem;
+  height: 6.5rem;
+  border-radius: 2.5rem;
+  display: flex;
+  align-items: center;
+}
+
+
+.category-item-container:active .category-frame {
+  background-color: var(--lightgreen);
+  color: var(--lightgreen);
+}
+
+.category-item-container:active .category-title {
+    color: var(--lightgreen);
+  }
+
+.category-frame img {
+  width: 2.5rem;
+}
+
+.category-title {
+  padding-top: 1rem;
+  color: var(--grey);
+  font-size: 1.6rem;
+}
+
+
+.row {
+  display: flex;
+  gap: 1.8rem;
+  justify-content: center;
+}
