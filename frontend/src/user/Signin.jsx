@@ -42,7 +42,7 @@ export default function Signin() {
   console.log(userData);
   return (
     <div className="main-wrapper background-signinup">
-      <BackButon />
+      <BackButon relativeClass="back-btn" />
       <h1 className="center padding-top-bottom">Welcome Back!</h1>
       <form className="column" onSubmit={submit}>
         <input
