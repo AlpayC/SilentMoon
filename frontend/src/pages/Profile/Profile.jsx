@@ -9,11 +9,11 @@ import SearchBar from "../../components/Search/Search";
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
   const { userData } = useUserData();
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = (inputValue) => {
     console.log(inputValue);
   };
-
 
   useEffect(() => {
     console.log(userData);
