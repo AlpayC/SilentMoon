@@ -1,8 +1,16 @@
 import "./Reminder.css";
 import { useState } from "react";
 import { TimePicker } from "react-ios-time-picker";
+import button from "../../components/Button/Button";
+import Button from "../../components/Button/Button";
+import { Link } from "react-router-dom";
+import { UserDataContext } from "../../context/UserDataContext";
+import { useContext } from "react";
+import axios from "axios";
+import Logo from "../../components/Logo/Logo";
 
 const Reminder = () => {
+	const { userData } = useContext(UserDataContext);
 	const [timeValue, setTimeValue] = useState("10:00 AM");
 	const [selectedDays, setSelectedDays] = useState([
 		"sunday",
@@ -15,8 +23,6 @@ const Reminder = () => {
 	const saveTime = pickedTime => {
 		setTimeValue(pickedTime);
 	};
-
-	console.log(timeValue);
 
 	/* 	const saveTime2 = event => {
 		const selectedTime = event.target.value;
@@ -36,11 +42,37 @@ const Reminder = () => {
 		}
 	};
 
-	console.log(selectedDays);
+	console.log(userData);
+
+	const setReminder = async e => {
+		e.preventDefault();
+		try {
+			const id = userData._id;
+
+			//fetch user by ID
+			const response = await axios.get(`/api/user/${id}`);
+			const fetchedUserData = response.data;
+
+			//udated Data
+			const updatedUserData = {
+				...fetchedUserData,
+				reminderTime: timeValue,
+				reminderDays: selectedDays,
+			};
+
+			// send updated properties to the backend for update
+			await axios.put(`/api/user/${id}`, updatedUserData);
+
+			//navigate to home
+			nav("/home");
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
-		<div className='main-wrapper'>
-			{/* <SilentMoonLogo /> */}
+		<div className='main-wrapper reminder'>
+			<Logo className={"logo-black"} />
 			<h2>What time would you like to meditate?</h2>
 			<p>
 				Any time you can choose but We recommend first thing in the morning.
@@ -125,6 +157,12 @@ const Reminder = () => {
 					/>
 					<label htmlFor='S'>S</label>
 				</div>
+			</div>
+			<div className='btn-wrapper'>
+				<form className='column' onSubmit={setReminder}>
+					<Button text='save' />
+					<Link to='/home'>NO THANKS</Link>
+				</form>
 			</div>
 		</div>
 	);

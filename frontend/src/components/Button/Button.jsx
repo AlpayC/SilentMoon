@@ -1,11 +1,11 @@
 import "./Button.css";
 
-const button = () => {
-  return (
-    <>
-      <button>btn</button>
-    </>
-  );
+const Button = props => {
+	return (
+		<>
+			<button className='main-btn'>{props.text}</button>
+		</>
+	);
 };
 
-export default button;
+export default Button;

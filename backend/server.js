@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { userRouter } from "./user/routes.js";
 import { spotifyRouter } from "./spotify/spotify.js";
+import { exercisesRouter } from "./exercises/routes.js";
 
 dotenv.config({
   path: path.join(path.resolve(), "..", ".env"),
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use(express.static(ReactAppDistPath.pathname));
 app.use("/api/user", userRouter);
 app.use("/api/spotify", spotifyRouter);
+app.use("/api/exercises", exercisesRouter);
 
 /*
  * express.static matched auf jede Datei im angegebenen Ordner

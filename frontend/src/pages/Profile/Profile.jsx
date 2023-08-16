@@ -1,5 +1,5 @@
 import "./Profile.css";
-import { GeneratePexelDataContext } from "../../context/GeneratePexelDataContext";
+import { VideoDataContext } from "../../context/VideoDataContext";
 
 import { useContext, useEffect, useState } from "react";
 import { useUserData } from "../../context/UserDataContext";
@@ -7,22 +7,21 @@ import { useUserData } from "../../context/UserDataContext";
 import SearchBar from "../../components/Search/Search";
 
 const Profile = () => {
-  const { pexelData } = useContext(GeneratePexelDataContext);
+  const { exerciseData } = useContext(VideoDataContext);
   const { userData } = useUserData();
-  console.log(userData);
 
-  const [searchInput, setSearchInput] = useState("");
   const handleSearch = (inputValue) => {
     console.log(inputValue);
   };
 
-  useEffect(() => {
-    console.log(pexelData);
-  }, [pexelData]);
 
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+
+  useEffect(() => {
+    console.log(exerciseData);
+  }, [exerciseData]);
   return (
     <>
       <div className="main-wrapper">

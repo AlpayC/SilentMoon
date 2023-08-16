@@ -1,13 +1,15 @@
 import "./Home.css";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
-import { GeneratePexelDataContext } from "../../context/GeneratePexelDataContext";
+import { VideoDataContext } from "../../context/VideoDataContext";
 
 const Home = () => {
-  const { pexelData } = useContext(GeneratePexelDataContext);
+  const { exerciseData } = useContext(VideoDataContext);
 
-  console.log(pexelData);
+  useEffect(() => {
+    console.log(exerciseData);
+  }, [exerciseData]);
   return (
     <>
       <h1>Home</h1>

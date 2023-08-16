@@ -5,33 +5,34 @@ import LoginImage from "../assets/img/Login/bg-person-handstand.png";
 import "./Login.css";
 
 const Login = () => {
-  return (
-    <>
-      <section>
-        <div
-          className="loginPage"
-          style={{ backgroundImage: `url(${LoginImage})` }}
-        >
-          <Logo className="logo-black main-wrapper" />
-        </div>
-      </section>
-      <section className="loginContainer">
-        <h1>We are what we do</h1>
-        <p>
-          Thousand of people are using silent moon for meditation and yoga
-          classes.
-        </p>
-        <div className="signingLinks">
-          <NavLink to={"./signup"} className="navLink">
-            <Button text="SIGN UP" />
-          </NavLink>
-          <NavLink to={"./signin"} className="navLink">
-            ALREADY HAVE AN ACCOUNT? <span>LOG IN</span>
-          </NavLink>
-        </div>
-      </section>
-    </>
-  );
+
+	return (
+		<>
+			<section>
+				<div
+					className='loginPage'
+					style={{ backgroundImage: `url(${LoginImage})` }}
+				>
+					<Logo className='logo-black main-wrapper' />
+				</div>
+			</section>
+			<section className='loginContainer'>
+				<h1>We are what we do</h1>
+				<p>
+					Thousand of people are using silent moon for meditation and yoga
+					classes.
+				</p>
+				<div className='signingLinks'>
+					<NavLink to={"./signup"} className='navLink'>
+						<Button text='SIGN UP' />
+					</NavLink>
+					<NavLink to={"./signin"} className='navLink'>
+						ALREADY HAVE AN ACCOUNT? <span>LOG IN</span>
+					</NavLink>
+				</div>
+			</section>
+		</>
+	);
 };
 
 export default Login;
