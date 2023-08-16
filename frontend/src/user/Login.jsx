@@ -5,6 +5,7 @@ import LoginImage from "../assets/img/Login/bg-person-handstand.png";
 import "./Login.css";
 
 const Login = () => {
+
 	return (
 		<>
 			<section>
