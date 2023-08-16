@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./user/UserContext.jsx";
 import { VideoDataProvider } from "./context/VideoDataContext.jsx";
 import { UserDataProvider } from "./context/UserDataContext.jsx";
+import { MusicDataProvider } from "./context/MusicDataContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <UserDataProvider>
         <VideoDataProvider>
           <UserProvider>
-            <App />
+            <MusicDataProvider>
+              <App />
+            </MusicDataProvider>
           </UserProvider>
         </VideoDataProvider>
       </UserDataProvider>
