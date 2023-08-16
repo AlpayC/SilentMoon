@@ -32,6 +32,10 @@
 	margin-bottom: 2rem;
 }
 
+.reminder p:first-of-type {
+	width: 100%;
+}
+
 .reminder p {
 	width: 70vw;
 	margin-bottom: 2rem;
