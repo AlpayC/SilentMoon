@@ -21,8 +21,15 @@ export default function Signin() {
     try {
       // await axios.post("/api/user/login", data);
       const response = await axios.post("/api/user/login", data);
+      const filteredObject = {
+        name: response.data.data.name,
+        lastname: response.data.data.lastname,
+        email: response.data.data.email,
+        _id: response.data.data._id,
+        // # ToDo: Evtl? profile picture, da auf der Detailsseite ein Profilbild angezeigt wird
+      };
 
-      setUserData(response.data.data.name);
+      setUserData(filteredObject);
       refetch();
 
       nav("/profile");

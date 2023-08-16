@@ -43,7 +43,7 @@ export default function Signup() {
         />
         <input
           className="input"
-          name="surname"
+          name="lastname"
           type="text"
           placeholder="LAST NAME"
         />
