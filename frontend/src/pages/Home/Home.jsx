@@ -9,49 +9,49 @@ import RandomHomeCard from "../../components/RandomHomeCard/RandomHomeCard";
 import NavBar from "../../components/NavBar/NavBar";
 
 const Home = () => {
-  const { exerciseData } = useContext(VideoDataContext);
-  const { userData } = useContext(UserDataContext);
-  console.log(userData);
-  const [greeting, setGreeting] = useState("");
+	const { exerciseData } = useContext(VideoDataContext);
+	const { userData } = useContext(UserDataContext);
+	console.log(userData);
+	const [greeting, setGreeting] = useState("");
 
-  // generate greeting
-  let newGreeting = "";
+	// generate greeting
+	let newGreeting = "";
 
-  useEffect(() => {
-    const currentHour = new Date().getHours();
-    if (currentHour >= 5 && currentHour < 12) {
-      newGreeting = "Good morning";
-    } else if (currentHour >= 12 && currentHour < 18) {
-      newGreeting = "Good afternoon";
-    } else {
-      newGreeting = "Good night";
-    }
+	useEffect(() => {
+		const currentHour = new Date().getHours();
+		if (currentHour >= 5 && currentHour < 12) {
+			newGreeting = "Good morning";
+		} else if (currentHour >= 12 && currentHour < 18) {
+			newGreeting = "Good afternoon";
+		} else {
+			newGreeting = "Good night";
+		}
 
-    setGreeting(newGreeting);
-  }, []);
-  // generate greeting end
+		setGreeting(newGreeting);
+	}, []);
+	// generate greeting end
 
-  useEffect(() => {
-    console.log(exerciseData.data);
-  }, [exerciseData]);
+	useEffect(() => {
+		console.log(exerciseData.data);
+	}, [exerciseData]);
 
-  return (
-    <div className="main-wrapper center">
-      <Logo className={"logo-black"} />
-      <h2>
-        {greeting} {userData?.name}
-      </h2>
-      <p>We hope you have a good day</p>
-      <section className="suggestions">
-        <RandomHomeCard data={exerciseData} category={"yoga"} />
-      </section>
-      {/* Search Bar */}
-      <h2>Recomended Yoga for you</h2>
-      <ExerciseSlider data={exerciseData} category={"yoga"} />
-      <h2>Recomended Meditation for you</h2>
-      <NavBar />
-    </div>
-  );
+	return (
+		<div className='main-wrapper'>
+			<Logo className={"logo-black"} />
+			<h2>
+				{greeting} {userData?.name}
+			</h2>
+			<p>We hope you have a good day</p>
+			<section className='suggestions'>
+				<RandomHomeCard data={exerciseData} category={"yoga"} />
+			</section>
+			{/* Search Bar */}
+			<h2>Recomended Yoga for you</h2>
+			<ExerciseSlider data={exerciseData} category={"yoga"} />
+			<h2>Recomended Meditation for you</h2>
+			<NavBar />
+		</div>
+	);
 };
 
 export default Home;

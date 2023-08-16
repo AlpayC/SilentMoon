@@ -32,16 +32,17 @@ const RandomHomeCard = props => {
 							alt={props.category}
 							onError={handleImageError}
 						/>
-						<div>
+						<div className='random-img-content'>
 							<h3>{randomExercise.title}</h3>
-							<p className='subtitle'>{randomExercise.level}</p>
+							<p className='subtitle'>{randomExercise.level.toUpperCase()}</p>
+						</div>
+						<div className='random-img-content-bottom'>
 							<p className='subtitle-small'>{randomExercise.duration}</p>
+							<button>START</button>
 						</div>
 					</div>
 				</Link>
 			)}
-
-			<h1>TEST</h1>
 		</>
 	);
 };
