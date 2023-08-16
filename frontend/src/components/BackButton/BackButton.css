@@ -15,12 +15,12 @@
     width: 2rem;
 }
 
-.back-btn-atl {
+.back-btn-filled {
     border-radius: 3rem;
     text-transform: uppercase;
     padding: 2rem;
     border: none;
-    background-color: var(--pink);
+    background-color: var(--cream);
     color: white;
     font-family: "sspro-semibold";
     font-size: 1.6rem;

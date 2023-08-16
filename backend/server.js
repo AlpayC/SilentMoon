@@ -15,7 +15,7 @@ dotenv.config({
 await mongoose.connect(process.env.DB);
 await mongoose.connection.syncIndexes();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 const ReactAppDistPath = new URL("../frontend/dist/", import.meta.url);
