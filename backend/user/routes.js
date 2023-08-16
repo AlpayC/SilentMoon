@@ -18,8 +18,8 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
   // Neuen User erstellen
-  const { name, email } = req.body;
-  const newUser = new User({ name, email });
+  const { name, email, lastname } = req.body;
+  const newUser = new User({ name, lastname, email });
   // user.setPassword (hash und salt setzen)
   newUser.setPassword(req.body.password);
   // user speichern
@@ -28,7 +28,7 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
     return res.send({
       data: {
         message: "New user created",
-        user: { name, email },
+        user: { name, lastname, email },
       },
     });
   } catch (e) {
@@ -81,4 +81,61 @@ userRouter.get("/logout", (req, res) => {
 userRouter.get("/secure", authenticateToken, async (req, res) => {
   console.log(req.userEmail);
   res.send({ email: req.userEmail });
+});
+
+userRouter.put("/addexercise", authenticateToken, async (req, res) => {
+  console.log(req.body);
+  try {
+    const { _id } = req.body;
+    const { exercise_id } = req.body;
+    const user = await User.findOne({ _id });
+    if (user.videos.includes(exercise_id)) {
+      return res.send("Video ist bereits vorhanden");
+    }
+    user.videos.push(exercise_id);
+    await user.save();
+    res.send("Video hinzugefügt");
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send("There was an error.");
+  }
+});
+
+userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
+  console.log(req.body);
+  try {
+    const { _id } = req.body;
+    const { exercise_id } = req.body;
+    const user = await User.findOne({ _id });
+    if (user.videos.some((item) => item.equals(exercise_id))) {
+      user.videos = user.videos.filter((item) => !item.equals(exercise_id));
+      await user.save();
+      return res.send("Video ist aus der Favoritenliste gelöscht");
+    } else {
+      res.send("Video ist nicht in der Favoritenliste");
+    }
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send("There was an error.");
+  }
+});
+
+userRouter.put("/updatereminder", authenticateToken, async (req, res) => {
+  console.log(req.body);
+  try {
+    const { _id, reminderdays, remindertime } = req.body;
+    const user = await User.findByIdAndUpdate(
+      _id,
+      { reminderdays, remindertime },
+      { new: true }
+    );
+    if (user) {
+      return res.send("Reminderinformationen erfolgreich upgedated");
+    } else {
+      res.status(404).send("User nicht gefunden");
+    }
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send("There was an error.");
+  }
 });
