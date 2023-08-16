@@ -1,10 +1,13 @@
 import "./Home.css";
 import { useContext, useEffect, useState } from "react";
 import { VideoDataContext } from "../../context/VideoDataContext";
+
 import Logo from "../../components/Logo/Logo";
 import { UserDataContext } from "../../context/UserDataContext";
 import ExerciseSlider from "../../components/ExerciseSlider/ExerciseSlider";
 import RandomHomeCard from "../../components/RandomHomeCard/RandomHomeCard";
+import NavBar from "../../components/NavBar/NavBar";
+
 
 const Home = () => {
 	const { exerciseData } = useContext(VideoDataContext);
@@ -33,8 +36,9 @@ const Home = () => {
 		console.log(exerciseData.data);
 	}, [exerciseData]);
 
+
 	return (
-		<div className='main-wrapper'>
+		<div className='main-wrapper center'>
 			<Logo className={"logo-black"} />
 			<h2>
 				{greeting} {userData} {/* spaeter z.B. userData.name */}
@@ -47,9 +51,10 @@ const Home = () => {
 			<h2>Recomended Yoga for you</h2>
 			<ExerciseSlider data={exerciseData} category={"yoga"} />
 			<h2>Recomended Meditation for you</h2>
-			{/* NavBar */}
+		    <NavBar />
 		</div>
 	);
+
 };
 
 export default Home;
