@@ -2,7 +2,7 @@ import { Router } from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import path from "path";
-import { Music } from "./MusicModel.js";
+import { Playlist } from "./MusicModel.js";
 dotenv.config({
   path: path.join(path.resolve(), "..", ".env"),
 });
@@ -46,7 +46,7 @@ spotifyRouter.post("/auth", async (req, res) => {
   }
 });
 spotifyRouter.get("/", async (req, res) => {
-  const musictitles = await Music.find();
+  const musictitles = await Playlist.find();
   res.send(musictitles);
 });
 
