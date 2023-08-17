@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import e from "express";
-import { Schema, model } from "mongoose";
+import { Schema, model, mongoose } from "mongoose";
 
 const isEmail = (string) => {
   const [name, domainWithTLD, ...rest] = string.split("@");
@@ -16,6 +16,7 @@ const isEmail = (string) => {
 
 export const userSchema = new Schema({
   name: { type: String, required: [true, "Please specify your name"] },
+  lastname: { type: String, required: [true, "Please specify your lastname"] },
   email: {
     type: String,
     unique: true,
@@ -26,6 +27,16 @@ export const userSchema = new Schema({
       message: (props) => `${props.value} is not a valid email`,
     },
   },
+  remindertime: [
+    {
+      type: String,
+      minlength: 2,
+      maxlength: 200,
+    },
+  ],
+  reminderdays: [{ type: String }],
+  videos: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
+  musictitles: [{ type: mongoose.Types.ObjectId, ref: "Music" }],
   salt: { type: String, required: true, select: false },
   hash: { type: String, required: true, select: false },
 });

@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from "react";
 import CategoriesItem from "../../components/CategoriesItem/CategoriesItem";
 import Logo from "../../components/Logo/Logo";
@@ -6,6 +7,7 @@ import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 
 import { VideoDataContext } from "../../context/VideoDataContext";
 import MasonryItem from "../../components/MasonryItem/MasonryItem";
+
 import "./CategoryMeditate.css";
 
 //* Images sind hier

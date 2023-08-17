@@ -1,7 +1,6 @@
 import "./Reminder.css";
 import { useState } from "react";
 import { TimePicker } from "react-ios-time-picker";
-import button from "../../components/Button/Button";
 import Button from "../../components/Button/Button";
 import { Link } from "react-router-dom";
 import { UserDataContext } from "../../context/UserDataContext";
@@ -23,11 +22,6 @@ const Reminder = () => {
 	const saveTime = pickedTime => {
 		setTimeValue(pickedTime);
 	};
-
-	/* 	const saveTime2 = event => {
-		const selectedTime = event.target.value;
-		setTimeValue(selectedTime);
-	}; */
 
 	const handleDayChange = event => {
 		const selectedDay = event.target.value;
@@ -80,8 +74,6 @@ const Reminder = () => {
 			<div className='time-picker-div'>
 				<TimePicker onChange={saveTime} value={timeValue} use12Hours />
 			</div>
-
-			{/* <input type='time' onChange={saveTime2} /> */}
 
 			<h2>Which day would you like to meditate?</h2>
 			<p>Everyday is best, but we recommend picking at least five. </p>

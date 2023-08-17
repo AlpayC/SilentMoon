@@ -1,0 +1,26 @@
+.recommended-item img {
+	width: 165px;
+	border-radius: 10px;
+	object-fit: cover;
+	object-position: center;
+	aspect-ratio: 29 / 20;
+	margin-bottom: 0.5rem;
+}
+
+.recommended-item .item-bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.recommended-item h3 {
+	color: var(--darkgreen);
+	margin-bottom: 0.5rem;
+	font-size: 1.6rem;
+	font-weight: 400;
+	letter-spacing: 0.1em;
+}
+
+.recommended-item a {
+	text-decoration: none;
+}

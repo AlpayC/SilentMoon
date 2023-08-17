@@ -1,0 +1,50 @@
+.random-img-container {
+	position: relative;
+	width: 185px;
+}
+.random-img-container img {
+	height: 210px;
+	border-radius: 10px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.random-img-content {
+	position: absolute;
+	top: 30%;
+	padding: 1.5rem;
+}
+
+.random-img-content h3,
+.random-img-content p,
+.random-img-content-bottom p {
+	color: var(--cream);
+	text-shadow: 0 0 8px var(--darkgreen);
+}
+
+.random-img-content h3 {
+	margin-bottom: 1rem;
+}
+
+.random-img-content p {
+	margin-bottom: 4rem;
+}
+
+.random-img-content-bottom {
+	width: 100%;
+	position: absolute;
+	bottom: 5%;
+	padding: 1.5rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.random-img-content-bottom button {
+	cursor: pointer;
+	background-color: var(--cream);
+	padding: 1rem 1.5rem;
+	border-radius: 3rem;
+	font-size: 1rem;
+	color: var(--darkgreen);
+}
