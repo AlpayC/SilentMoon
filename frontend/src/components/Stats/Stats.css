@@ -1,0 +1,22 @@
+.statsContainer{
+    display: flex;
+    padding: 1rem;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.stats{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stats img{
+    width: 15px;
+    height: 15px;
+}
+
+.stats p{
+    color: var(--gray);
+    margin-left: 1rem;
+}

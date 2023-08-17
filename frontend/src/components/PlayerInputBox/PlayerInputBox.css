@@ -1,0 +1,13 @@
+svg{
+    width: 50px;
+}
+
+.wind{
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+}
+svg:hover path{
+    stroke: #7c7f8d;
+}
