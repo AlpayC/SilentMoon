@@ -1,13 +1,14 @@
 import "./MediationPlayer.css";
 import { MusicDataContext } from "../../context/MusicDataContext";
 import { useContext } from "react";
-import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
-const MeditationPlayer = () => {
-  const { musicData } = useContext(MusicDataContext);
 
+import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
+
+const MeditationPlayer = () => {
   return (
     <>
       <h1>MeditationPlayer</h1>
+
       {musicData?.tracks?.items?.map((track) => (
         <div key={track.id}>
           <h3>{track.name}</h3>
