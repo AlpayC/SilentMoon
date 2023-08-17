@@ -1,0 +1,14 @@
+.play-pause{
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+}
+
+.play-pause .play{
+    width: 38px;
+}
+
+.play-pause .pause{
+    width: 40px;
+}
