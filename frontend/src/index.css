@@ -22,6 +22,8 @@
   --pink: #e28f83;
   --lightcream: #fefcf8;
   --grey: #a1a4b2;
+  --lightgrey: #a1a4b22e;
+  --darkgrey: #3f414e;
   --white: #ffffff;
 }
 
@@ -38,6 +40,7 @@ html {
 
 a {
   color: var(--pink);
+  text-decoration: none;
 }
 
 img {
@@ -113,6 +116,7 @@ p {
   padding: 1rem;
   margin: auto 0;
   padding-top: 3rem;
+  padding-bottom: 12rem;
 }
 
 .column {
