@@ -11,6 +11,7 @@ const client_id = process.env.SPOTIFY_ID;
 const client_secret = process.env.SPOTIFY_SECRET;
 
 export const spotifyRouter = Router();
+
 let authOptions = {
   url: "https://accounts.spotify.com/api/token",
   headers: {
@@ -33,7 +34,10 @@ spotifyRouter.post("/auth", async (req, res) => {
 
     if (response.status === 200) {
       const token = response.data;
-      res.send(token);
+      accessToken = token;
+      console.log(accessToken);
+      res.send("Token generated");
+      // res.send(accessToken);
     } else {
       res.status(response.status || 500).send("Error");
     }
@@ -44,4 +48,70 @@ spotifyRouter.post("/auth", async (req, res) => {
 spotifyRouter.get("/", async (req, res) => {
   const musictitles = await Music.find();
   res.send(musictitles);
+});
+
+spotifyRouter.post("/tracks", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const { data } = await axios.post(authOptions.url, null, {
+      headers: authOptions.headers,
+      params: authOptions.form,
+    });
+
+    const response = await axios.get(
+      `https://api.spotify.com/v1/playlists/${id}/tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      const spotifyData = response.data;
+      console.log("SpotifyData", spotifyData);
+      res.status(200).json(spotifyData);
+    } else {
+      res
+        .status(response.status || 500)
+        .json({ error: "Error fetching Spotify data" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+spotifyRouter.get("/playlist", async (req, res) => {
+  const searchQueryPlaylist = "meditation yoga";
+
+  try {
+    const { data } = await axios.post(authOptions.url, null, {
+      headers: authOptions.headers,
+      params: authOptions.form,
+    });
+
+    const response = await axios.get(
+      `https://api.spotify.com/v1/search?q=${encodeURIComponent(
+        searchQueryPlaylist
+      )}&type=playlist`,
+      {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      const spotifyData = response.data;
+
+      res.status(200).json(spotifyData);
+    } else {
+      res
+        .status(response.status || 500)
+        .json({ error: "Error fetching Spotify data" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
