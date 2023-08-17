@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const MusicSchema = new mongoose.Schema({
+const PlayListSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -13,7 +13,7 @@ const MusicSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 20,
   },
-  title_url: {
+  playlist_id: {
     type: String,
     required: true,
     minlength: 2,
@@ -25,6 +25,12 @@ const MusicSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 200,
   },
+  level: {
+    type: String,
+    required: true,
+    minlength: 2,
+    maxlength: 20,
+  },
 });
 
-export const Music = mongoose.model("Music", MusicSchema);
+export const Playlist = mongoose.model("Playlist", PlayListSchema);

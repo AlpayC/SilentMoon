@@ -36,7 +36,7 @@ export const userSchema = new Schema({
   ],
   reminderdays: [{ type: String }],
   videos: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
-  musictitles: [{ type: mongoose.Types.ObjectId, ref: "Music" }],
+  playlists: [{ type: Object }],
   salt: { type: String, required: true, select: false },
   hash: { type: String, required: true, select: false },
 });
