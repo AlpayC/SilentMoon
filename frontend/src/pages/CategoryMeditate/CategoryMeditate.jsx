@@ -16,6 +16,7 @@ import favsImg from "../../assets/img/Icons/heartunfilled.svg";
 import anxiousImg from "../../assets/img/Icons/smileysad.svg";
 import sleepImg from "../../assets/img/Icons/sleep.svg";
 import kidsImg from "../../assets/img/Icons/kid.svg";
+import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
 
 const CategoryMeditate = () => {
   const getRandomHeight = () => {
@@ -57,29 +58,51 @@ const CategoryMeditate = () => {
         <p className="padding-top-bottom-sm padding-left-right">
         Audio-only meditation techniques to help you minimize your screen time and practice on the go.
         </p>
+        <MiniPlayerYoga/>
         <div className="row categories">
           <CategoriesItem
             categoryImage={allImg}
             categoryTitle="All"
             onClick={() => handleCategoryClick("all")}
+            selectedCategory={selectedCategory}
           />
-          <CategoriesItem categoryImage={favsImg} categoryTitle="Favorites" />
-          <CategoriesItem categoryImage={anxiousImg} categoryTitle="Anxious" />
+          <CategoriesItem
+            categoryImage={favsImg}
+            categoryTitle="Favorites"
+            onClick={() => handleCategoryClick("Favorites")}
+            selectedCategory={selectedCategory}
+          />
+          <CategoriesItem
+            categoryImage={anxiousImg}
+            categoryTitle="Anxious"
+            onClick={() => handleCategoryClick("Anxious")}
+            selectedCategory={selectedCategory}
+          />
           <CategoriesItem
             categoryImage={sleepImg}
             categoryTitle="Sleep"
             onClick={() => handleCategoryClick("Sleep")}
+            selectedCategory={selectedCategory}
           />
-          <CategoriesItem categoryImage={kidsImg} categoryTitle="Kids" />
+          <CategoriesItem
+            categoryImage={kidsImg}
+            categoryTitle="Kids"
+            onClick={() => handleCategoryClick("Kids")}
+            selectedCategory={selectedCategory}
+          />
         </div>
         <div className="masonry-container">
-  {filteredData.slice(0, visibleItems).map((item) => (
-    <MasonryItem key={item._id} item={item} height={getRandomHeight()} />
-  ))}
-</div>
-{visibleItems < filteredData.length && (
-  <LoadMoreButton onClick={loadMoreItems} />
-)}
+          {filteredData.slice(0, visibleItems).map((item) => (
+            <MasonryItem
+              key={item._id}
+              item={item}
+              height={getRandomHeight()}
+            />
+          ))}
+        </div>
+        {visibleItems < filteredData.length && (
+          <LoadMoreButton onClick={loadMoreItems} />
+        )}
         <NavBar />
       </div>
     </>
