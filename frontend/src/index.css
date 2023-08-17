@@ -23,6 +23,7 @@
   --lightcream: #fefcf8;
   --grey: #a1a4b2;
   --lightgrey: #a1a4b22e;
+  --darkgrey: #3f414e;
   --white: #ffffff;
 }
 
@@ -39,6 +40,7 @@ html {
 
 a {
   color: var(--pink);
+  text-decoration: none;
 }
 
 img {
