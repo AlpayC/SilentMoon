@@ -1,6 +1,7 @@
 .random-img-container {
 	position: relative;
-	width: 185px;
+	width: 45vw;
+	overflow: hidden;
 }
 .random-img-container img {
 	height: 210px;
