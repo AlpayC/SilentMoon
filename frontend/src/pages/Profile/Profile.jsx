@@ -3,6 +3,7 @@ import { VideoDataContext } from "../../context/VideoDataContext";
 import { useContext, useEffect, useState } from "react";
 import { useUserData } from "../../context/UserDataContext";
 
+import Stats from "../../components/Stats/Stats";
 import SearchBar from "../../components/Search/Search";
 
 const Profile = () => {
@@ -33,6 +34,7 @@ const Profile = () => {
             handleSearch();
           }}
         />
+        <Stats />
       </div>
     </>
   );
