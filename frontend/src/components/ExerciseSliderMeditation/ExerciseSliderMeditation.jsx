@@ -15,10 +15,7 @@ const ExerciseSliderMeditation = props => {
 		return shuffledArray.slice(0, count);
 	};
 
-	console.log("props data", props?.data);
 	const randomMeditations = getRandomItems(props?.data || [], 8);
-	console.log("randomMed", randomMeditations[0]?.id);
-	console.log(randomMeditations);
 	return (
 		<section className='slider no-margin'>
 			{randomMeditations?.map(item => (
