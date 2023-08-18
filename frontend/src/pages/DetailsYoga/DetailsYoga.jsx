@@ -5,12 +5,13 @@ import Stats from "../../components/Stats/Stats";
 import { VideoDataContext } from "../../context/VideoDataContext";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import NavBar from "../../components/NavBar/NavBar"
+import NavBar from "../../components/NavBar/NavBar";
 
 const DetailsYoga = () => {
   const { id } = useParams();
+  const params = useParams();
   // console.log("Extracted id:", id);
-  const { exerciseData } = useContext(VideoDataContext); 
+  const { exerciseData } = useContext(VideoDataContext);
 
   //* Simple loader
   if (!exerciseData || !exerciseData.data) {
@@ -29,10 +30,14 @@ const DetailsYoga = () => {
     <>
       <div className="video-details">
         <div className="video-wrapper">
-        <div className="video-header">
-        <BackButton relativeClass="back-btn-filled" />
-        <FavoriteButton relativeClass="back-btn-filled" />
-            </div>
+          <div className="video-header">
+            <BackButton relativeClass="back-btn-filled" />
+            <FavoriteButton
+              relativeClass="back-btn-filled"
+              itemId={params}
+              categoryName={"yoga"}
+            />
+          </div>
           <video playsInline autoPlay muted loop poster={thisItem.image_url}>
             <source src={thisItem.secure_url} type="video/mp4" />
           </video>
@@ -40,17 +45,16 @@ const DetailsYoga = () => {
       </div>
       <div className="main-wrapper center">
         <div className="left">
-        <h1>{thisItem.title}</h1>
-        <section>
-          <div>
-          </div>
-          <div>
-            <p>{thisItem.level.toUpperCase()}</p>
-            <Stats />
-          </div>
-        </section>
+          <h1>{thisItem.title}</h1>
+          <section>
+            <div></div>
+            <div>
+              <p>{thisItem.level.toUpperCase()}</p>
+              <Stats />
+            </div>
+          </section>
         </div>
-        <NavBar/>
+        <NavBar />
       </div>
     </>
   );

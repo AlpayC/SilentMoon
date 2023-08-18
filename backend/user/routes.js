@@ -16,6 +16,29 @@ userRouter.get("/", async (req, res) => {
   res.send(users);
 });
 
+userRouter.post("/getUserData/", authenticateToken, async (req, res) => {
+  try {
+    const { _id } = req.body;
+
+    const user = await User.findOne({ _id });
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    // Check if the requested user is the same as the authenticated user
+    if (user.id !== req.body._id) {
+      return res.status(403).send("Forbidden");
+    }
+
+    // If the user is authorized, send the user data as the response
+    res.send(user);
+  } catch (err) {
+    // Handle errors appropriately
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
 userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
   // Neuen User erstellen
   const { name, email, lastname } = req.body;
@@ -89,12 +112,15 @@ userRouter.put("/addexercise", authenticateToken, async (req, res) => {
     const { _id } = req.body;
     const { exercise_id } = req.body;
     const user = await User.findOne({ _id });
+
     if (user.videos.includes(exercise_id)) {
+      console.log("video ist bereits vorhanden");
       return res.send("Video ist bereits vorhanden");
     }
     user.videos.push(exercise_id);
     await user.save();
     res.send("Video hinzugefügt");
+    console.log("Video hinzugefügt");
   } catch (err) {
     console.log("Error:", err);
     res.status(500).send("There was an error.");
@@ -110,6 +136,7 @@ userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
     if (user.videos.some((item) => item.equals(exercise_id))) {
       user.videos = user.videos.filter((item) => !item.equals(exercise_id));
       await user.save();
+      console.log("Video gelöscht");
       return res.send("Video ist aus der Favoritenliste gelöscht");
     } else {
       res.send("Video ist nicht in der Favoritenliste");
@@ -134,12 +161,12 @@ userRouter.put("/addplaylist", authenticateToken, async (req, res) => {
 
     if (playlistExists) {
       console.log("Playlist ist bereits vorhanden");
-      return res.send("Playlist ist bereits vorhanden");
+      return res.status(200).send("Playlist vorhanden");
     }
     user.playlists.push({ playlist_id });
     await user.save();
     console.log("Playlist hinzugefügt");
-    res.send("Playlist hinzugefügt");
+    res.status(201).send("Playlist hinzugefügt");
   } catch (err) {
     console.log("Error:", err);
     res.status(500).send("There was an error.");
@@ -159,6 +186,8 @@ userRouter.put("/deleteplaylist", authenticateToken, async (req, res) => {
     if (playlistIndex !== -1) {
       user.playlists.splice(playlistIndex, 1);
       await user.save();
+      console.log("Playlist gelöscht");
+
       return res.send("Playlist ist aus der Favoritenliste gelöscht");
     } else {
       res.send("Playlist ist nicht in der Favoritenliste");

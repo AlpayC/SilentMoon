@@ -20,9 +20,6 @@ const Profile = () => {
     console.log(userData);
   }, [userData]);
 
-  useEffect(() => {
-    console.log(exerciseData);
-  }, [exerciseData]);
   return (
     <>
       <div className="main-wrapper">
@@ -39,15 +36,23 @@ const Profile = () => {
         <h2>Favourite Yoga Sessions</h2>
         <section className="slider">
           {userData?.videos.map((item) => (
+            // <RecommendedItem
+            //   key={item.id}
+            //   link={`/category/yoga/${item.id}`}
+            //   // title={
+            //   //   item.name.length > 20
+            //   //     ? `${item.name.substring(0, 10)}`
+            //   //     : item.name
+            //   // }
+            //   exercise_id={item}
+            // />
             <RecommendedItem
               key={item.id}
               link={`/category/yoga/${item.id}`}
-              // title={
-              //   item.name.length > 20
-              //     ? `${item.name.substring(0, 10)}`
-              //     : item.name
-              // }
-              playlist_id={item.playlist_id}
+              image={item.image_url}
+              title={item.title}
+              level={item.level}
+              duration={item.duration}
             />
           ))}
         </section>
