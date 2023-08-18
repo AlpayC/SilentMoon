@@ -31,16 +31,8 @@ const MeditationPlayer = () => {
   return (
     <>
       <h1>MeditationPlayer</h1>
-      <div>
-        <PlayerInputBox
-          audioRef={audioRef}
-          progressBarRef={progressBarRef}
-          timeProgress={timeProgress}
-          duration={duration}
-        />
-      </div>
 
-      {/* {musicData?.tracks?.items?.map((track, index) => (
+      {/*       {musicData?.tracks?.items?.map((track, index) => (
         <div key={track.id}>
           {index === currentTrackIndex && (
             <DisplayTrack
@@ -49,16 +41,33 @@ const MeditationPlayer = () => {
               setDuration={setDuration}
               progressBarRef={progressBarRef}
             />
-          )} */}
+          )}
+        </div>
+      ))} */}
 
       <div key={trackItemData?.id}>
         <h3>{trackItemData?.name}</h3>
         <div>
-          <PlayerInputBox />
+          <PlayerInputBox
+            audioRef={audioRef}
+            progressBarRef={progressBarRef}
+            timeProgress={timeProgress}
+            duration={duration}
+          />
         </div>
-        <audio controls>
+
+        {/*         <audio controls>
           <source src={trackItemData?.preview_url} type="audio/mp3" />
-        </audio>
+        </audio> */}
+
+        {/* test */}
+        <DisplayTrack
+          currentTrack={trackItemData}
+          audioRef={audioRef}
+          setDuration={setDuration}
+          progressBarRef={progressBarRef}
+        />
+        {/* test */}
       </div>
     </>
   );

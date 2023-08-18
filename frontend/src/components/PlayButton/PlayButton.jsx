@@ -2,22 +2,22 @@ import PlayBtn from "../../assets/img/Icons/playBtn.png";
 import PauseBtn from "../../assets/img/Icons/pauseBtn.png";
 import { useState, useEffect, useRef } from "react";
 
-const PlayButton = ({ audioRef }) => {
+const PlayButton = ({ audioRef, trackItemData }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const togglePlayPause = () => {
     setIsPlaying((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   if (isPlaying && audioRef.current) {
-  //     audioRef.current.play();
-  //     console.log(audioRef.current);
-  //   } else if (audioRef.current) {
-  //     audioRef.current.pause();
-  //     console.log(audioRef.current);
-  //   }
-  // }, [isPlaying, audioRef]);
+  /*   useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+      console.log(audioRef.current);
+    } else {
+      audioRef.current.pause();
+      console.log(audioRef.current);
+    }
+  }, [isPlaying, audioRef]); */
 
   return (
     <div className="controls">
