@@ -2,7 +2,7 @@ import { Router } from "express";
 import axios from "axios";
 import dotenv from "dotenv";
 import path from "path";
-import { Music } from "./MusicModel.js";
+import { Playlist } from "./MusicModel.js";
 dotenv.config({
   path: path.join(path.resolve(), "..", ".env"),
 });
@@ -46,7 +46,7 @@ spotifyRouter.post("/auth", async (req, res) => {
   }
 });
 spotifyRouter.get("/", async (req, res) => {
-  const musictitles = await Music.find();
+  const musictitles = await Playlist.find();
   res.send(musictitles);
 });
 
@@ -61,6 +61,38 @@ spotifyRouter.post("/tracks", async (req, res) => {
 
     const response = await axios.get(
       `https://api.spotify.com/v1/playlists/${id}/tracks`,
+      {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      const spotifyData = response.data;
+      console.log("SpotifyData", spotifyData);
+      res.status(200).json(spotifyData);
+    } else {
+      res
+        .status(response.status || 500)
+        .json({ error: "Error fetching Spotify data" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+spotifyRouter.post("/onetrack", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const { data } = await axios.post(authOptions.url, null, {
+      headers: authOptions.headers,
+      params: authOptions.form,
+    });
+
+    const response = await axios.get(
+      `https://api.spotify.com/v1/tracks/${id}`,
       {
         headers: {
           Authorization: `Bearer ${data.access_token}`,

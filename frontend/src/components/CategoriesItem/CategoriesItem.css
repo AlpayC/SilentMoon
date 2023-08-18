@@ -13,12 +13,12 @@
 }
 
 
-.category-item-container:active .category-frame {
+.category-item-container.active .category-frame {
   background-color: var(--lightgreen);
-  color: var(--lightgreen);
 }
 
-.category-item-container:active .category-title {
+
+.category-item-container.active .category-title {
     color: var(--lightgreen);
   }
 

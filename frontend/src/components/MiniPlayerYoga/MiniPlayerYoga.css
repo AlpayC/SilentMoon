@@ -1,0 +1,29 @@
+.miniplayer-banner {
+  background-image: url("../../assets/img/YogaMeditation/calmbanerbackground.svg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 2.5rem 3rem;
+  background-color: var(--cream);
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.miniplayer-baner-left {
+  text-align: left;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.miniplayer-title {
+    font-size: 1.6rem;
+    color: var(--darkgreen);
+}
+
+.description-banner {
+    font-size: 1rem;
+    color: var(--grey);
+}

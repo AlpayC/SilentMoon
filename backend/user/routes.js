@@ -120,6 +120,53 @@ userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
   }
 });
 
+userRouter.put("/addplaylist", authenticateToken, async (req, res) => {
+  console.log(req.body);
+
+  try {
+    console.log(req.body);
+    const { _id } = req.body;
+    const { playlist_id } = req.body;
+    const user = await User.findOne({ _id });
+    const playlistExists = user.playlists.some(
+      (playlist) => playlist.playlist_id === playlist_id
+    );
+
+    if (playlistExists) {
+      return res.send("Playlist ist bereits vorhanden");
+    }
+    user.playlists.push({ playlist_id });
+    await user.save();
+    res.send("Playlist hinzugefügt");
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send("There was an error.");
+  }
+});
+
+userRouter.put("/deleteplaylist", authenticateToken, async (req, res) => {
+  console.log(req.body);
+  try {
+    const { _id, playlist_id } = req.body;
+    const user = await User.findOne({ _id });
+
+    const playlistIndex = user.playlists.findIndex(
+      (item) => item.playlist_id === playlist_id
+    );
+
+    if (playlistIndex !== -1) {
+      user.playlists.splice(playlistIndex, 1);
+      await user.save();
+      return res.send("Playlist ist aus der Favoritenliste gelöscht");
+    } else {
+      res.send("Playlist ist nicht in der Favoritenliste");
+    }
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).send("There was an error.");
+  }
+});
+
 userRouter.put("/updatereminder", authenticateToken, async (req, res) => {
   console.log(req.body);
   try {

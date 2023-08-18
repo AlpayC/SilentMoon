@@ -1,9 +1,9 @@
-import "./RandomHomeCard.css";
+import "./RandomHomeCardYoga.css";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import BackupImage from "../../assets/img/BackupImage/yoga.jpg";
 
-const RandomHomeCard = props => {
+const RandomHomeCardYoga = props => {
 	const getRandomItem = array => {
 		if (!array || array.length === 0) {
 			return null;
@@ -47,4 +47,4 @@ const RandomHomeCard = props => {
 	);
 };
 
-export default RandomHomeCard;
+export default RandomHomeCardYoga;
