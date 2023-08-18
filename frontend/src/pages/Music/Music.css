@@ -1,0 +1,26 @@
+.playlist-item {
+	display: flex;
+	align-items: center;
+	max-height: 200px;
+	margin: 2rem 0;
+}
+
+.playlist-img img {
+	width: 150px;
+	height: 150px;
+	border-radius: 10px;
+	object-fit: cover;
+	object-position: center;
+	margin-bottom: 0.5rem;
+	box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+		rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+}
+
+.playlist-info {
+	padding: 0 2rem;
+	text-align: left;
+}
+
+.playlist-info h3 {
+	color: var(--darkgrey);
+}
