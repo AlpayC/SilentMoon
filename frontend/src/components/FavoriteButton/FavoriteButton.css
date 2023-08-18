@@ -8,3 +8,13 @@
   font-family: "sspro-semibold";
   font-size: 1.6rem;
 }
+.fav-btn-unfilled {
+  border-radius: 3rem;
+  text-transform: uppercase;
+  padding: 2rem;
+  border: none;
+  background-color: black;
+  color: white;
+  font-family: "sspro-semibold";
+  font-size: 1.6rem;
+}

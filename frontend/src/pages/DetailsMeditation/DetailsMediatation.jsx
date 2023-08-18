@@ -33,7 +33,7 @@ const DetailsMediatation = () => {
           <Stats />
           {tracksData?.items?.map((track) => (
             <div key={track.track.id}>
-              <NavLink to={`/meditationplayer/${track.track.id}`}>
+              <NavLink to={`/meditationplayer/${track.track?.id}`}>
                 <h1>KLICK MICH</h1>
               </NavLink>
               <h3>{track.track.name}</h3>
