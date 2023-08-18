@@ -3,3 +3,16 @@
 	flex-direction: row;
 	gap: 2rem;
 }
+
+.home-wrapper {
+	text-align: left;
+}
+
+.home-wrapper h2,
+.home-wrapper p {
+	margin-bottom: 2rem;
+}
+
+.recommendations {
+	margin-top: 2rem;
+}

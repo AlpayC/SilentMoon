@@ -33,9 +33,13 @@ const FavoriteButton = (props) => {
 
   return (
     <>
+
       <button onClick={sendFavoriteItem} className={"fav-btn-filled"}>
         <img src={FavoriteBtn} alt="heart" />
       </button>
+
+      <button><img src={FavoriteBtn} alt="heart" className={props.className} /></button>
+
     </>
   );
 };

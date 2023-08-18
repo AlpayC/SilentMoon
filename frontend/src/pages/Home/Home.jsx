@@ -9,6 +9,7 @@ import ExerciseSlider from "../../components/ExerciseSlider/ExerciseSlider";
 import NavBar from "../../components/NavBar/NavBar";
 import RandomHomeCardYoga from "../../components/RandomHomeCardYoga/RandomHomeCardYoga";
 import ExerciseSliderMeditation from "../../components/ExerciseSliderMeditation/ExerciseSliderMeditation";
+import SearchBar from "../../components/Search/Search";
 
 const Home = () => {
 	const { exerciseData } = useContext(VideoDataContext);
@@ -16,7 +17,7 @@ const Home = () => {
 	const [greeting, setGreeting] = useState("");
 	const { playlistData } = useContext(MusicDataContext);
 	console.log("Playlists", playlistData?.data?.playlists?.items);
-
+	const [searchInput, setSearchInput] = useState("");
 	// generate greeting
 	let newGreeting = "";
 
@@ -38,26 +39,43 @@ const Home = () => {
 		console.log(exerciseData.data);
 	}, [exerciseData]);
 
+	const handleSearch = inputValue => {
+		console.log(inputValue);
+	};
+
 	return (
-		<div className='main-wrapper test'>
-			<Logo className={"logo-black"} />
-			<h2>
-				{greeting} {userData?.name}
-			</h2>
-			<p>We hope you have a good day</p>
-			<section className='suggestions'>
-				<RandomHomeCardYoga data={exerciseData} category={"yoga"} />
-				<RandomHomeCardYoga data={exerciseData} category={"yoga"} />
-			</section>
-			{/* Search Bar */}
-			<h2>Recomended Yoga for you</h2>
-			<ExerciseSlider data={exerciseData} category={"yoga"} />
-			<h2>Recomended Meditation for you</h2>
-			<ExerciseSliderMeditation
-				data={playlistData?.data?.playlists?.items}
-				category={"meditation"}
-			/>
-			<NavBar />
+		<div className='main-wrapper center'>
+			<div className='home-wrapper'>
+				<Logo className={"logo-black"} />
+				<h2>
+					{greeting} {userData?.name}
+				</h2>
+				<p>We hope you have a good day</p>
+				<section className='suggestions'>
+					<RandomHomeCardYoga data={exerciseData} category={"yoga"} />
+					<RandomHomeCardYoga data={exerciseData} category={"yoga"} />
+				</section>
+
+				<SearchBar
+					searchProp={handleSearch}
+					value={searchInput}
+					onChange={e => {
+						setSearchInput(e.target.value);
+						handleSearch();
+					}}
+				/>
+				<section className='recommendations'>
+					<h2>Recomended Yoga for you</h2>
+					<ExerciseSlider data={exerciseData} category={"yoga"} />
+					<h2>Recomended Meditation for you</h2>
+					<ExerciseSliderMeditation
+						data={playlistData?.data?.playlists?.items}
+						category={"meditation"}
+					/>
+				</section>
+
+				<NavBar />
+			</div>
 		</div>
 	);
 };
