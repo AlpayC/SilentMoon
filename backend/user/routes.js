@@ -133,10 +133,12 @@ userRouter.put("/addplaylist", authenticateToken, async (req, res) => {
     );
 
     if (playlistExists) {
+      console.log("Playlist ist bereits vorhanden");
       return res.send("Playlist ist bereits vorhanden");
     }
     user.playlists.push({ playlist_id });
     await user.save();
+    console.log("Playlist hinzugefügt");
     res.send("Playlist hinzugefügt");
   } catch (err) {
     console.log("Error:", err);

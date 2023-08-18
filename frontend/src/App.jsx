@@ -50,7 +50,7 @@ function App() {
           element={<DetailsMediatation />}
         />
         <Route path="/meditationplayer/:id" element={<MeditationPlayer />} />
-        <Route path="/music" element={<Music />} />
+        <Route path="/music/:id" element={<Music />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/passwordReset" element={<ResetPassword />} />
       </Routes>

@@ -26,13 +26,16 @@ export default function Signin() {
         lastname: response.data.data.lastname,
         email: response.data.data.email,
         _id: response.data.data._id,
+        reminderdays: response.data.data.reminderdays,
+        remindertime: response.data.data.remindertime,
+        playlists: response.data.data.playlists,
+        videos: response.data.data.videos,
         // # ToDo: Evtl? profile picture, da auf der Detailsseite ein Profilbild angezeigt wird
       };
 
       setUserData(filteredObject);
       refetch();
-
-      nav("/profile");
+      nav("/welcome");
     } catch (e) {
       console.log(e);
       setError("An Error occured, try again later");
