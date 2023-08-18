@@ -1,30 +1,23 @@
 import "./MediationPlayer.css";
 import { MusicDataContext } from "../../context/MusicDataContext";
 
-import { useContext, useRef, useState } from "react";
-
+import { useContext, useRef, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
 import DisplayTrack from "../../components/DisplayTrack/DisplayTrack";
+
+import axios from "axios";
 
 const MeditationPlayer = () => {
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
+  const params = useParams();
+  const [trackItemData, setTrackItemData] = useState();
 
   const { musicData } = useContext(MusicDataContext);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [duration, setDuration] = useState(0);
   const [timeProgress, setTimeProgress] = useState(0);
-
-
-import { useContext, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
-import axios from "axios";
-
-const MeditationPlayer = () => {
-  const params = useParams();
-  const [trackItemData, setTrackItemData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,8 +31,6 @@ const MeditationPlayer = () => {
   return (
     <>
       <h1>MeditationPlayer</h1>
-
-
       <div>
         <PlayerInputBox
           audioRef={audioRef}
@@ -49,7 +40,7 @@ const MeditationPlayer = () => {
         />
       </div>
 
-      {musicData?.tracks?.items?.map((track, index) => (
+      {/* {musicData?.tracks?.items?.map((track, index) => (
         <div key={track.id}>
           {index === currentTrackIndex && (
             <DisplayTrack
@@ -58,7 +49,7 @@ const MeditationPlayer = () => {
               setDuration={setDuration}
               progressBarRef={progressBarRef}
             />
-          )}
+          )} */}
 
       <div key={trackItemData?.id}>
         <h3>{trackItemData?.name}</h3>
