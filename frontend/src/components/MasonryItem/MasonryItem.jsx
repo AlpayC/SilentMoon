@@ -1,13 +1,20 @@
 import "./MasonryItem.css";
+import { Link } from "react-router-dom";
 
 const MasonryItem = ({ item, height }) => {
   return (
-    <div
-      style={{ backgroundImage: `url(${item.image_url})`, height: height }}
-      className="masonry-item"
+    <Link
+      to={{
+        pathname: `/category/yoga/${item._id}`,
+      }}
     >
-      {item.title}
-    </div>
+      <div
+        style={{ backgroundImage: `url(${item.image_url})`, height: height }}
+        className="masonry-item"
+      >
+        {item.title}
+      </div>
+    </Link>
   );
 };
 
