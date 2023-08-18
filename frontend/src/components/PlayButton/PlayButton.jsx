@@ -9,15 +9,15 @@ const PlayButton = ({ audioRef }) => {
     setIsPlaying((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (isPlaying && audioRef.current) {
-      audioRef.current.play();
-      console.log(audioRef.current);
-    } else if (audioRef.current) {
-      audioRef.current.pause();
-      console.log(audioRef.current);
-    }
-  }, [isPlaying, audioRef]);
+  // useEffect(() => {
+  //   if (isPlaying && audioRef.current) {
+  //     audioRef.current.play();
+  //     console.log(audioRef.current);
+  //   } else if (audioRef.current) {
+  //     audioRef.current.pause();
+  //     console.log(audioRef.current);
+  //   }
+  // }, [isPlaying, audioRef]);
 
   return (
     <div className="controls">
