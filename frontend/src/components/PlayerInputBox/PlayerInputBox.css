@@ -1,13 +1,13 @@
-svg{
-    width: 50px;
+.player-input-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.wind{
-    border: none;
-    cursor: pointer;
-    appearance: none;
-    background-color: inherit;
-}
-svg:hover path{
-    stroke: #7c7f8d;
+.SkipPlayPause{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem;
 }
