@@ -1,5 +1,4 @@
-
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useUserData } from "../../context/UserDataContext";
 import { NavLink } from "react-router-dom";
 import Logo from "../../components/Logo/Logo";
@@ -9,6 +8,14 @@ import WelcomeImage from "../../assets/img/WelcomePage/bg-person.png";
 
 const WelcomePage = () => {
   const { userData } = useUserData();
+  const [redirection, setRedirection] = useState();
+  useEffect(() => {
+    console.log(userData);
+    if (userData.reminderdays.length === 0) {
+      return setRedirection("/reminder");
+    }
+    setRedirection("/home");
+  }, []);
   return (
     <>
       <section>
@@ -19,11 +26,11 @@ const WelcomePage = () => {
           <div className="main-wrapper">
             <Logo className="logo-white" />
             <div className="welcomeText">
-              <h1>Hi {userData}, welcome to Silent Moon</h1>
+              <h1>Hi {userData.name}, welcome to Silent Moon</h1>
             </div>
           </div>
         </section>
-        <NavLink to={"/reminder"} className="getStartedBtn">
+        <NavLink to={redirection} className="getStartedBtn">
           <Button text="GET STARTED" />
         </NavLink>
       </section>

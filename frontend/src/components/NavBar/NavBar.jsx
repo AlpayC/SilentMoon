@@ -5,8 +5,12 @@ import MusicImg from "../../assets/img/Nav/Music.svg";
 import ProfileImg from "../../assets/img/Nav/Profile.svg";
 import YogaImg from "../../assets/img/Nav/Yoga.svg";
 import { NavLink } from "react-router-dom";
+import { useUserData } from "../../context/UserDataContext";
+import { useContext } from "react";
 
 const NavBar = () => {
+  const { userData } = useUserData();
+
   return (
     <nav>
       <div className="nav-container">
@@ -50,7 +54,7 @@ const NavBar = () => {
             <div className="navImgContainer">
               <img className="navImg" src={ProfileImg} />
             </div>
-            <p className="navText">Profile</p>
+            <p className="navText">{userData.name}</p>
           </div>
         </NavLink>
       </div>
