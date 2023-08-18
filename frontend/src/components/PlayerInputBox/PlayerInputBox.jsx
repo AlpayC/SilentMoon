@@ -3,9 +3,11 @@ import PlayButton from "../PlayButton/PlayButton";
 import SkipBackwards from "../SkipButtons/SkipBackwards";
 import SkipForward from "../SkipButtons/SkipForward";
 import ProgressBar from "../ProgressBar/ProgressBar";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
 
-const PlayerInputBox = ({ audioRef }) => {
+const PlayerInputBox = ({ audioRef, timeProgress, duration }) => {
+  const progressBarRef = useRef(null);
+
   const handleSkipForward = () => {
     if (audioRef.current) {
       audioRef.current.currentTime += 15;
@@ -27,7 +29,12 @@ const PlayerInputBox = ({ audioRef }) => {
           <PlayButton audioRef={audioRef} />
           <SkipForward onSkipForward={handleSkipForward} />
         </div>
-        <ProgressBar audioRef={audioRef} />
+        <ProgressBar
+          progressBarRef={progressBarRef}
+          audioRef={audioRef}
+          timeProgress={timeProgress}
+          duration={duration}
+        />
       </div>
     </>
   );

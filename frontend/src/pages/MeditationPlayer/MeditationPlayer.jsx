@@ -3,26 +3,16 @@ import { MusicDataContext } from "../../context/MusicDataContext";
 import { useContext, useRef, useState } from "react";
 
 import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
+import DisplayTrack from "../../components/DisplayTrack/DisplayTrack";
 
 const MeditationPlayer = () => {
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
-  const [timeProgress, setTimeProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
 
   const { musicData } = useContext(MusicDataContext);
-
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setTimeProgress(audioRef.current.currentTime);
-    }
-  };
-
-  const handleDurationChange = () => {
-    if (audioRef.current) {
-      setDuration(audioRef.current.duration);
-    }
-  };
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [timeProgress, setTimeProgress] = useState(0);
 
   return (
     <>
@@ -37,26 +27,16 @@ const MeditationPlayer = () => {
         />
       </div>
 
-      {musicData?.tracks?.items?.map((track) => (
+      {musicData?.tracks?.items?.map((track, index) => (
         <div key={track.id}>
-          <h3>{track.name}</h3>
-
-          <audio
-            ref={(element) => {
-              audioRef.current = element;
-              if (audioRef.current) {
-                audioRef.current.addEventListener("timeupdate", () => {
-                  setTimeProgress(audioRef.current.currentTime);
-                });
-                audioRef.current.addEventListener("durationchange", () => {
-                  setDuration(audioRef.current.duration);
-                });
-              }
-            }}
-            controls
-          >
-            <source src={track.preview_url} type="audio/mp3" />
-          </audio>
+          {index === currentTrackIndex && (
+            <DisplayTrack
+              currentTrack={track}
+              audioRef={audioRef}
+              setDuration={setDuration}
+              progressBarRef={progressBarRef}
+            />
+          )}
         </div>
       ))}
     </>
