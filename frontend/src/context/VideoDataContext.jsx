@@ -7,7 +7,7 @@ export const VideoDataProvider = ({ children }) => {
   const [exerciseData, setExerciseData] = useState([]);
 
   useEffect(() => {
-    const fetchPexelData = async () => {
+    const exercisesFromDB = async () => {
       try {
         const response = await axios.get("/api/exercises");
         setExerciseData(response);
@@ -15,7 +15,7 @@ export const VideoDataProvider = ({ children }) => {
         console.error("Error fetching Pexels data:", error);
       }
     };
-    fetchPexelData();
+    exercisesFromDB();
   }, []);
 
   // const submit = async (e) => {
