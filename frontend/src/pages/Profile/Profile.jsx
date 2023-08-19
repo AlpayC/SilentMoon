@@ -6,9 +6,11 @@ import Stats from "../../components/Stats/Stats";
 import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
+import { MusicDataContext } from "../../context/MusicDataContext";
 
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
+  const { playlistDetails } = useContext(MusicDataContext);
   const { userData } = useUserData();
   const [searchInput, setSearchInput] = useState("");
 
@@ -18,7 +20,12 @@ const Profile = () => {
 
   useEffect(() => {
     console.log(userData);
+    console.log(exerciseData);
   }, [userData]);
+
+  const favoriteVideos = exerciseData.data.filter((video) =>
+    userData.videos.includes(video._id)
+  );
 
   return (
     <>
@@ -35,20 +42,10 @@ const Profile = () => {
         <Stats />
         <h2>Favourite Yoga Sessions</h2>
         <section className="slider">
-          {userData?.videos.map((item) => (
-            // <RecommendedItem
-            //   key={item.id}
-            //   link={`/category/yoga/${item.id}`}
-            //   // title={
-            //   //   item.name.length > 20
-            //   //     ? `${item.name.substring(0, 10)}`
-            //   //     : item.name
-            //   // }
-            //   exercise_id={item}
-            // />
+          {favoriteVideos?.map((item) => (
             <RecommendedItem
               key={item.id}
-              link={`/category/yoga/${item.id}`}
+              link={`/category/yoga/${item._id}`}
               image={item.image_url}
               title={item.title}
               level={item.level}
@@ -58,16 +55,17 @@ const Profile = () => {
         </section>
         <h2>Favourite Meditations</h2>
         <section className="slider">
-          {userData?.playlists.map((item) => (
+          {playlistDetails?.map((item) => (
             <RecommendedItem
               key={item.id}
               link={`/category/meditation/${item.id}`}
-              // title={
-              //   item.name.length > 20
-              //     ? `${item.name.substring(0, 10)}`
-              //     : item.name
-              // }
+              title={
+                item.name.length > 20
+                  ? `${item.name.substring(0, 10)}`
+                  : item.name
+              }
               playlist_id={item.playlist_id}
+              image={item?.images[0].url}
             />
           ))}
         </section>

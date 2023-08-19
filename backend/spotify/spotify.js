@@ -3,6 +3,8 @@ import axios from "axios";
 import dotenv from "dotenv";
 import path from "path";
 import { Playlist } from "./MusicModel.js";
+import User from "../user/UserModel.js";
+
 dotenv.config({
   path: path.join(path.resolve(), "..", ".env"),
 });
@@ -145,5 +147,39 @@ spotifyRouter.get("/playlist", async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+spotifyRouter.post("/getPlaylistDetails", async (req, res) => {
+  try {
+    const { data } = await axios.post(authOptions.url, null, {
+      headers: authOptions.headers,
+      params: authOptions.form,
+    });
+
+    const { _id } = req.body;
+    const { playlists } = await User.findOne({ _id });
+    console.log(playlists);
+    const playlistIds = playlists.map((playlist) => playlist.playlist_id);
+
+    const playlistDetails = await Promise.all(
+      playlistIds.map(async (playlistId) => {
+        const response = await axios.get(
+          `https://api.spotify.com/v1/playlists/${playlistId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${data.access_token}`,
+            },
+          }
+        );
+        return response.data;
+      })
+    );
+
+    res.status(200).json(playlistDetails);
+    console.log("Playlistdetails erfolgreich gefetcht");
+  } catch (error) {
+    console.error("Error fetching playlist details:", error);
+    res.status(500).json({ error: "An error occurred" });
   }
 });
