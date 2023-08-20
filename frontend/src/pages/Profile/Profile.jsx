@@ -21,6 +21,7 @@ const Profile = () => {
   useEffect(() => {
     console.log(userData);
     console.log(exerciseData);
+    console.log(playlistDetails);
   }, [userData]);
 
   const favoriteVideos = exerciseData.data.filter((video) =>
@@ -44,7 +45,7 @@ const Profile = () => {
         <section className="slider">
           {favoriteVideos?.map((item) => (
             <RecommendedItem
-              key={item.id}
+              key={item._id}
               link={`/category/yoga/${item._id}`}
               image={item.image_url}
               title={item.title}
@@ -64,8 +65,10 @@ const Profile = () => {
                   ? `${item.name.substring(0, 10)}`
                   : item.name
               }
-              playlist_id={item.playlist_id}
+              playlist_id={item.id}
               image={item?.images[0].url}
+              tracks={item?.tracks.total}
+              owner={item?.owner.display_name}
             />
           ))}
         </section>

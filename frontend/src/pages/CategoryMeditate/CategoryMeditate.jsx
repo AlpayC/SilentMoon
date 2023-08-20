@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext } from "react";
 import CategoriesItem from "../../components/CategoriesItem/CategoriesItem";
 import Logo from "../../components/Logo/Logo";
@@ -17,6 +16,7 @@ import anxiousImg from "../../assets/img/Icons/smileysad.svg";
 import sleepImg from "../../assets/img/Icons/sleep.svg";
 import kidsImg from "../../assets/img/Icons/kid.svg";
 import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
+import SearchBar from "../../components/Search/Search";
 
 const CategoryMeditate = () => {
   const getRandomHeight = () => {
@@ -56,9 +56,11 @@ const CategoryMeditate = () => {
         <Logo />
         <h1 className="padding-top-bottom">Meditate</h1>
         <p className="padding-top-bottom-sm padding-left-right">
-        Audio-only meditation techniques to help you minimize your screen time and practice on the go.
+          Audio-only meditation techniques to help you minimize your screen time
+          and practice on the go.
         </p>
-        <MiniPlayerYoga/>
+        <MiniPlayerYoga />
+        <SearchBar />
         <div className="row categories">
           <CategoriesItem
             categoryImage={allImg}
