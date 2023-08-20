@@ -1,73 +1,47 @@
 import "./MediationPlayer.css";
-import { MusicDataContext } from "../../context/MusicDataContext";
-
-import { useContext, useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import PlayerInputBox from "../../components/PlayerInputBox/PlayerInputBox";
-import DisplayTrack from "../../components/DisplayTrack/DisplayTrack";
-
 import axios from "axios";
+import { MusicDataContext } from "../../context/MusicDataContext";
+import { useContext, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Player from "../../components/Player/Player";
+import FavoriteButtonToggle from "../../components/FavoriteButton/FavoriteButtonToggle";
+import CloseButton from "../../components/BackButton/CloseButton";
 
 const MeditationPlayer = () => {
-  const audioRef = useRef(null);
-  const progressBarRef = useRef(null);
   const params = useParams();
   const [trackItemData, setTrackItemData] = useState();
-
   const { musicData } = useContext(MusicDataContext);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [timeProgress, setTimeProgress] = useState(0);
+
+  const id = trackItemData?.id;
+  const name = trackItemData?.name;
+  const preview_url = trackItemData?.preview_url;
 
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.post(`/api/spotify/onetrack`, params);
       setTrackItemData(data);
-      console.log(data);
     };
     fetchData();
-  }, []);
+  }, [params]);
 
   return (
     <>
-      <h1>MeditationPlayer</h1>
-
-      {/*       {musicData?.tracks?.items?.map((track, index) => (
-        <div key={track.id}>
-          {index === currentTrackIndex && (
-            <DisplayTrack
-              currentTrack={track}
-              audioRef={audioRef}
-              setDuration={setDuration}
-              progressBarRef={progressBarRef}
-            />
-          )}
+      <div className="meditation-player-page">
+        <article className="meditation-page-btns">
+          <CloseButton />
+          <FavoriteButtonToggle />
+        </article>
+        <div key={id}>
+          <article className="meditation-player-content">
+            <div className="track-description">
+              <h2>{name}</h2>
+              <h3>{trackItemData?.artists[0].name}</h3>
+            </div>
+            <div className="player-container">
+              <Player audioSrc={preview_url} />
+            </div>
+          </article>
         </div>
-      ))} */}
-
-      <div key={trackItemData?.id}>
-        <h3>{trackItemData?.name}</h3>
-        <div>
-          <PlayerInputBox
-            audioRef={audioRef}
-            progressBarRef={progressBarRef}
-            timeProgress={timeProgress}
-            duration={duration}
-          />
-        </div>
-
-        {/*         <audio controls>
-          <source src={trackItemData?.preview_url} type="audio/mp3" />
-        </audio> */}
-
-        {/* test */}
-        <DisplayTrack
-          currentTrack={trackItemData}
-          audioRef={audioRef}
-          setDuration={setDuration}
-          progressBarRef={progressBarRef}
-        />
-        {/* test */}
       </div>
     </>
   );

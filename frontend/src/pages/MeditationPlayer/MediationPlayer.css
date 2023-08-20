@@ -1,0 +1,47 @@
+.meditation-player-content{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-container{
+    max-width: 98%;
+    height: 40%;
+    margin-top: 60px;
+}
+
+.meditation-player-page{
+    background-image: url('../../assets/img/MeditationPlayer/Meditation Player-Bck.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    min-width: 100vw;
+}
+
+.meditation-page-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5%;
+}
+
+.track-description{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 160px;
+}
+
+.track-description h2{
+    color: var(--darkgreen);
+    letter-spacing: 1.5px;
+}
+
+.track-description h3{
+    margin-top: 6%;
+    color: var(--middlegrey);
+    font-family: "sspro-semibold";
+}

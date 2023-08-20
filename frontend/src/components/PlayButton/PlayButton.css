@@ -6,14 +6,11 @@
 }
 
 .play-pause .play {
-  width: 38px;
+  width: 80px;
 }
 
 .play-pause .pause {
-  width: 40px;
+  width: 80px;
 }
-.play-btn {
-  width: 40px;
-  height: 40px;
-}
+
 

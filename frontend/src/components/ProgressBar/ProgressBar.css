@@ -3,7 +3,8 @@
     align-items: center;
     gap: 10px;
     width: 100%;
-  }
+    margin-top: 4%;
+}
   
 
 .time {
@@ -13,11 +14,14 @@
 }
   
 .time.current {
-    color: #f50;
+    color: #333; 
+}
+
+.progress{
+    width: 80%;
 }
 
 input[type="range"] {
-    --range-progress: 0;
     position: relative;
     background:#ccc;
     width: 100%;
@@ -28,9 +32,9 @@ input[type="range"] {
 
 input[type="range"]::before {
     content: '';
-    height: 2px;
-    background: #f50;
-    width: var(--range-progress);
+    height: 5px;
+    color: #333;
+    background: #333;
     border-bottom-left-radius: 2px;
     border-top-left-radius: 2px;
     position: absolute;

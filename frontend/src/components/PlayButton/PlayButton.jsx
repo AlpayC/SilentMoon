@@ -1,27 +1,10 @@
 import PlayBtn from "../../assets/img/Icons/playBtn.png";
 import PauseBtn from "../../assets/img/Icons/pauseBtn.png";
-import { useState, useEffect, useRef } from "react";
-
-const PlayButton = ({ audioRef, trackItemData }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const togglePlayPause = () => {
-    setIsPlaying((prev) => !prev);
-  };
-
-  /*   useEffect(() => {
-    if (isPlaying) {
-      audioRef.current.play();
-      console.log(audioRef.current);
-    } else {
-      audioRef.current.pause();
-      console.log(audioRef.current);
-    }
-  }, [isPlaying, audioRef]); */
-
+import "./PlayButton.css";
+const PlayButton = ({ isPlaying, onToggle }) => {
   return (
     <div className="controls">
-      <button className="play-pause" onClick={togglePlayPause}>
+      <button className="play-pause" onClick={onToggle}>
         {isPlaying ? (
           <img src={PauseBtn} alt="pause" className="pause" />
         ) : (
