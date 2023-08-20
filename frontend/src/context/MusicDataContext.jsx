@@ -48,6 +48,8 @@ export const MusicDataProvider = ({ children }) => {
         musicData,
         playlistData,
         playlistDetails,
+        setPlaylistData,
+        setPlaylistDetails,
       }}
     >
       {children}

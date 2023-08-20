@@ -15,6 +15,7 @@ import anxiousImg from "../../assets/img/Icons/smileysad.svg";
 import sleepImg from "../../assets/img/Icons/sleep.svg";
 import kidsImg from "../../assets/img/Icons/kid.svg";
 import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
+import SearchBar from "../../components/Search/Search";
 
 const CategoryYoga = () => {
   const getRandomHeight = () => {
@@ -56,7 +57,8 @@ const CategoryYoga = () => {
         <p className="padding-top-bottom-sm">
           Find your inner zen from anywhere.
         </p>
-        <MiniPlayerYoga/>
+        <MiniPlayerYoga />
+        <SearchBar />
         <div className="row categories">
           <CategoriesItem
             categoryImage={allImg}
