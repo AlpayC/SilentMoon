@@ -40,7 +40,7 @@ const Profile = () => {
     <>
       {isLoggedIn && (
         <div className="main-wrapper">
-          <div>
+          <div className="info-logout">
             <h1>{userData?.name || storagedUserData?.name}</h1>
             <button onClick={logout}>
               <img src={LogoutBtn} alt="logout button" />
