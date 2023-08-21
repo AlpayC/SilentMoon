@@ -8,6 +8,7 @@ import WelcomeImage from "../../assets/img/WelcomePage/bg-person.png";
 
 const WelcomePage = () => {
   const { userData } = useUserData();
+  console.log(userData);
   const [redirection, setRedirection] = useState();
   useEffect(() => {
     console.log(userData);
@@ -29,10 +30,10 @@ const WelcomePage = () => {
               <h1>Hi {userData.name}, welcome to Silent Moon</h1>
             </div>
           </div>
+          <NavLink to={redirection} className="getStartedBtn">
+            <Button text="GET STARTED" />
+          </NavLink>
         </section>
-        <NavLink to={redirection} className="getStartedBtn">
-          <Button text="GET STARTED" />
-        </NavLink>
       </section>
     </>
   );

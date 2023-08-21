@@ -1,10 +1,11 @@
 import React from "react";
+import "./ProgressBar.css";
 
-const ProgressBar = ({ progressBarRef, audioRef, timeProgress, duration }) => {
-  const handleProgressChange = () => {
-    audioRef.current.currentTime = progressBarRef.current.value;
-  };
-
+const ProgressBar = ({
+  timeProgress,
+  duration,
+  onTimeProgressChangeRequest,
+}) => {
   const formatTime = (time) => {
     if (time && !isNaN(time)) {
       const minutes = Math.floor(time / 60);
@@ -16,17 +17,21 @@ const ProgressBar = ({ progressBarRef, audioRef, timeProgress, duration }) => {
     return "00:00";
   };
 
+  const onProgressBarChange = (e) => {
+    const value = parseFloat(e.target.value);
+    onTimeProgressChangeRequest(value);
+  };
+
   return (
     <div className="progress">
       <span className="time current">{formatTime(timeProgress)}</span>
       <input
         type="range"
-        ref={progressBarRef}
-        defaultValue="0"
-        onChange={handleProgressChange}
+        onChange={onProgressBarChange}
         min="0"
         max={duration}
-        step="1"
+        value={timeProgress}
+        step="0.5"
       />
       <span className="time">{formatTime(duration)}</span>
     </div>
