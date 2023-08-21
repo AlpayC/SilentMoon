@@ -46,7 +46,7 @@ const CategoryMeditate = () => {
             .slice(0, visibleItems)
             .map((item) => (
               <MasonryMeditateItem
-                key={item._id}
+                key={item.id}
                 item={item}
                 height={getRandomHeight()}
               />

@@ -6,14 +6,15 @@ import { MusicDataContext } from "../../context/MusicDataContext";
 import { Link } from "react-router-dom";
 
 const Music = () => {
-  const { playlistData } = useContext(MusicDataContext);
-  console.log("Playlist here", playlistData);
-  return (
-    <div className="main-wrapper center">
-      <div className="music-wrapper">
-        <Logo className={"logo-black"} />
-        <h1>Our Playlist Favorites</h1>
-        <p>find your inner peace</p>
+
+	const { playlistData } = useContext(MusicDataContext);
+
+	return (
+		<div className='main-wrapper center'>
+			<div className='music-wrapper'>
+				<Logo className={"logo-black"} />
+				<h1>Our Playlist Favorites</h1>
+				<p>find your inner peace</p>
 
         {playlistData?.data?.playlists?.items.map((playlist) => (
           <Link to={`/music/${playlist.id}`} key={playlist.id}>

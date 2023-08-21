@@ -7,6 +7,9 @@ import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
 import { MusicDataContext } from "../../context/MusicDataContext";
+//import { UserDataContext } from "../../context/UserDataContext";
+import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
+import { UserContext } from "../../user/UserContext";
 
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
@@ -23,7 +26,11 @@ const Profile = () => {
   );
   const [searchInput, setSearchInput] = useState("");
 
+
   const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
+
+  const { isLoggedIn, logout } = useContext(UserContext);
+
 
   const favoriteVideos = favoriteExercises?.filter((video) =>
     storagedUserData.videos.includes(video._id)
@@ -33,6 +40,7 @@ const Profile = () => {
 
   return (
     <>
+          {isLoggedIn && (
       <div className="main-wrapper">
         <h1>{userData?.name || storagedUserData?.name}</h1>
         <SearchBar
@@ -75,6 +83,7 @@ const Profile = () => {
         </section>
         <NavBar />
       </div>
+      )}
     </>
   );
 };
