@@ -1,0 +1,23 @@
+.masonry-container {
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem 1rem;
+    column-gap: 1rem;
+    grid-auto-rows: minmax(15rem, max-content); */
+    column-width: 15rem;
+ }
+
+.masonry-item {
+    display: flex;
+    background-size: cover;
+    border-radius: 1.5rem;
+    align-items: flex-end;
+    background-position: center;
+    background-size: cover;
+    padding: 0rem 0rem 2rem 2rem;
+    color: white;
+    text-shadow: 0 0 9px #0000003d;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+    margin-bottom: 2rem;
+}

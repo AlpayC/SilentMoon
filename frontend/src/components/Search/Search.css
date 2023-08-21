@@ -1,5 +1,5 @@
 .searchBar{
-    padding: 1rem;
+    padding: 1rem 0rem 1rem 0rem;
     margin: 0 auto;
 }
 .searchInput{
@@ -7,7 +7,7 @@
     opacity: 0.8;
     border-radius: 15px;
     height: 2.8rem;
-    width: 92vw;
+    width: 100%;
     background-image:url("../../assets/img/Icons/lupe.svg");
     background-repeat: no-repeat;
     background-position: right;
