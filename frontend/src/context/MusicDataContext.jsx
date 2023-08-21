@@ -6,12 +6,12 @@ import { useUserData } from "../context/UserDataContext";
 export const MusicDataContext = createContext();
 
 export const MusicDataProvider = ({ children }) => {
-  const [accessToken, setAccesToken] = useState([]);
   const { user } = useContext(UserContext);
   const { userData } = useUserData();
-  const [tokenGenerated, setTokenGenerated] = useState(false);
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
 
-  const [musicData, setMusicData] = useState([]);
   const [playlistData, setPlaylistData] = useState([]);
   const [playlistDetails, setPlaylistDetails] = useState([]);
 
@@ -27,25 +27,38 @@ export const MusicDataProvider = ({ children }) => {
   }, [user]);
 
   useEffect(() => {
-    if (user !== null) {
-      const id = { _id: userData?._id };
-      const fetchPlaylistDetails = async () => {
-        const response = await axios.post(
-          "/api/spotify/getPlaylistDetails",
-          id
-        );
+    const fetchData = async () => {
+      if (user) {
+        const playlistId = storagedUserData?._id || userData?._id;
+        const response = await axios.post("/api/spotify/getPlaylistDetails", {
+          _id: playlistId,
+        });
         setPlaylistDetails(response.data);
         console.log(response);
-      };
-      fetchPlaylistDetails();
-    }
+      }
+    };
+    fetchData();
   }, [user, userData]);
 
+  useEffect(() => {
+    if (playlistData) {
+      sessionStorage.setItem(
+        "sessionedPlaylistData",
+        JSON.stringify(playlistData)
+      );
+    }
+  }, [playlistData]);
+  useEffect(() => {
+    if (playlistDetails) {
+      sessionStorage.setItem(
+        "sessionedPlaylistDetails",
+        JSON.stringify(playlistDetails)
+      );
+    }
+  }, [playlistDetails]);
   return (
     <MusicDataContext.Provider
       value={{
-        accessToken,
-        musicData,
         playlistData,
         playlistDetails,
         setPlaylistData,

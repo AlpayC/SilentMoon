@@ -12,6 +12,10 @@ import { useNavigate } from "react-router-dom";
 const Reminder = () => {
   const nav = useNavigate();
   const { userData } = useContext(UserDataContext);
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
+
   const [timeValue, setTimeValue] = useState("10:00 AM");
   const [selectedDays, setSelectedDays] = useState([
     "sunday",
@@ -43,13 +47,8 @@ const Reminder = () => {
   const setReminder = async (e) => {
     e.preventDefault();
     try {
-      const _id = userData._id;
+      const _id = storagedUserData?._id || userData?._id;
 
-      //   //fetch user by ID
-      //   const response = await axios.get(`/api/user/${id}`);
-      //   const fetchedUserData = response.data;
-
-      //udated Data
       const updatedUserData = {
         _id,
         remindertime: timeValue,

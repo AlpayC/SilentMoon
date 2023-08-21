@@ -12,32 +12,33 @@ const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
   const { playlistDetails } = useContext(MusicDataContext);
   const { userData } = useUserData();
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
+  const storagedExerciseData = JSON.parse(
+    sessionStorage.getItem("sessionedExerciseData")
+  );
+  const storagedPlaylistDetails = JSON.parse(
+    sessionStorage.getItem("sessionedPlaylistDetails")
+  );
   const [searchInput, setSearchInput] = useState("");
 
-  const handleSearch = (inputValue) => {
-    console.log(inputValue);
-  };
+  const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
 
-  useEffect(() => {
-    console.log(userData);
-    console.log(exerciseData);
-    console.log(playlistDetails);
-  }, [userData]);
-
-  const favoriteVideos = exerciseData.data.filter((video) =>
-    userData.videos.includes(video._id)
+  const favoriteVideos = favoriteExercises?.filter((video) =>
+    storagedUserData.videos.includes(video._id)
   );
+
+  const favoritePlaylists = playlistDetails || storagedPlaylistDetails;
 
   return (
     <>
       <div className="main-wrapper">
-        <h1>{userData.name}</h1>
+        <h1>{userData?.name || storagedUserData?.name}</h1>
         <SearchBar
-          searchProp={handleSearch}
           value={searchInput}
           onChange={(e) => {
             setSearchInput(e.target.value);
-            handleSearch();
           }}
         />
         <Stats />
@@ -56,7 +57,7 @@ const Profile = () => {
         </section>
         <h2>Favourite Meditations</h2>
         <section className="slider">
-          {playlistDetails?.map((item) => (
+          {favoritePlaylists?.map((item) => (
             <RecommendedItem
               key={item.id}
               link={`/category/meditation/${item.id}`}

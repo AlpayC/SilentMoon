@@ -5,11 +5,16 @@ import { MusicDataContext } from "../../context/MusicDataContext";
 
 const SearchBar = () => {
   const { exerciseData, setExerciseData } = useContext(VideoDataContext);
+  const storagedExerciseData = JSON.parse(
+    sessionStorage.getItem("sessionedExerciseData")
+  );
+
   const { playlistData, setPlaylistData, playlistDetails, setPlaylistDetails } =
     useContext(MusicDataContext);
   const [searchInput, setSearchInput] = useState("");
-  const [originalExerciseData, setOriginalExerciseData] =
-    useState(exerciseData);
+  const [originalExerciseData, setOriginalExerciseData] = useState(
+    exerciseData || storagedExerciseData
+  );
   const [originalPlaylistData, setOriginalPlaylistData] =
     useState(playlistData);
   const [originalPlaylistDetails, setOriginalPlaylistDetails] =
