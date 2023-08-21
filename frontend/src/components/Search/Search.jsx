@@ -1,14 +1,12 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./Search.css";
 import { VideoDataContext } from "../../context/VideoDataContext";
 import { MusicDataContext } from "../../context/MusicDataContext";
 
-const SearchBar = (props) => {
+const SearchBar = () => {
   const { exerciseData, setExerciseData } = useContext(VideoDataContext);
   const { playlistData, setPlaylistData, playlistDetails, setPlaylistDetails } =
     useContext(MusicDataContext);
-
-  console.log(playlistDetails);
   const [searchInput, setSearchInput] = useState("");
   const [originalExerciseData, setOriginalExerciseData] =
     useState(exerciseData);
@@ -24,7 +22,7 @@ const SearchBar = (props) => {
     if (value === "") {
       setExerciseData(originalExerciseData);
       setPlaylistData(originalPlaylistData);
-      setOriginalPlaylistDetails(originalPlaylistDetails);
+      setPlaylistDetails(originalPlaylistDetails);
     } else {
       const filteredExercises = originalExerciseData.data.filter((exercise) =>
         exercise.title.toLowerCase().includes(value.toLowerCase())
