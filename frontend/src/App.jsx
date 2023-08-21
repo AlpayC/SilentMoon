@@ -16,6 +16,7 @@ import DetailsMediatation from "./pages/DetailsMeditation/DetailsMediatation";
 import MeditationPlayer from "./pages/MeditationPlayer/MeditationPlayer";
 import Music from "./pages/Music/Music";
 import Signin from "./user/Signin";
+import DetailsMusic from "./pages/DetailsMusic/DetailsMusic";
 
 function App() {
   return (
