@@ -1,8 +1,8 @@
 .music-item {
 	display: flex;
 	align-items: center;
-	gap: 2rem;
 	padding: 2rem 0;
+	border-bottom: 1px solid var(--lightgrey);
 }
 
 .music-item div {

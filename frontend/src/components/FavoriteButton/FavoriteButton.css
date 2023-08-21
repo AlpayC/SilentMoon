@@ -8,6 +8,8 @@
   font-family: "sspro-semibold";
   font-size: 1.6rem;
   opacity: 1;
+  width: 6rem;
+  height: 6rem;
 }
 
 .fav-btn-unfilled {
@@ -15,19 +17,18 @@
   text-transform: uppercase;
   padding: 2rem;
   border: none;
-  background-color: var(--pink);
+  background-color: #e2908351;
+  backdrop-filter: blur(3px);
   color: white;
   font-family: "sspro-semibold";
   font-size: 1.6rem;
-  opacity: 1;
+  width: 6rem;
+  height: 6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.fav-btn-unfilled {
-  border-radius: 3rem;
-  text-transform: uppercase;
-  padding: 2rem;
-  border: none;
-  background-color: #e2908362;
-  color: white;
-  font-family: "sspro-semibold";
-  font-size: 1.6rem;
+
+button.fav-btn-unfilled img {
+  width: 139%;
 }

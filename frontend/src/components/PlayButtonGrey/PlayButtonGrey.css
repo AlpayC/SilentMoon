@@ -2,3 +2,8 @@
 	width: 40px;
 	height: 40px;
 }
+
+.play-btn-grey svg {
+	width: auto;
+	margin: 0 2rem 0 0;
+}

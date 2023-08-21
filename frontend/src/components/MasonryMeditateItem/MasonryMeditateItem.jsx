@@ -5,7 +5,7 @@ const MasonryMeditateItem = ({ item, height }) => {
   return (
     <Link
       to={{
-        pathname: `/music/${item.id}`,
+        pathname: `/category/meditation/${item.id}`,
       }}
     >
       <div
