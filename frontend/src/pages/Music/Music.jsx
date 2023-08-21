@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Music = () => {
 	const { playlistData } = useContext(MusicDataContext);
-	console.log("Playlist here", playlistData);
+
 	return (
 		<div className='main-wrapper center'>
 			<div className='music-wrapper'>

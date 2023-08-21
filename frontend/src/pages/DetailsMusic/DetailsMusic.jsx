@@ -6,11 +6,12 @@ import NavBar from "../../components/NavBar/NavBar";
 import BackButton from "../../components/BackButton/BackButton";
 import { MusicDataContext } from "../../context/MusicDataContext";
 import MusicItem from "../../components/MusicItem/MusicItem";
+import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 
 const DetailsMusic = () => {
 	const { playlistData } = useContext(MusicDataContext);
 	const [tracksData, setTracksData] = useState();
-	const [visibleTracks, setVisibleTracks] = useState(20); // Number of tracks to show
+	const [visibleTracks, setVisibleTracks] = useState(20);
 	const params = useParams();
 
 	const chosenPlaylist = playlistData?.data?.playlists?.items.find(
@@ -29,7 +30,6 @@ const DetailsMusic = () => {
 		fetchData();
 	}, [params]);
 
-	// Load more tracks when the "Load More" button is clicked
 	const loadMoreTracks = () => {
 		setVisibleTracks(prevVisibleTracks => prevVisibleTracks + 20);
 	};
@@ -52,7 +52,7 @@ const DetailsMusic = () => {
 						/>
 					))}
 					{visibleTracks < tracksData?.items?.length && (
-						<button onClick={loadMoreTracks}>Load More</button>
+						<LoadMoreButton onClick={loadMoreTracks} />
 					)}
 					<NavBar />
 				</>
