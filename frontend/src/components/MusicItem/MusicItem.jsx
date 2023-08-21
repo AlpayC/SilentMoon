@@ -19,7 +19,7 @@ const MusicItem = props => {
 	const duration = convertMillisecondsToMinutesAndSeconds(props.duration);
 
 	return (
-		<Link to={"/meditationplayer"}>
+		<Link to={`/meditationplayer/${props.link}`} key={props.key}>
 			<div className='music-item cloumn'>
 				<PlayButtonGrey />
 				<div>

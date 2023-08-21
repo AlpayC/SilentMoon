@@ -1,30 +1,64 @@
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Stats from "../../components/Stats/Stats";
 import NavBar from "../../components/NavBar/NavBar";
+import BackButton from "../../components/BackButton/BackButton";
+import { MusicDataContext } from "../../context/MusicDataContext";
+import MusicItem from "../../components/MusicItem/MusicItem";
 
 const DetailsMusic = () => {
+	const { playlistData } = useContext(MusicDataContext);
 	const [tracksData, setTracksData] = useState();
+	const [visibleTracks, setVisibleTracks] = useState(20); // Number of tracks to show
 	const params = useParams();
-	console.log(params);
+
+	const chosenPlaylist = playlistData?.data?.playlists?.items.find(
+		playlist => playlist.id === params.id,
+	);
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const { data } = await axios.post(`/api/spotify/tracks`, params);
-			setTracksData(data);
-			console.log(data);
+			try {
+				const { data } = await axios.post(`/api/spotify/tracks`, params);
+				setTracksData(data);
+			} catch (error) {
+				console.error("Error fetching tracks:", error);
+			}
 		};
 		fetchData();
-	}, []);
+	}, [params]);
+
+	// Load more tracks when the "Load More" button is clicked
+	const loadMoreTracks = () => {
+		setVisibleTracks(prevVisibleTracks => prevVisibleTracks + 20);
+	};
 
 	return (
 		<div className='main-wrapper center'>
-			<h1>Playlist Name</h1>
-			<p>PLAYLIST</p>
-			<p className='subtitle'>Playlist Description</p>
-			<Stats />
-			<NavBar />
+			<BackButton relativeClass='back-btn' />
+			{chosenPlaylist ? (
+				<>
+					<h1>{chosenPlaylist.name}</h1>
+					<p>PLAYLIST</p>
+					<p className='subtitle'>{chosenPlaylist.description}</p>
+					<Stats />
+					{tracksData?.items?.slice(0, visibleTracks).map(track => (
+						<MusicItem
+							key={track.track.id}
+							link={track.track.id}
+							title={track.track.name}
+							duration={track.track.duration_ms}
+						/>
+					))}
+					{visibleTracks < tracksData?.items?.length && (
+						<button onClick={loadMoreTracks}>Load More</button>
+					)}
+					<NavBar />
+				</>
+			) : (
+				<p>Loading playlist details...</p>
+			)}
 		</div>
 	);
 };
