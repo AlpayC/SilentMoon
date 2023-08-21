@@ -4,7 +4,6 @@ import { MusicDataContext } from "../../context/MusicDataContext";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Player from "../../components/Player/Player";
-import FavoriteButtonToggle from "../../components/FavoriteButton/FavoriteButtonToggle";
 import CloseButton from "../../components/BackButton/CloseButton";
 
 const MeditationPlayer = () => {
@@ -27,9 +26,8 @@ const MeditationPlayer = () => {
   return (
     <>
       <div className="meditation-player-page">
-        <article className="meditation-page-btns">
+        <article className="meditation-page-btn">
           <CloseButton />
-          <FavoriteButtonToggle />
         </article>
         <div key={id}>
           <article className="meditation-player-content">

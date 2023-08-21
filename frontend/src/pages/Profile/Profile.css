@@ -1,7 +1,12 @@
+.info-logout{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .logout-btn{
     float: right;
     margin: 15px 15px 0 0;
     width: 40px;
     height: 40px;
-
 }
