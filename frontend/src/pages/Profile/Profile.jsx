@@ -41,7 +41,7 @@ const Profile = () => {
   return (
     <>
           {isLoggedIn && (
-      <div className="main-wrapper">
+      <div className="main-wrapper center">
         <h1>{userData?.name || storagedUserData?.name}</h1>
         <SearchBar
           value={searchInput}
