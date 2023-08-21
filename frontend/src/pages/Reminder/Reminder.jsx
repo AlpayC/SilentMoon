@@ -10,16 +10,22 @@ import Logo from "../../components/Logo/Logo";
 import { useNavigate } from "react-router-dom";
 
 const Reminder = () => {
-	const nav = useNavigate();
-	const { userData } = useContext(UserDataContext);
-	const [timeValue, setTimeValue] = useState("10:00 AM");
-	const [selectedDays, setSelectedDays] = useState([
-		"sunday",
-		"monday",
-		"tuesday",
-		"friday",
-		"saturday",
-	]);
+
+  const nav = useNavigate();
+  const { userData } = useContext(UserDataContext);
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
+
+  const [timeValue, setTimeValue] = useState("10:00 AM");
+  const [selectedDays, setSelectedDays] = useState([
+    "sunday",
+    "monday",
+    "tuesday",
+    "friday",
+    "saturday",
+  ]);
+
 
 	const saveTime = pickedTime => {
 		setTimeValue(pickedTime);
@@ -39,6 +45,7 @@ const Reminder = () => {
 		};
 	}, [timePickerOpen]);
 
+
 	const handleDayChange = event => {
 		const selectedDay = event.target.value;
 		if (event.target.checked) {
@@ -57,7 +64,7 @@ const Reminder = () => {
 	const setReminder = async e => {
 		e.preventDefault();
 		try {
-			const _id = userData._id;
+			const _id = storagedUserData?._id || userData?._id;
 
 			//   //fetch user by ID
 			//   const response = await axios.get(`/api/user/${id}`);

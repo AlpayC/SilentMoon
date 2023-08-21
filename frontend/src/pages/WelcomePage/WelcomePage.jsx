@@ -8,15 +8,21 @@ import WelcomeImage from "../../assets/img/WelcomePage/bg-person.png";
 
 const WelcomePage = () => {
   const { userData } = useUserData();
-  console.log(userData);
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
+
   const [redirection, setRedirection] = useState();
   useEffect(() => {
-    console.log(userData);
-    if (userData.reminderdays.length === 0) {
+    if (
+      userData?.reminderdays.length === null ||
+      storagedUserData?.reminderdays.length === null
+    ) {
       return setRedirection("/reminder");
     }
     setRedirection("/home");
   }, []);
+
   return (
     <>
       <section>
@@ -27,7 +33,10 @@ const WelcomePage = () => {
           <div className="main-wrapper">
             <Logo className="logo-white" />
             <div className="welcomeText">
-              <h1>Hi {userData.name}, welcome to Silent Moon</h1>
+              <h1>
+                Hi {userData?.name || storagedUserData?.name}, welcome to Silent
+                Moon
+              </h1>
             </div>
           </div>
           <NavLink to={redirection} className="getStartedBtn">

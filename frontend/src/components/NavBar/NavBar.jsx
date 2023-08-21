@@ -10,7 +10,9 @@ import { useContext } from "react";
 
 const NavBar = () => {
   const { userData } = useUserData();
-
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
   return (
     <nav>
       <div className="nav-container">
@@ -55,7 +57,9 @@ const NavBar = () => {
             <div className="navImgContainer">
               <img className="navImg" src={ProfileImg} />
             </div>
-            <p className="navText">{userData.name}</p>
+            <p className="navText">
+              {userData?.name || storagedUserData?.name}
+            </p>
           </div>
         </NavLink>
       </div>

@@ -6,15 +6,20 @@ import axios from "axios";
 
 const FavoriteButton = (props) => {
   const { userData, refetchData } = useContext(UserDataContext);
+  const storagedUserData = JSON.parse(
+    sessionStorage.getItem("sessionedUserData")
+  );
   const { itemId } = props;
-  const userId = { _id: userData._id };
+
+  const id = userData?._id || storagedUserData?._id;
+  const userId = { _id: id };
   const [itemInDB, setItemInDB] = useState(false);
 
   const favoriteType =
     props.categoryName === "meditation" ? "playlist" : "exercise";
 
   const favoriteData = {
-    _id: userData._id,
+    _id: id,
     [`${favoriteType}_id`]: itemId?.id,
   };
 
@@ -34,15 +39,27 @@ const FavoriteButton = (props) => {
     let checkFavorite = false;
 
     if (favoriteType === "playlist") {
-      checkFavorite = userData.playlists.some(
-        (playlist) => playlist.playlist_id === itemId?.id
-      );
+      if (userData) {
+        checkFavorite = userData.playlists.some(
+          (playlist) => playlist.playlist_id === itemId?.id
+        );
+      } else if (storagedUserData) {
+        checkFavorite = storagedUserData.playlists.some(
+          (playlist) => playlist.playlist_id === itemId?.id
+        );
+      }
     } else if (favoriteType === "exercise") {
-      checkFavorite = userData.videos.some((video) => video === itemId?.id);
+      if (userData) {
+        checkFavorite = userData.videos.some((video) => video === itemId?.id);
+      } else if (storagedUserData) {
+        checkFavorite = storagedUserData.videos.some(
+          (video) => video === itemId?.id
+        );
+      }
     }
 
     setItemInDB(checkFavorite);
-  }, [userData, itemId, favoriteType]);
+  }, [userData, storagedUserData, itemId, favoriteType]);
 
   return (
     <button

@@ -30,8 +30,6 @@ const CategoryMeditate = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
   };
 
-  console.log(playlistData.data.playlists.items);
-
   return (
     <>
       <div className="main-wrapper center">
@@ -42,7 +40,7 @@ const CategoryMeditate = () => {
           and practice on the go.
         </p>
         <MiniPlayerYoga />
-        <SearchBar/>
+        <SearchBar />
         <div className="masonry-container">
           {playlistData?.data?.playlists?.items
             .slice(0, visibleItems)
