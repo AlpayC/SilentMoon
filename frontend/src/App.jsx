@@ -1,7 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { UserContext } from "./user/UserContext";
 
 // Routes
 import Home from "./pages/Home/Home";
@@ -21,20 +18,8 @@ import Music from "./pages/Music/Music";
 import Signin from "./user/Signin";
 
 function App() {
-  const { isLoggedIn, logout } = useContext(UserContext);
-
   return (
     <>
-      {isLoggedIn && (
-        <>
-          <NavLink to="/profile"> Profile</NavLink>
-          <NavLink to="/home"> Home</NavLink>
-
-          <button type="button" onClick={logout}>
-            Logout
-          </button>
-        </>
-      )}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

@@ -9,6 +9,8 @@ const Player = ({ audioSrc }) => {
   const audioPlayerRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   // überwacht ob das Lied abspielt
+  const [isAudioReady, setIsAudioReady] = useState(false);
+  // überwacht ob Audio Element bereit ist zum abspielen
   const [currentSongProgress, setCurrentSongProgress] = useState(0);
   // überwacht inwieweit Lied bereits abgespielt ist
   const [entireSongDuration, setEntireSongDuration] = useState(0);
@@ -18,6 +20,7 @@ const Player = ({ audioSrc }) => {
     // erst wenn Metadaten geladen sind wird die gesamte Dauer des Liedes gespeichert
     const seconds = e.target.duration;
     setEntireSongDuration(seconds);
+    setIsAudioReady(true); // erst wenn Audio komplett geladen ist, wird es auf bereit gesetzt
   };
 
   const onTimeUpdate = (e) => {
@@ -28,12 +31,15 @@ const Player = ({ audioSrc }) => {
   };
 
   const onPlayButtonToggle = () => {
-    const shouldPlay = !isPlaying;
-    // wenn Lied läuft isPlaying = true / should play auf false
-    if (shouldPlay) {
-      audioPlayerRef.current.play();
-    } else {
-      audioPlayerRef.current.pause();
+    if (isAudioReady) {
+      // doppelte Abfrage so dass wenn Audioelement bereit ist, play und pause ausgeführt werden können
+      const shouldPlay = !isPlaying;
+      // wenn Lied läuft isPlaying = true / should play auf false
+      if (shouldPlay) {
+        audioPlayerRef.current.play();
+      } else {
+        audioPlayerRef.current.pause();
+      }
     }
   };
 
@@ -75,7 +81,7 @@ const Player = ({ audioSrc }) => {
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
             controls // Attribut für Steuerelemente
-            autoPlay // autoplay wenn Lied gealdes ist
+            autoPlay // autoplay wenn Lied geladen ist
             load="auto" // Lied wird automatisch geladen
             preload="auto" // Attribut gibt nochmal zusätzlich mit an das Lied erst abspeilt wenn es komplett gealden ist
           >
