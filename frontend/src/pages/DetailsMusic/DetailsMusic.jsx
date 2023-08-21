@@ -7,6 +7,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import { MusicDataContext } from "../../context/MusicDataContext";
 import MusicItem from "../../components/MusicItem/MusicItem";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
+import Logo from "../../components/Logo/Logo";
 
 const DetailsMusic = () => {
 	const { playlistData } = useContext(MusicDataContext);
@@ -36,13 +37,15 @@ const DetailsMusic = () => {
 
 	return (
 		<div className='main-wrapper center'>
-			<BackButton relativeClass='back-btn' />
+			<Logo/>
 			{chosenPlaylist ? (
 				<>
+				<div className="gap3">
 					<h1>{chosenPlaylist.name}</h1>
 					<p>PLAYLIST</p>
 					<p className='subtitle'>{chosenPlaylist.description}</p>
 					<Stats />
+					</div>
 					{tracksData?.items?.slice(0, visibleTracks).map(track => (
 						<MusicItem
 							key={track.track.id}

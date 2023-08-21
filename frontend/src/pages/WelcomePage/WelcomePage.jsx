@@ -38,10 +38,10 @@ const WelcomePage = () => {
                 Moon
               </h1>
             </div>
-          </div>
-          <NavLink to={redirection} className="getStartedBtn">
+            <NavLink to={redirection} className="getStartedBtn">
             <Button text="GET STARTED" />
           </NavLink>
+          </div>
         </section>
       </section>
     </>
