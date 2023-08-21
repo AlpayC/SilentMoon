@@ -7,12 +7,17 @@ import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
 import { MusicDataContext } from "../../context/MusicDataContext";
+//import { UserDataContext } from "../../context/UserDataContext";
+import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
+import { UserContext } from "../../user/UserContext";
 
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
   const { playlistDetails } = useContext(MusicDataContext);
   const { userData } = useUserData();
   const [searchInput, setSearchInput] = useState("");
+
+  const { isLoggedIn, logout } = useContext(UserContext);
 
   const handleSearch = (inputValue) => {
     console.log(inputValue);
@@ -30,50 +35,57 @@ const Profile = () => {
 
   return (
     <>
-      <div className="main-wrapper">
-        <h1>{userData.name}</h1>
-        <SearchBar
-          searchProp={handleSearch}
-          value={searchInput}
-          onChange={(e) => {
-            setSearchInput(e.target.value);
-            handleSearch();
-          }}
-        />
-        <Stats />
-        <h2>Favourite Yoga Sessions</h2>
-        <section className="slider">
-          {favoriteVideos?.map((item) => (
-            <RecommendedItem
-              key={item._id}
-              link={`/category/yoga/${item._id}`}
-              image={item.image_url}
-              title={item.title}
-              level={item.level}
-              duration={item.duration}
-            />
-          ))}
-        </section>
-        <h2>Favourite Meditations</h2>
-        <section className="slider">
-          {playlistDetails?.map((item) => (
-            <RecommendedItem
-              key={item.id}
-              link={`/category/meditation/${item.id}`}
-              title={
-                item.name.length > 20
-                  ? `${item.name.substring(0, 10)}`
-                  : item.name
-              }
-              playlist_id={item.id}
-              image={item?.images[0].url}
-              tracks={item?.tracks.total}
-              owner={item?.owner.display_name}
-            />
-          ))}
-        </section>
-        <NavBar />
-      </div>
+      {isLoggedIn && (
+        <div className="main-wrapper">
+          <div>
+            <h1>{userData.name}</h1>
+            <button type="button" onClick={logout} className="logout-btn">
+              <img src={LogoutBtn} alt="logout button" />
+            </button>
+          </div>
+          <SearchBar
+            searchProp={handleSearch}
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+              handleSearch();
+            }}
+          />
+          <Stats />
+          <h2>Favourite Yoga Sessions</h2>
+          <section className="slider">
+            {favoriteVideos?.map((item) => (
+              <RecommendedItem
+                key={item._id}
+                link={`/category/yoga/${item._id}`}
+                image={item.image_url}
+                title={item.title}
+                level={item.level}
+                duration={item.duration}
+              />
+            ))}
+          </section>
+          <h2>Favourite Meditations</h2>
+          <section className="slider">
+            {playlistDetails?.map((item) => (
+              <RecommendedItem
+                key={item.id}
+                link={`/category/meditation/${item.id}`}
+                title={
+                  item.name.length > 20
+                    ? `${item.name.substring(0, 10)}`
+                    : item.name
+                }
+                playlist_id={item.id}
+                image={item?.images[0].url}
+                tracks={item?.tracks.total}
+                owner={item?.owner.display_name}
+              />
+            ))}
+          </section>
+          <NavBar />
+        </div>
+      )}
     </>
   );
 };

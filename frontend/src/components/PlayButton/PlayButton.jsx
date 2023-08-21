@@ -1,5 +1,5 @@
-import PlayBtn from "../../assets/img/Icons/playBtn.png";
-import PauseBtn from "../../assets/img/Icons/pauseBtn.png";
+import PlayBtn from "../../assets/img/Icons/PlayBtn.svg";
+import PauseBtn from "../../assets/img/Icons/PauseBtn.svg";
 import "./PlayButton.css";
 const PlayButton = ({ isPlaying, onToggle }) => {
   return (

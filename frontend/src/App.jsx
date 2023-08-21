@@ -1,7 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useContext, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { UserContext } from "./user/UserContext";
 
 // Routes
 import Home from "./pages/Home/Home";
@@ -22,42 +19,30 @@ import Signin from "./user/Signin";
 import DetailsMusic from "./pages/DetailsMusic/DetailsMusic";
 
 function App() {
-	const { isLoggedIn, logout } = useContext(UserContext);
-
-	return (
-		<>
-			{isLoggedIn && (
-				<>
-					<NavLink to='/profile'> Profile</NavLink>
-					<NavLink to='/home'> Home</NavLink>
-
-					<button type='button' onClick={logout}>
-						Logout
-					</button>
-				</>
-			)}
-			<Routes>
-				<Route path='/' element={<Login />} />
-				<Route path='/signup' element={<Signup />} />
-				<Route path='/signin' element={<Signin />} />
-				<Route path='/welcome' element={<WelcomePage />} />
-				<Route path='/reminder' element={<Reminder />} />
-				<Route path='/home' element={<Home />} />
-				<Route path='/category/yoga/' element={<CategoryYoga />} />
-				<Route path='/category/yoga/:id' element={<DetailsYoga />} />
-				<Route path='/category/meditation/' element={<CategoryMeditate />} />
-				<Route
-					path='/category/meditation/:id'
-					element={<DetailsMediatation />}
-				/>
-				<Route path='/meditationplayer/:id' element={<MeditationPlayer />} />
-				<Route path='/music/' element={<Music />} />
-				<Route path='/music/:id' element={<DetailsMusic />} />
-				<Route path='/profile' element={<Profile />} />
-				<Route path='/passwordReset' element={<ResetPassword />} />
-			</Routes>
-		</>
-	);
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/reminder" element={<Reminder />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/category/yoga/" element={<CategoryYoga />} />
+        <Route path="/category/yoga/:id" element={<DetailsYoga />} />
+        <Route path="/category/meditation/" element={<CategoryMeditate />} />
+        <Route
+          path="/category/meditation/:id"
+          element={<DetailsMediatation />}
+        />
+        <Route path="/meditationplayer/:id" element={<MeditationPlayer />} />
+        <Route path="/music/" element={<Music />} />
+        <Route path="/music/:id" element={<Music />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/passwordReset" element={<ResetPassword />} />
+      </Routes>
+    </>
+  );
 }
 
 export default App;
