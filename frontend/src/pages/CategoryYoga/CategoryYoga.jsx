@@ -18,95 +18,95 @@ import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
 import SearchBar from "../../components/Search/Search";
 
 const CategoryYoga = () => {
-  const getRandomHeight = () => {
-    const minHeight = 12; // Minimum height in rem
-    const maxHeight = 25; // Maximum height in rem
-    return (
-      (Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
-    );
-  };
+	const getRandomHeight = () => {
+		const minHeight = 12; // Minimum height in rem
+		const maxHeight = 25; // Maximum height in rem
+		return (
+			(Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
+		);
+	};
 
-  const { exerciseData } = useContext(VideoDataContext);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const categoriesArray = exerciseData.data || [];
-  const initialItemsToShow = 4; // Number of items to show initially
-  const itemsPerLoad = 2; // Number of items to load per click
+	const { exerciseData } = useContext(VideoDataContext);
+	const [selectedCategory, setSelectedCategory] = useState("all");
+	const categoriesArray = exerciseData.data || [];
+	const initialItemsToShow = 4; // Number of items to show initially
+	const itemsPerLoad = 2; // Number of items to load per click
 
-  const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
+	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
-  const loadMoreItems = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
-  };
+	const loadMoreItems = () => {
+		setVisibleItems(prevVisibleItems => prevVisibleItems + itemsPerLoad);
+	};
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+	const handleCategoryClick = category => {
+		setSelectedCategory(category);
+	};
 
-  const filteredData =
-    selectedCategory === "all"
-      ? categoriesArray
-      : categoriesArray.filter((item) => item.category === selectedCategory);
+	const filteredData =
+		selectedCategory === "all"
+			? categoriesArray
+			: categoriesArray.filter(item => item.category === selectedCategory);
 
-  console.log(exerciseData);
+	console.log(exerciseData);
 
-  return (
-    <>
-      <div className="main-wrapper center">
-        <Logo />
-        <h1 className="padding-top-bottom">Yoga</h1>
-        <p className="padding-top-bottom-sm">
-          Find your inner zen from anywhere.
-        </p>
-        <MiniPlayerYoga />
-        <SearchBar />
-        <div className="row categories">
-          <CategoriesItem
-            categoryImage={allImg}
-            categoryTitle="All"
-            onClick={() => handleCategoryClick("all")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={favsImg}
-            categoryTitle="Favorites"
-            onClick={() => handleCategoryClick("Favorites")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={anxiousImg}
-            categoryTitle="Anxious"
-            onClick={() => handleCategoryClick("Anxious")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={sleepImg}
-            categoryTitle="Sleep"
-            onClick={() => handleCategoryClick("Sleep")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={kidsImg}
-            categoryTitle="Kids"
-            onClick={() => handleCategoryClick("Kids")}
-            selectedCategory={selectedCategory}
-          />
-        </div>
-        <div className="masonry-container">
-          {filteredData.slice(0, visibleItems).map((item) => (
-            <MasonryItem
-              key={item._id}
-              item={item}
-              height={getRandomHeight()}
-            />
-          ))}
-        </div>
-        {visibleItems < filteredData.length && (
-          <LoadMoreButton onClick={loadMoreItems} />
-        )}
-        <NavBar />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className='main-wrapper center'>
+				<Logo />
+				<h1 className='padding-top-bottom'>Yoga</h1>
+				<p className='padding-top-bottom-sm'>
+					Find your inner zen from anywhere.
+				</p>
+				<MiniPlayerYoga category={"yoga"} />
+				<SearchBar />
+				<div className='row categories'>
+					<CategoriesItem
+						categoryImage={allImg}
+						categoryTitle='All'
+						onClick={() => handleCategoryClick("all")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={favsImg}
+						categoryTitle='Favorites'
+						onClick={() => handleCategoryClick("Favorites")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={anxiousImg}
+						categoryTitle='Anxious'
+						onClick={() => handleCategoryClick("Anxious")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={sleepImg}
+						categoryTitle='Sleep'
+						onClick={() => handleCategoryClick("Sleep")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={kidsImg}
+						categoryTitle='Kids'
+						onClick={() => handleCategoryClick("Kids")}
+						selectedCategory={selectedCategory}
+					/>
+				</div>
+				<div className='masonry-container'>
+					{filteredData.slice(0, visibleItems).map(item => (
+						<MasonryItem
+							key={item._id}
+							item={item}
+							height={getRandomHeight()}
+						/>
+					))}
+				</div>
+				{visibleItems < filteredData.length && (
+					<LoadMoreButton onClick={loadMoreItems} />
+				)}
+				<NavBar />
+			</div>
+		</>
+	);
 };
 
 export default CategoryYoga;
