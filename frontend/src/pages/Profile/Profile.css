@@ -15,6 +15,9 @@
     margin-left: 1.2rem;
 }
 
+.favorite-title{
+    color: var(--darkgreen);
+}
 
 .slider {
 padding: 2rem 0rem 2rem 0rem;

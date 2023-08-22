@@ -41,12 +41,12 @@ const Profile = () => {
     <>
       {isLoggedIn && (
         <div className="main-wrapper center">
-                 <Logo className={"logo-black"} />
+          <Logo className={"logo-black"} />
 
           <div className="profile-wrapper">
             <div className="info-logout padding-top-bottom">
               <h1>{userData?.name || storagedUserData?.name}</h1>
-              <button  onClick={logout} className="logout-btn">
+              <button onClick={logout} className="logout-btn">
                 <img src={LogoutBtn} alt="logout button" />
               </button>
             </div>
@@ -57,7 +57,7 @@ const Profile = () => {
               }}
             />
             <Stats />
-            <h2>Favourite Yoga Sessions</h2>
+            <h2 className="favorite-title">Favourite Yoga Sessions</h2>
             <section className="slider">
               {favoriteVideos?.map((item) => (
                 <RecommendedItem
@@ -70,7 +70,7 @@ const Profile = () => {
                 />
               ))}
             </section>
-            <h2>Favourite Meditations</h2>
+            <h2 className="favorite-title">Favourite Meditations</h2>
             <section className="slider">
               {favoritePlaylists?.map((item) => (
                 <RecommendedItem
