@@ -5,6 +5,8 @@ import NavBar from "../../components/NavBar/NavBar";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 
 import { VideoDataContext } from "../../context/VideoDataContext";
+import { useUserData } from "../../context/UserDataContext";
+import { UserContext } from "../../user/UserContext";
 import MasonryItem from "../../components/MasonryItem/MasonryItem";
 import "./CategoryYoga.css";
 
@@ -26,11 +28,18 @@ const CategoryYoga = () => {
 		);
 	};
 
-	const { exerciseData } = useContext(VideoDataContext);
-	const [selectedCategory, setSelectedCategory] = useState("all");
-	const categoriesArray = exerciseData.data || [];
-	const initialItemsToShow = 4; // Number of items to show initially
-	const itemsPerLoad = 2; // Number of items to load per click
+
+  const { isLoggedIn, logout } = useContext(UserContext);
+
+  const { userData } = useUserData();
+
+
+  const { exerciseData } = useContext(VideoDataContext);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const categoriesArray = exerciseData.data || [];
+  const initialItemsToShow = 4; // Number of items to show initially
+  const itemsPerLoad = 2; // Number of items to load per click
+
 
 	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
@@ -42,12 +51,35 @@ const CategoryYoga = () => {
 		setSelectedCategory(category);
 	};
 
-	const filteredData =
-		selectedCategory === "all"
-			? categoriesArray
-			: categoriesArray.filter(item => item.category === selectedCategory);
 
-	console.log(exerciseData);
+  const handleFavorites = () => {
+    setSelectedCategory("Favorites")
+  }
+
+  const filteredData =
+    selectedCategory === "all"
+      ? categoriesArray
+      : categoriesArray.filter((item) => item.category === selectedCategory);
+
+ 
+
+      const storagedUserData = JSON.parse(
+        sessionStorage.getItem("sessionedUserData")
+      );
+
+      const storagedExerciseData = JSON.parse(
+        sessionStorage.getItem("sessionedExerciseData")
+      );
+
+      const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
+
+      const favoriteVideos = favoriteExercises?.filter((video) =>
+      storagedUserData.videos.includes(video._id)
+    );
+
+
+  console.log(exerciseData);
+
 
   return (
     <>
@@ -57,8 +89,6 @@ const CategoryYoga = () => {
         <p className="padding-top-bottom-sm">
           Find your inner zen from anywhere.
         </p>
-        <MiniPlayerYoga />
-        <SearchBar />
         <div className="row categories">
           <CategoriesItem
             categoryImage={allImg}
@@ -91,21 +121,37 @@ const CategoryYoga = () => {
             selectedCategory={selectedCategory}
           />
         </div>
+        <SearchBar />
+        <MiniPlayerYoga />
         <div className="masonry-container">
-          {filteredData.slice(0, visibleItems).map((item) => (
+        {selectedCategory === "Favorites" ? ( // guckt ob favoriten selectedCategory sind
+          favoriteVideos?.map((item) => (
+            <MasonryItem
+              key={item._id}
+              link={`/category/yoga/${item._id}`}
+              image={item.image_url}
+              title={item.title}
+              item={item}
+              height={getRandomHeight()}
+            />
+          ))
+        ) : (
+          // alle kategorien außer favs
+          filteredData.slice(0, visibleItems).map((item) => (
             <MasonryItem
               key={item._id}
               item={item}
               height={getRandomHeight()}
             />
-          ))}
-        </div>
-        {visibleItems < filteredData.length && (
-          <LoadMoreButton onClick={loadMoreItems} />
+          ))
         )}
-        <NavBar />
       </div>
-    </>
+      {visibleItems < filteredData.length && (
+        <LoadMoreButton onClick={loadMoreItems} />
+      )}
+      <NavBar />
+      </div>
+      </>
   );
 };
 

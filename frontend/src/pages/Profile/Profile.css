@@ -5,8 +5,12 @@
 }
 
 .logout-btn{
-    float: right;
     width: 32px;
     height: 32px;
     margin-left: 1.2rem;
+}
+
+
+.slider {
+padding: 2rem 0rem 2rem 0rem;
 }
