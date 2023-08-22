@@ -1,16 +1,22 @@
-.info-logout {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.logout-btn {
-  float: right;
-  margin: 15px 15px 0 0;
-  width: 40px;
-  height: 40px;
-}
-/* NEW: Page Wrapper zum Zentrieren der H2 und p Tags nach links */
 .profile-wrapper {
   text-align: left;
 }
+
+.info-logout{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start
+}
+
+.logout-btn{
+    width: 32px;
+    height: 32px;
+    margin-left: 1.2rem;
+}
+
+
+.slider {
+padding: 2rem 0rem 2rem 0rem;
+}
+

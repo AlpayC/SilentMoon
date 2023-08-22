@@ -1,5 +1,5 @@
 .searchBar{
-    padding: 1rem 0rem 1rem 0rem;
+    padding: 1rem 0rem 2rem 0rem;
     margin: 0 auto;
 }
 .searchInput{
@@ -13,5 +13,5 @@
     background-position: right;
     background-origin: content-box;
     background-size: auto;
-    padding: 2%;
+    padding: 10px;
 }

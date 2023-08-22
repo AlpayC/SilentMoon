@@ -38,7 +38,7 @@ const WelcomePage = () => {
           style={{ backgroundImage: `url(${WelcomeImage})` }}
         >
           <div className="main-wrapper">
-            <Logo className="logo-white" />
+            <Logo className={"logo-white"} />
             <div className="welcomeText">
               <h1>
                 Hi {userData?.name || storagedUserData?.name}, welcome to Silent

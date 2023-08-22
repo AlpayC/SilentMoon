@@ -70,7 +70,7 @@ const FavoriteButton = (props) => {
       onClick={() => performFavoriteAction(itemInDB ? "delete" : "add")}
       className={itemInDB ? "fav-btn-filled" : "fav-btn-unfilled"}
     >
-      <img src={FavoriteBtn} alt="heart" />
+      <img src={FavoriteBtn} alt="heart" className="heart" />
     </button>
   );
 };

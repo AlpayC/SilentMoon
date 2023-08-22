@@ -13,8 +13,12 @@
 	margin-bottom: 2rem;
 }
 
+.home-wrapper h2{
+	padding: 3rem 0rem 0rem 0rem;
+}
+
 .recommendations {
-	margin-top: 2rem;
+	margin-top: 1rem;
 }
 
 
