@@ -8,6 +8,9 @@ const SearchBar = () => {
   const storagedExerciseData = JSON.parse(
     sessionStorage.getItem("sessionedExerciseData")
   );
+  const storagedPlaylistData = JSON.parse(
+    sessionStorage.getItem("sessionedPlaylistData")
+  );
 
   const { playlistData, setPlaylistData, playlistDetails, setPlaylistDetails } =
     useContext(MusicDataContext);
@@ -54,6 +57,12 @@ const SearchBar = () => {
       setPlaylistDetails(filteredPlaylistDetails);
     }
   };
+
+  //BUGFIX: Filter Bug fix
+  useEffect(() => {
+    setOriginalExerciseData(storagedExerciseData);
+    setOriginalPlaylistData(storagedPlaylistData);
+  }, []);
 
   return (
     <>
