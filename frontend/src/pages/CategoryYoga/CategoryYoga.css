@@ -2,3 +2,6 @@
     padding: 1rem 0rem 3rem 0rem;
 }
 
+.masonry-container .masonry-item:nth-child(2n) {
+    height: 30rem !important;
+  }

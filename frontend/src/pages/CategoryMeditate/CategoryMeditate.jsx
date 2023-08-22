@@ -39,8 +39,8 @@ const CategoryMeditate = () => {
           Audio-only meditation techniques to help you minimize your screen time
           and practice on the go.
         </p>
-        <MiniPlayerYoga />
         <SearchBar />
+        <MiniPlayerYoga />
         <div className="masonry-container">
           {playlistData?.data?.playlists?.items
             .slice(0, visibleItems)
