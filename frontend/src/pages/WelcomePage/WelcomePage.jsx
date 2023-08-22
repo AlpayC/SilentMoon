@@ -13,15 +13,22 @@ const WelcomePage = () => {
   );
 
   const [redirection, setRedirection] = useState();
+
+  // BUGFIX: Reminder Redirection 22.08
   useEffect(() => {
-    if (
-      userData?.reminderdays.length === null ||
-      storagedUserData?.reminderdays.length === null
-    ) {
-      return setRedirection("/reminder");
+    const isUserDataValid =
+      userData?.reminderdays?.length > 0 && userData?.remindertime?.length > 0;
+
+    const isStoragedDataValid =
+      storagedUserData?.reminderdays?.length > 0 &&
+      storagedUserData?.remindertime?.length > 0;
+
+    if (!isUserDataValid || !isStoragedDataValid) {
+      setRedirection("/reminder");
+    } else {
+      setRedirection("/home");
     }
-    setRedirection("/home");
-  }, []);
+  }, [userData, storagedUserData]);
 
   return (
     <>
@@ -39,8 +46,8 @@ const WelcomePage = () => {
               </h1>
             </div>
             <NavLink to={redirection} className="getStartedBtn">
-            <Button text="GET STARTED" />
-          </NavLink>
+              <Button text="GET STARTED" />
+            </NavLink>
           </div>
         </section>
       </section>

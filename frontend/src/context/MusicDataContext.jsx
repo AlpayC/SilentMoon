@@ -8,6 +8,10 @@ export const MusicDataContext = createContext();
 export const MusicDataProvider = ({ children }) => {
   const { user } = useContext(UserContext);
   const { userData } = useUserData();
+  // BUGFIX: Search wird zurückgesetzt 22.08
+
+  const [shouldRefetch, _refetch] = useState(true);
+  const resetSearchMusicData = () => _refetch((prev) => !prev);
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
@@ -20,11 +24,10 @@ export const MusicDataProvider = ({ children }) => {
       const fetchTracks = async () => {
         const response = await axios.get("/api/spotify/playlist");
         setPlaylistData(response);
-        console.log(response);
       };
       fetchTracks();
     }
-  }, [user]);
+  }, [user, shouldRefetch]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,11 +37,10 @@ export const MusicDataProvider = ({ children }) => {
           _id: playlistId,
         });
         setPlaylistDetails(response.data);
-        console.log(response);
       }
     };
     fetchData();
-  }, [user, userData]);
+  }, [user, userData, shouldRefetch]);
 
   useEffect(() => {
     if (playlistData) {
@@ -47,7 +49,7 @@ export const MusicDataProvider = ({ children }) => {
         JSON.stringify(playlistData)
       );
     }
-  }, [playlistData]);
+  }, [playlistData, shouldRefetch]);
   useEffect(() => {
     if (playlistDetails) {
       sessionStorage.setItem(
@@ -55,7 +57,7 @@ export const MusicDataProvider = ({ children }) => {
         JSON.stringify(playlistDetails)
       );
     }
-  }, [playlistDetails]);
+  }, [playlistDetails, shouldRefetch]);
   return (
     <MusicDataContext.Provider
       value={{
@@ -63,6 +65,7 @@ export const MusicDataProvider = ({ children }) => {
         playlistDetails,
         setPlaylistData,
         setPlaylistDetails,
+        resetSearchMusicData,
       }}
     >
       {children}

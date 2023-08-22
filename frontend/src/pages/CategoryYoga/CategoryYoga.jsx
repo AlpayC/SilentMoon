@@ -47,8 +47,6 @@ const CategoryYoga = () => {
       ? categoriesArray
       : categoriesArray.filter((item) => item.category === selectedCategory);
 
-  console.log(exerciseData);
-
   return (
     <>
       <div className="main-wrapper center">

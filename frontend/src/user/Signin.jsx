@@ -42,7 +42,6 @@ export default function Signin() {
     }
   };
 
-  console.log(userData);
   return (
     <div className="main-wrapper background-signinup">
       <BackButon relativeClass="back-btn" />
