@@ -52,7 +52,7 @@ const CategoryYoga = () => {
   return (
     <>
       <div className="main-wrapper center">
-        <Logo />
+        <Logo className={"logo-black"} />
         <h1 className="padding-top-bottom">Yoga</h1>
         <p className="padding-top-bottom-sm">
           Find your inner zen from anywhere.

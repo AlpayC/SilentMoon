@@ -31,7 +31,7 @@ const WelcomePage = () => {
           style={{ backgroundImage: `url(${WelcomeImage})` }}
         >
           <div className="main-wrapper">
-            <Logo className="logo-white" />
+            <Logo className={"logo-white"} />
             <div className="welcomeText">
               <h1>
                 Hi {userData?.name || storagedUserData?.name}, welcome to Silent
@@ -39,8 +39,8 @@ const WelcomePage = () => {
               </h1>
             </div>
             <NavLink to={redirection} className="getStartedBtn">
-            <Button text="GET STARTED" />
-          </NavLink>
+              <Button text="GET STARTED" />
+            </NavLink>
           </div>
         </section>
       </section>

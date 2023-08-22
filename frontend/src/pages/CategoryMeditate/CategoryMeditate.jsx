@@ -33,7 +33,7 @@ const CategoryMeditate = () => {
   return (
     <>
       <div className="main-wrapper center">
-        <Logo />
+        <Logo className={"logo-black"} />
         <h1 className="padding-top-bottom">Meditate</h1>
         <p className="padding-top-bottom-sm padding-left-right">
           Audio-only meditation techniques to help you minimize your screen time
