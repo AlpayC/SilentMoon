@@ -6,6 +6,7 @@ import Stats from "../../components/Stats/Stats";
 import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
+import Logo from "../../components/Logo/Logo";
 import { MusicDataContext } from "../../context/MusicDataContext";
 //import { UserDataContext } from "../../context/UserDataContext";
 import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
@@ -40,9 +41,10 @@ const Profile = () => {
     <>
       {isLoggedIn && (
         <div className="main-wrapper">
-          <div className="info-logout">
+          <Logo className={"logo-black"} />
+          <div className="info-logout padding-top-bottom">
             <h1>{userData?.name || storagedUserData?.name}</h1>
-            <button onClick={logout}>
+            <button onClick={logout} className="logout-btn">
               <img src={LogoutBtn} alt="logout button" />
             </button>
           </div>
