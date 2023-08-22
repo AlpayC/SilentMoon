@@ -12,7 +12,9 @@ const FavoriteButton = (props) => {
   const { itemId } = props;
 
   const id = userData?._id || storagedUserData?._id;
-  const userId = { _id: id };
+  // BUGFIX: Search wird zurückgesetzt 22.08
+
+  // const userId = { _id: id };
   const [itemInDB, setItemInDB] = useState(false);
 
   const favoriteType =
@@ -26,7 +28,9 @@ const FavoriteButton = (props) => {
   const performFavoriteAction = async (actionType) => {
     try {
       await axios.put(`/api/user/${actionType}${favoriteType}`, favoriteData);
-      refetchData(userId);
+      // BUGFIX: Search wird zurückgesetzt 22.08
+
+      refetchData(id);
       console.log(
         `${actionType === "add" ? "Hinzugefügt" : "Gelöscht"}: ${favoriteType}`
       );

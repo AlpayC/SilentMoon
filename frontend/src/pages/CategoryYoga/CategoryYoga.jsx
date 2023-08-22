@@ -61,6 +61,7 @@ const CategoryYoga = () => {
       ? categoriesArray
       : categoriesArray.filter((item) => item.category === selectedCategory);
 
+
  
 
       const storagedUserData = JSON.parse(
@@ -76,9 +77,6 @@ const CategoryYoga = () => {
       const favoriteVideos = favoriteExercises?.filter((video) =>
       storagedUserData.videos.includes(video._id)
     );
-
-
-  console.log(exerciseData);
 
 
   return (

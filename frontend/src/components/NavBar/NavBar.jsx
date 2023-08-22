@@ -5,19 +5,37 @@ import MusicImg from "../../assets/img/Nav/Music.svg";
 import ProfileImg from "../../assets/img/Nav/Profile.svg";
 import YogaImg from "../../assets/img/Nav/Yoga.svg";
 import { NavLink } from "react-router-dom";
-import { useUserData } from "../../context/UserDataContext";
-import { useContext } from "react";
+import { UserDataContext, useUserData } from "../../context/UserDataContext";
+import { useContext, useEffect } from "react";
+// BUGFIX: Search wird zurückgesetzt 22.08
+import { VideoDataContext } from "../../context/VideoDataContext";
+import { MusicDataContext } from "../../context/MusicDataContext";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  // BUGFIX: Search wird zurückgesetzt 22.08
+  const { resetSearchVideoData } = useContext(VideoDataContext);
+  const { refetchData } = useContext(UserDataContext);
+  const { resetSearchMusicData } = useContext(MusicDataContext);
   const { userData } = useUserData();
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
+
+  // BUGFIX: Search wird zurückgesetzt 22.08
+  const userId = storagedUserData?._id || userData?._id;
+  const resetSearchData = () => {
+    resetSearchVideoData();
+    refetchData(userId);
+    resetSearchMusicData();
+  };
+
   return (
     <nav>
       <div className="nav-container">
         {/* <NavLink to="/category/yoga" activeClassName="activeNavLink"> */}
-        <NavLink to="/category/yoga">
+        <NavLink to="/category/yoga" onClick={resetSearchData}>
           <div className="navItem">
             <div className="navImgContainer">
               <img className="navImg" src={YogaImg} />
@@ -26,7 +44,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink to="/category/meditation">
+        <NavLink to="/category/meditation" onClick={resetSearchData}>
           <div className="navItem">
             <div className="navImgContainer">
               <img className="navImg" src={MeditateImg} />
@@ -35,7 +53,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink to="/home">
+        <NavLink to="/home" onClick={resetSearchData}>
           <div className="navItem">
             <div className="navImgContainer">
               <img className="navImg" src={HomeImg} />
@@ -44,7 +62,7 @@ const NavBar = () => {
           </div>
         </NavLink>
 
-        <NavLink to="/music">
+        <NavLink to="/music" onClick={resetSearchData}>
           <div className="navItem">
             <div className="navImgContainer">
               <img className="navImg" src={MusicImg} />
@@ -52,7 +70,7 @@ const NavBar = () => {
             <p className="navText">Music</p>
           </div>
         </NavLink>
-        <NavLink to="/profile">
+        <NavLink to="/profile" onClick={resetSearchData}>
           <div className="navItem">
             <div className="navImgContainer">
               <img className="navImg" src={ProfileImg} />

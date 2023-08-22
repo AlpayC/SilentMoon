@@ -40,53 +40,56 @@ const Profile = () => {
   return (
     <>
       {isLoggedIn && (
-        <div className="main-wrapper">
-          <Logo className={"logo-black"} />
-          <div className="info-logout padding-top-bottom">
-            <h1>{userData?.name || storagedUserData?.name}</h1>
-            <button onClick={logout} className="logout-btn">
-              <img src={LogoutBtn} alt="logout button" />
-            </button>
+        <div className="main-wrapper center">
+                 <Logo className={"logo-black"} />
+
+          <div className="profile-wrapper">
+            <div className="info-logout padding-top-bottom">
+              <h1>{userData?.name || storagedUserData?.name}</h1>
+              <button  onClick={logout} className="logout-btn">
+                <img src={LogoutBtn} alt="logout button" />
+              </button>
+            </div>
+            <SearchBar
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
+            />
+            <Stats />
+            <h2>Favourite Yoga Sessions</h2>
+            <section className="slider">
+              {favoriteVideos?.map((item) => (
+                <RecommendedItem
+                  key={item._id}
+                  link={`/category/yoga/${item._id}`}
+                  image={item.image_url}
+                  title={item.title}
+                  level={item.level}
+                  duration={item.duration}
+                />
+              ))}
+            </section>
+            <h2>Favourite Meditations</h2>
+            <section className="slider">
+              {favoritePlaylists?.map((item) => (
+                <RecommendedItem
+                  key={item.id}
+                  link={`/category/meditation/${item.id}`}
+                  title={
+                    item.name.length > 20
+                      ? `${item.name.substring(0, 10)}`
+                      : item.name
+                  }
+                  playlist_id={item.id}
+                  image={item?.images[0].url}
+                  tracks={item?.tracks.total}
+                  owner={item?.owner.display_name}
+                />
+              ))}
+            </section>
+            <NavBar />
           </div>
-          <SearchBar
-            value={searchInput}
-            onChange={(e) => {
-              setSearchInput(e.target.value);
-            }}
-          />
-          <Stats />
-          <h2>Favourite Yoga Sessions</h2>
-          <section className="slider">
-            {favoriteVideos?.map((item) => (
-              <RecommendedItem
-                key={item._id}
-                link={`/category/yoga/${item._id}`}
-                image={item.image_url}
-                title={item.title}
-                level={item.level}
-                duration={item.duration}
-              />
-            ))}
-          </section>
-          <h2>Favourite Meditations</h2>
-          <section className="slider">
-            {favoritePlaylists?.map((item) => (
-              <RecommendedItem
-                key={item.id}
-                link={`/category/meditation/${item.id}`}
-                title={
-                  item.name.length > 20
-                    ? `${item.name.substring(0, 10)}`
-                    : item.name
-                }
-                playlist_id={item.id}
-                image={item?.images[0].url}
-                tracks={item?.tracks.total}
-                owner={item?.owner.display_name}
-              />
-            ))}
-          </section>
-          <NavBar />
         </div>
       )}
     </>

@@ -9,6 +9,9 @@ export const VideoDataProvider = ({ children }) => {
   const [exerciseData, setExerciseData] = useState([]);
   const { userData } = useUserData();
   const { user } = useContext(UserContext);
+  const [shouldRefetch, _refetch] = useState(true);
+  const resetSearchVideoData = () => _refetch((prev) => !prev);
+  // BUGFIX: Search wird zurückgesetzt 22.08
 
   useEffect(() => {
     if (user !== null) {
@@ -22,7 +25,7 @@ export const VideoDataProvider = ({ children }) => {
       };
       exercisesFromDB();
     }
-  }, [user]);
+  }, [user, shouldRefetch]);
 
   useEffect(() => {
     if (exerciseData) {
@@ -31,9 +34,11 @@ export const VideoDataProvider = ({ children }) => {
         JSON.stringify(exerciseData)
       );
     }
-  }, [exerciseData]);
+  }, [exerciseData, shouldRefetch]);
   return (
-    <VideoDataContext.Provider value={{ exerciseData, setExerciseData }}>
+    <VideoDataContext.Provider
+      value={{ exerciseData, setExerciseData, resetSearchVideoData }}
+    >
       {children}
     </VideoDataContext.Provider>
   );

@@ -177,7 +177,6 @@ spotifyRouter.post("/getPlaylistDetails", async (req, res) => {
     );
 
     res.status(200).json(playlistDetails);
-    console.log("Playlistdetails erfolgreich gefetcht");
   } catch (error) {
     console.error("Error fetching playlist details:", error);
     res.status(500).json({ error: "An error occurred" });

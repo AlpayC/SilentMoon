@@ -11,6 +11,9 @@ export const UserDataProvider = ({ children }) => {
 
   const refetchData = async (userId) => {
     setError(null);
+
+    // BUGFIX: Richtige Generierung des Objekts für den Fetch
+    userId = { _id: userId };
     try {
       const response = await axios.post("/api/user/getUserData", userId);
       const updatedUserObject = {

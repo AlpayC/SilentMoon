@@ -13,6 +13,9 @@ export const UserProvider = ({ children }) => {
 
   const logout = async () => {
     await axios.get("/api/user/logout");
+    // NEW: Sessionstorage wird nach Logout geleert
+    sessionStorage.clear();
+
     setUser(null);
     nav("/");
   };

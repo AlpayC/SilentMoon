@@ -1,3 +1,8 @@
+
+.profile-wrapper {
+  text-align: left;
+}
+
 .info-logout{
     display: flex;
     align-items: center;
@@ -14,3 +19,4 @@
 .slider {
 padding: 2rem 0rem 2rem 0rem;
 }
+
