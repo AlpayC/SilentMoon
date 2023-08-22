@@ -18,36 +18,36 @@ import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
 import SearchBar from "../../components/Search/Search";
 
 const CategoryYoga = () => {
-  const getRandomHeight = () => {
-    const minHeight = 12; // Minimum height in rem
-    const maxHeight = 25; // Maximum height in rem
-    return (
-      (Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
-    );
-  };
+	const getRandomHeight = () => {
+		const minHeight = 12; // Minimum height in rem
+		const maxHeight = 25; // Maximum height in rem
+		return (
+			(Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
+		);
+	};
 
-  const { exerciseData } = useContext(VideoDataContext);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const categoriesArray = exerciseData.data || [];
-  const initialItemsToShow = 4; // Number of items to show initially
-  const itemsPerLoad = 2; // Number of items to load per click
+	const { exerciseData } = useContext(VideoDataContext);
+	const [selectedCategory, setSelectedCategory] = useState("all");
+	const categoriesArray = exerciseData.data || [];
+	const initialItemsToShow = 4; // Number of items to show initially
+	const itemsPerLoad = 2; // Number of items to load per click
 
-  const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
+	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
-  const loadMoreItems = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
-  };
+	const loadMoreItems = () => {
+		setVisibleItems(prevVisibleItems => prevVisibleItems + itemsPerLoad);
+	};
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+	const handleCategoryClick = category => {
+		setSelectedCategory(category);
+	};
 
-  const filteredData =
-    selectedCategory === "all"
-      ? categoriesArray
-      : categoriesArray.filter((item) => item.category === selectedCategory);
+	const filteredData =
+		selectedCategory === "all"
+			? categoriesArray
+			: categoriesArray.filter(item => item.category === selectedCategory);
 
-  console.log(exerciseData);
+	console.log(exerciseData);
 
   return (
     <>
