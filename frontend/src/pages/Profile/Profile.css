@@ -1,17 +1,16 @@
 .info-logout{
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: flex-start
 }
 
 .logout-btn{
-    float: right;
-    margin: 15px 15px 0 0;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+    margin-left: 1.2rem;
 }
 
-/* 2208 added bugfix*/
+
 .slider {
 padding: 2rem 0rem 2rem 0rem;
 }

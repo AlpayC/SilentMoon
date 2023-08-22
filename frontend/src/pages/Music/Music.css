@@ -25,3 +25,6 @@
 	color: var(--darkgrey);
 }
 
+.music-wrapper p{
+	margin-bottom: 2.2rem;
+}

@@ -12,28 +12,29 @@ import "./CategoryMeditate.css";
 import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
 
 const CategoryMeditate = () => {
-  const getRandomHeight = () => {
-    const minHeight = 12; // Minimum height in rem
-    const maxHeight = 25; // Maximum height in rem
-    return (
-      (Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
-    );
-  };
+	const getRandomHeight = () => {
+		const minHeight = 12; // Minimum height in rem
+		const maxHeight = 25; // Maximum height in rem
+		return (
+			(Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
+		);
+	};
 
-  const { playlistData } = useContext(MusicDataContext);
-  const initialItemsToShow = 4; // Number of items to show initially
-  const itemsPerLoad = 2; // Number of items to load per click
+	const { playlistData } = useContext(MusicDataContext);
+	const initialItemsToShow = 4; // Number of items to show initially
+	const itemsPerLoad = 2; // Number of items to load per click
 
-  const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
+	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
-  const loadMoreItems = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
-  };
+	const loadMoreItems = () => {
+		setVisibleItems(prevVisibleItems => prevVisibleItems + itemsPerLoad);
+	};
+
 
   return (
     <>
       <div className="main-wrapper center">
-        <Logo />
+        <Logo className={"logo-black"} />
         <h1 className="padding-top-bottom">Meditate</h1>
         <p className="padding-top-bottom-sm padding-left-right">
           Audio-only meditation techniques to help you minimize your screen time
@@ -53,14 +54,15 @@ const CategoryMeditate = () => {
             ))}
         </div>
 
-        {visibleItems < (playlistData?.data?.playlists?.items.length || 0) && (
-          <LoadMoreButton onClick={loadMoreItems} />
-        )}
 
-        <NavBar />
-      </div>
-    </>
-  );
+				{visibleItems < (playlistData?.data?.playlists?.items.length || 0) && (
+					<LoadMoreButton onClick={loadMoreItems} />
+				)}
+
+				<NavBar />
+			</div>
+		</>
+	);
 };
 
 export default CategoryMeditate;

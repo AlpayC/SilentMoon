@@ -10,60 +10,67 @@ import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import Logo from "../../components/Logo/Logo";
 
 const DetailsMusic = () => {
-	const { playlistData } = useContext(MusicDataContext);
-	const [tracksData, setTracksData] = useState();
-	const [visibleTracks, setVisibleTracks] = useState(20);
-	const params = useParams();
+  const { playlistData } = useContext(MusicDataContext);
+  const [tracksData, setTracksData] = useState();
+  const [visibleTracks, setVisibleTracks] = useState(20);
+  const params = useParams();
 
-	const chosenPlaylist = playlistData?.data?.playlists?.items.find(
-		playlist => playlist.id === params.id,
-	);
+  const chosenPlaylist = playlistData?.data?.playlists?.items.find(
+    (playlist) => playlist.id === params.id
+  );
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const { data } = await axios.post(`/api/spotify/tracks`, params);
-				setTracksData(data);
-			} catch (error) {
-				console.error("Error fetching tracks:", error);
-			}
-		};
-		fetchData();
-	}, [params]);
+  //BUG Fix 228
+  let shortenedPLaylistName = chosenPlaylist.name;
+  shortenedPLaylistName =
+    shortenedPLaylistName.length > 45
+      ? shortenedPLaylistName.slice(0, 45) + "..."
+      : shortenedPLaylistName;
 
-	const loadMoreTracks = () => {
-		setVisibleTracks(prevVisibleTracks => prevVisibleTracks + 20);
-	};
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.post(`/api/spotify/tracks`, params);
+        setTracksData(data);
+      } catch (error) {
+        console.error("Error fetching tracks:", error);
+      }
+    };
+    fetchData();
+  }, [params]);
 
-	return (
-		<div className='main-wrapper center'>
-			<Logo/>
-			{chosenPlaylist ? (
-				<>
-				<div className="gap3">
-					<h1>{chosenPlaylist.name}</h1>
-					<p>PLAYLIST</p>
-					<p className='subtitle'>{chosenPlaylist.description}</p>
-					<Stats />
-					</div>
-					{tracksData?.items?.slice(0, visibleTracks).map(track => (
-						<MusicItem
-							key={track.track.id}
-							link={track.track.id}
-							title={track.track.name}
-							duration={track.track.duration_ms}
-						/>
-					))}
-					{visibleTracks < tracksData?.items?.length && (
-						<LoadMoreButton onClick={loadMoreTracks} />
-					)}
-					<NavBar />
-				</>
-			) : (
-				<p>Loading playlist details...</p>
-			)}
-		</div>
-	);
+  const loadMoreTracks = () => {
+    setVisibleTracks((prevVisibleTracks) => prevVisibleTracks + 20);
+  };
+
+  return (
+    <div className="main-wrapper center">
+      <Logo className={"logo-black"} />
+      {chosenPlaylist ? (
+        <>
+          <div className="gap3">
+            <h1 className="playlistname-meditation">{shortenedPLaylistName}</h1>
+            <p>PLAYLIST</p>
+            <p className="subtitle">{chosenPlaylist.description}</p>
+            <Stats />
+          </div>
+          {tracksData?.items?.slice(0, visibleTracks).map((track) => (
+            <MusicItem
+              key={track.track.id}
+              link={track.track.id}
+              title={track.track.name}
+              duration={track.track.duration_ms}
+            />
+          ))}
+          {visibleTracks < tracksData?.items?.length && (
+            <LoadMoreButton onClick={loadMoreTracks} />
+          )}
+          <NavBar />
+        </>
+      ) : (
+        <p>Loading playlist details...</p>
+      )}
+    </div>
+  );
 };
 
 export default DetailsMusic;

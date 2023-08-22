@@ -20,15 +20,15 @@ import MiniPlayerYoga from "../../components/MiniPlayerYoga/MiniPlayerYoga";
 import SearchBar from "../../components/Search/Search";
 
 const CategoryYoga = () => {
-  const getRandomHeight = () => {
-    const minHeight = 12; // Minimum height in rem
-    const maxHeight = 25; // Maximum height in rem
-    return (
-      (Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
-    );
-  };
+	const getRandomHeight = () => {
+		const minHeight = 12; // Minimum height in rem
+		const maxHeight = 25; // Maximum height in rem
+		return (
+			(Math.random() * (maxHeight - minHeight) + minHeight).toFixed(2) + "rem"
+		);
+	};
 
-  //! 2208 added aber kann raus
+
   const { isLoggedIn, logout } = useContext(UserContext);
 
   const { userData } = useUserData();
@@ -40,15 +40,17 @@ const CategoryYoga = () => {
   const initialItemsToShow = 4; // Number of items to show initially
   const itemsPerLoad = 2; // Number of items to load per click
 
-  const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
-  const loadMoreItems = () => {
-    setVisibleItems((prevVisibleItems) => prevVisibleItems + itemsPerLoad);
-  };
+	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-  };
+	const loadMoreItems = () => {
+		setVisibleItems(prevVisibleItems => prevVisibleItems + itemsPerLoad);
+	};
+
+	const handleCategoryClick = category => {
+		setSelectedCategory(category);
+	};
+
 
   const handleFavorites = () => {
     setSelectedCategory("Favorites")
@@ -59,7 +61,7 @@ const CategoryYoga = () => {
       ? categoriesArray
       : categoriesArray.filter((item) => item.category === selectedCategory);
 
-      //! 2208
+ 
 
       const storagedUserData = JSON.parse(
         sessionStorage.getItem("sessionedUserData")
@@ -78,10 +80,11 @@ const CategoryYoga = () => {
 
   console.log(exerciseData);
 
+
   return (
     <>
       <div className="main-wrapper center">
-        <Logo />
+        <Logo className={"logo-black"} />
         <h1 className="padding-top-bottom">Yoga</h1>
         <p className="padding-top-bottom-sm">
           Find your inner zen from anywhere.
