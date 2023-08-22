@@ -28,18 +28,15 @@ const CategoryYoga = () => {
 		);
 	};
 
+	const { isLoggedIn, logout } = useContext(UserContext);
 
-  const { isLoggedIn, logout } = useContext(UserContext);
+	const { userData } = useUserData();
 
-  const { userData } = useUserData();
-
-
-  const { exerciseData } = useContext(VideoDataContext);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const categoriesArray = exerciseData.data || [];
-  const initialItemsToShow = 4; // Number of items to show initially
-  const itemsPerLoad = 2; // Number of items to load per click
-
+	const { exerciseData } = useContext(VideoDataContext);
+	const [selectedCategory, setSelectedCategory] = useState("all");
+	const categoriesArray = exerciseData.data || [];
+	const initialItemsToShow = 4; // Number of items to show initially
+	const itemsPerLoad = 2; // Number of items to load per click
 
 	const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
 
@@ -51,106 +48,101 @@ const CategoryYoga = () => {
 		setSelectedCategory(category);
 	};
 
+	const handleFavorites = () => {
+		setSelectedCategory("Favorites");
+	};
 
-  const handleFavorites = () => {
-    setSelectedCategory("Favorites")
-  }
+	const filteredData =
+		selectedCategory === "all"
+			? categoriesArray
+			: categoriesArray.filter(item => item.category === selectedCategory);
 
-  const filteredData =
-    selectedCategory === "all"
-      ? categoriesArray
-      : categoriesArray.filter((item) => item.category === selectedCategory);
+	const storagedUserData = JSON.parse(
+		sessionStorage.getItem("sessionedUserData"),
+	);
 
+	const storagedExerciseData = JSON.parse(
+		sessionStorage.getItem("sessionedExerciseData"),
+	);
 
- 
+	const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
 
-      const storagedUserData = JSON.parse(
-        sessionStorage.getItem("sessionedUserData")
-      );
+	const favoriteVideos = favoriteExercises?.filter(video =>
+		storagedUserData.videos.includes(video._id),
+	);
 
-      const storagedExerciseData = JSON.parse(
-        sessionStorage.getItem("sessionedExerciseData")
-      );
-
-      const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
-
-      const favoriteVideos = favoriteExercises?.filter((video) =>
-      storagedUserData.videos.includes(video._id)
-    );
-
-
-  return (
-    <>
-      <div className="main-wrapper center">
-        <Logo className={"logo-black"} />
-        <h1 className="padding-top-bottom">Yoga</h1>
-        <p className="padding-top-bottom-sm">
-          Find your inner zen from anywhere.
-        </p>
-        <div className="row categories">
-          <CategoriesItem
-            categoryImage={allImg}
-            categoryTitle="All"
-            onClick={() => handleCategoryClick("all")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={favsImg}
-            categoryTitle="Favorites"
-            onClick={() => handleCategoryClick("Favorites")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={anxiousImg}
-            categoryTitle="Anxious"
-            onClick={() => handleCategoryClick("Anxious")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={sleepImg}
-            categoryTitle="Sleep"
-            onClick={() => handleCategoryClick("Sleep")}
-            selectedCategory={selectedCategory}
-          />
-          <CategoriesItem
-            categoryImage={kidsImg}
-            categoryTitle="Kids"
-            onClick={() => handleCategoryClick("Kids")}
-            selectedCategory={selectedCategory}
-          />
-        </div>
-        <SearchBar />
-        <MiniPlayerYoga />
-        <div className="masonry-container">
-        {selectedCategory === "Favorites" ? ( // guckt ob favoriten selectedCategory sind
-          favoriteVideos?.map((item) => (
-            <MasonryItem
-              key={item._id}
-              link={`/category/yoga/${item._id}`}
-              image={item.image_url}
-              title={item.title}
-              item={item}
-              height={getRandomHeight()}
-            />
-          ))
-        ) : (
-          // alle kategorien außer favs
-          filteredData.slice(0, visibleItems).map((item) => (
-            <MasonryItem
-              key={item._id}
-              item={item}
-              height={getRandomHeight()}
-            />
-          ))
-        )}
-      </div>
-      {visibleItems < filteredData.length && (
-        <LoadMoreButton onClick={loadMoreItems} />
-      )}
-      <NavBar />
-      </div>
-      </>
-  );
+	return (
+		<>
+			<div className='main-wrapper center'>
+				<Logo className={"logo-black"} />
+				<h1 className='padding-top-bottom'>Yoga</h1>
+				<p className='padding-top-bottom-sm'>
+					Find your inner zen from anywhere.
+				</p>
+				<div className='row categories'>
+					<CategoriesItem
+						categoryImage={allImg}
+						categoryTitle='All'
+						onClick={() => handleCategoryClick("all")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={favsImg}
+						categoryTitle='Favorites'
+						onClick={() => handleCategoryClick("Favorites")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={anxiousImg}
+						categoryTitle='Anxious'
+						onClick={() => handleCategoryClick("Anxious")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={sleepImg}
+						categoryTitle='Sleep'
+						onClick={() => handleCategoryClick("Sleep")}
+						selectedCategory={selectedCategory}
+					/>
+					<CategoriesItem
+						categoryImage={kidsImg}
+						categoryTitle='Kids'
+						onClick={() => handleCategoryClick("Kids")}
+						selectedCategory={selectedCategory}
+					/>
+				</div>
+				<SearchBar />
+				<MiniPlayerYoga category={"yoga"} />
+				<div className='masonry-container'>
+					{selectedCategory === "Favorites" // guckt ob favoriten selectedCategory sind
+						? favoriteVideos?.map(item => (
+								<MasonryItem
+									key={item._id}
+									link={`/category/yoga/${item._id}`}
+									image={item.image_url}
+									title={item.title}
+									item={item}
+									height={getRandomHeight()}
+								/>
+						  ))
+						: // alle kategorien außer favs
+						  filteredData
+								.slice(0, visibleItems)
+								.map(item => (
+									<MasonryItem
+										key={item._id}
+										item={item}
+										height={getRandomHeight()}
+									/>
+								))}
+				</div>
+				{visibleItems < filteredData.length && (
+					<LoadMoreButton onClick={loadMoreItems} />
+				)}
+				<NavBar />
+			</div>
+		</>
+	);
 };
 
 export default CategoryYoga;
