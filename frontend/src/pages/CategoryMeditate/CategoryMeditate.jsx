@@ -30,30 +30,28 @@ const CategoryMeditate = () => {
 		setVisibleItems(prevVisibleItems => prevVisibleItems + itemsPerLoad);
 	};
 
-
-  return (
-    <>
-      <div className="main-wrapper center">
-        <Logo className={"logo-black"} />
-        <h1 className="padding-top-bottom">Meditate</h1>
-        <p className="padding-top-bottom-sm padding-left-right">
-          Audio-only meditation techniques to help you minimize your screen time
-          and practice on the go.
-        </p>
-        <SearchBar />
-        <MiniPlayerYoga />
-        <div className="masonry-container">
-          {playlistData?.data?.playlists?.items
-            .slice(0, visibleItems)
-            .map((item) => (
-              <MasonryMeditateItem
-                key={item.id}
-                item={item}
-                height={getRandomHeight()}
-              />
-            ))}
-        </div>
-
+	return (
+		<>
+			<div className='main-wrapper center'>
+				<Logo className={"logo-black"} />
+				<h1 className='padding-top-bottom'>Meditate</h1>
+				<p className='padding-top-bottom-sm padding-left-right'>
+					Audio-only meditation techniques to help you minimize your screen time
+					and practice on the go.
+				</p>
+				<SearchBar />
+				<MiniPlayerYoga category={"meditation"} />
+				<div className='masonry-container'>
+					{playlistData?.data?.playlists?.items
+						.slice(0, visibleItems)
+						.map(item => (
+							<MasonryMeditateItem
+								key={item.id}
+								item={item}
+								height={getRandomHeight()}
+							/>
+						))}
+				</div>
 
 				{visibleItems < (playlistData?.data?.playlists?.items.length || 0) && (
 					<LoadMoreButton onClick={loadMoreItems} />
