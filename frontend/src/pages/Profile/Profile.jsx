@@ -49,6 +49,7 @@ const Profile = () => {
                 <img src={LogoutBtn} alt="logout button" />
               </button>
             </div>
+            {/*  NEU */}
             <SearchBar
               value={searchInput}
               onChange={(e) => {
@@ -57,34 +58,43 @@ const Profile = () => {
             />
             <h2 className="favorite-title">Favourite Yoga Sessions</h2>
             <section className="slider">
-              {favoriteVideos?.map((item) => (
-                <RecommendedItem
-                  key={item._id}
-                  link={`/category/yoga/${item._id}`}
-                  image={item.image_url}
-                  title={item.title}
-                  level={item.level}
-                  duration={item.duration}
-                />
-              ))}
+              {favoriteVideos?.length > 0 ? (
+                favoriteVideos?.map((item) => (
+                  <RecommendedItem
+                    key={item._id}
+                    link={`/category/yoga/${item._id}`}
+                    image={item.image_url}
+                    title={item.title}
+                    level={item.level}
+                    duration={item.duration}
+                  />
+                ))
+              ) : (
+                <p>No matching results.</p>
+              )}
             </section>
             <h2 className="favorite-title">Favourite Meditations</h2>
             <section className="slider">
-              {favoritePlaylists?.map((item) => (
-                <RecommendedItem
-                  key={item.id}
-                  link={`/category/meditation/${item.id}`}
-                  title={
-                    item.name.length > 20
-                      ? `${item.name.substring(0, 10)}`
-                      : item.name
-                  }
-                  playlist_id={item.id}
-                  image={item?.images[0].url}
-                  tracks={item?.tracks.total}
-                  owner={item?.owner.display_name}
-                />
-              ))}
+              {favoritePlaylists?.length > 0 ? (
+                favoritePlaylists?.map((item) => (
+                  <RecommendedItem
+                    key={item.id}
+                    link={`/category/meditation/${item.id}`}
+                    title={
+                      item.name.length > 20
+                        ? `${item.name.substring(0, 10)}`
+                        : item.name
+                    }
+                    playlist_id={item.id}
+                    image={item?.images[0].url}
+                    tracks={item?.tracks.total}
+                    owner={item?.owner.display_name}
+                  />
+                ))
+              ) : (
+                <p>No matching results.</p>
+              )}
+              {/*   Bis HIER */}
             </section>
             <NavBar />
           </div>
