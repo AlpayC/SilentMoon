@@ -27,3 +27,7 @@
     font-size: 1rem;
     color: var(--grey);
 }
+
+.miniplayer-banner .play-button {
+  width: 5.5rem;
+}
