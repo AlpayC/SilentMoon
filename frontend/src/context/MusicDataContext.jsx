@@ -12,6 +12,8 @@ export const MusicDataProvider = ({ children }) => {
 
   const [shouldRefetch, _refetch] = useState(true);
   const resetSearchMusicData = () => _refetch((prev) => !prev);
+  const [refreshPlaylistDetails, _refresh] = useState(true);
+  const refreshPlaylistData = () => _refresh((prev) => !prev);
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
@@ -25,8 +27,25 @@ export const MusicDataProvider = ({ children }) => {
     if (user !== null) {
       const fetchTracks = async () => {
         const response = await axios.get("/api/spotify/playlist");
-        setPlaylistData(response);
-        setCopyPlaylistData(response);
+        console.log(response);
+        // setPlaylistData(response);
+        // setCopyPlaylistData(response);
+        const filteredPlaylists = response.data.playlists.items.filter(
+          (playlist) =>
+            playlist.id !== "2TSqBzonsoTHZ8dXeu7gVF" &&
+            playlist.id !== "3u3z3wxohxmsp3cOP1ffJ9"
+        );
+        const updatedResponse = {
+          data: {
+            playlists: {
+              ...response.data.playlists,
+              items: filteredPlaylists,
+            },
+          },
+        };
+        console.log(updatedResponse);
+        setPlaylistData(updatedResponse);
+        setCopyPlaylistData(updatedResponse);
       };
       fetchTracks();
     }
@@ -44,7 +63,7 @@ export const MusicDataProvider = ({ children }) => {
       }
     };
     fetchData();
-  }, [user]);
+  }, [user, refreshPlaylistDetails]);
 
   useEffect(() => {
     sessionStorage.setItem(
@@ -70,6 +89,7 @@ export const MusicDataProvider = ({ children }) => {
         setPlaylistData,
         setPlaylistDetails,
         resetSearchMusicData,
+        refreshPlaylistData,
       }}
     >
       {children}

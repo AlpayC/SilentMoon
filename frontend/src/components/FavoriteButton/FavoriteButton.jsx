@@ -2,10 +2,12 @@ import "./FavoriteButton.css";
 import FavoriteBtn from "../../assets/img/Icons/heartunfilled.svg";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../../context/UserDataContext";
+import { MusicDataContext } from "../../context/MusicDataContext";
 import axios from "axios";
 
 const FavoriteButton = (props) => {
   const { userData, refetchData } = useContext(UserDataContext);
+  const { refreshPlaylistData } = useContext(MusicDataContext);
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
@@ -31,6 +33,7 @@ const FavoriteButton = (props) => {
       // BUGFIX: Search wird zurückgesetzt 22.08
 
       refetchData(id);
+      refreshPlaylistData();
       console.log(
         `${actionType === "add" ? "Hinzugefügt" : "Gelöscht"}: ${favoriteType}`
       );

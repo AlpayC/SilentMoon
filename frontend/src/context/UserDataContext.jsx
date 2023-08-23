@@ -38,7 +38,7 @@ export const UserDataProvider = ({ children }) => {
     if (userData) {
       sessionStorage.setItem("sessionedUserData", JSON.stringify(userData));
     }
-  }, [userData]);
+  }, [userData, refetchData]);
   return (
     <UserDataContext.Provider value={{ userData, setUserData, refetchData }}>
       {children}

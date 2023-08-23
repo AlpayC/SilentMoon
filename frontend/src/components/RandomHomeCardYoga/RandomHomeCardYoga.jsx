@@ -42,7 +42,7 @@ const RandomHomeCardYoga = (props) => {
           </div>
         </Link>
       ) : (
-        <p>No matching results.</p>
+        <></>
       )}
     </>
   );

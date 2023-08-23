@@ -1,53 +1,56 @@
-.main-wrapper{
-    padding: 1rem;
+.main-wrapper {
+  padding: 1rem;
 }
 
-.loginPage{
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    min-height: 60vh;
+.loginPage {
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  min-height: 60vh;
 }
 
-.logo-black{
-    color: var(--darkgreen);
-    padding: 2rem 0;
-    margin: 0;
+.logo-black {
+  color: var(--darkgreen);
+  padding: 2rem 0;
+  margin: 0;
 }
-.logo-white{
-    margin: 0;
-}
-
-.loginContainer{
-    text-align: center;
-    max-height: 40vh;
+.logo-white {
+  margin: 0;
 }
 
-.loginContainer h1{
-    color: var(--darkgreen);
-    padding: 7%;
-    width: 88%;
-    margin: 0 auto;
-}
-.loginContainer p{
-    color: var(--grey);
-    width: 92%;
-    margin: 0 auto;
-    padding-bottom: 15%;
+.loginContainer {
+  text-align: center;
+  max-height: 40vh;
 }
 
-.signingLinks{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+.loginContainer h1 {
+  color: var(--darkgreen);
+  padding: 7%;
+  width: 88%;
+  margin: 0 auto;
+}
+.loginContainer p {
+  color: var(--grey);
+  width: 92%;
+  margin: 0 auto;
+  padding-bottom: 15%;
 }
 
-.navLink{
-    color: var(--grey);
-    text-decoration: none;
-    padding: 1.5rem;
+.signingLinks {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-span{
-    color: var(--pink);
+.navLink {
+  color: var(--grey);
+  text-decoration: none;
+  padding: 1.5rem;
+}
+.signingLinks .navLink:nth-child(2) {
+  padding: 4rem 2rem;
+}
+
+span {
+  color: var(--pink);
 }
