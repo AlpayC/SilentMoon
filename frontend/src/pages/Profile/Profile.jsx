@@ -2,7 +2,6 @@ import "./Profile.css";
 import { VideoDataContext } from "../../context/VideoDataContext";
 import { useContext, useEffect, useState } from "react";
 import { useUserData } from "../../context/UserDataContext";
-import Stats from "../../components/Stats/Stats";
 import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
