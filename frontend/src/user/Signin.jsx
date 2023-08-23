@@ -62,7 +62,7 @@ export default function Signin() {
         {error && <small style={{ color: "red" }}>{error}</small>}
         <Button text="login" />
         <p className="center grey-text">
-          DON'T HAVE AN ACCOUNT YET? <Link to={"../signup"}>SIGN UP</Link>
+          DON'T HAVE AN ACCOUNT YET? <Link to={"/signup"}>SIGN UP</Link>
         </p>
       </form>
     </div>
