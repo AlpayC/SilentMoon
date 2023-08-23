@@ -56,7 +56,6 @@ const Profile = () => {
                 setSearchInput(e.target.value);
               }}
             />
-            <Stats />
             <h2 className="favorite-title">Favourite Yoga Sessions</h2>
             <section className="slider">
               {favoriteVideos?.map((item) => (

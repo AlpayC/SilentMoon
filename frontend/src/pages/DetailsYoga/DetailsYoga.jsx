@@ -44,13 +44,15 @@ const DetailsYoga = () => {
         </div>
       </div>
       <div className="main-wrapper center">
-        <div className="left">
+        <div className="left gap2">
           <h1>{thisItem.title}</h1>
           <section>
             <div></div>
             <div>
               <p>{thisItem.level.toUpperCase()}</p>
+              <div className="statsContainerNew">
               <Stats />
+              </div>
             </div>
           </section>
         </div>
