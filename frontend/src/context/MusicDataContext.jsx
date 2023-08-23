@@ -18,16 +18,19 @@ export const MusicDataProvider = ({ children }) => {
 
   const [playlistData, setPlaylistData] = useState([]);
   const [playlistDetails, setPlaylistDetails] = useState([]);
+  const [copyPlaylistData, setCopyPlaylistData] = useState([]);
+  const [copyPlaylistDetails, setCopyPlaylistDetails] = useState([]);
 
   useEffect(() => {
     if (user !== null) {
       const fetchTracks = async () => {
         const response = await axios.get("/api/spotify/playlist");
         setPlaylistData(response);
+        setCopyPlaylistData(response);
       };
       fetchTracks();
     }
-  }, [user, shouldRefetch]);
+  }, [user]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,27 +40,28 @@ export const MusicDataProvider = ({ children }) => {
           _id: playlistId,
         });
         setPlaylistDetails(response.data);
+        setCopyPlaylistDetails(response.data);
       }
     };
     fetchData();
-  }, [user, userData, shouldRefetch]);
+  }, [user]);
 
   useEffect(() => {
-    if (playlistData) {
-      sessionStorage.setItem(
-        "sessionedPlaylistData",
-        JSON.stringify(playlistData)
-      );
-    }
-  }, [playlistData, shouldRefetch]);
+    sessionStorage.setItem(
+      "sessionedPlaylistData",
+      JSON.stringify(copyPlaylistData)
+    );
+    setPlaylistData(copyPlaylistData);
+  }, [shouldRefetch, copyPlaylistData]);
+
   useEffect(() => {
-    if (playlistDetails) {
-      sessionStorage.setItem(
-        "sessionedPlaylistDetails",
-        JSON.stringify(playlistDetails)
-      );
-    }
-  }, [playlistDetails, shouldRefetch]);
+    sessionStorage.setItem(
+      "sessionedPlaylistDetails",
+      JSON.stringify(copyPlaylistDetails)
+    );
+    setPlaylistDetails(copyPlaylistDetails);
+  }, [shouldRefetch, copyPlaylistDetails]);
+
   return (
     <MusicDataContext.Provider
       value={{

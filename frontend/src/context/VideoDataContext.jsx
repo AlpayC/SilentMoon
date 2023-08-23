@@ -7,6 +7,7 @@ export const VideoDataContext = createContext();
 
 export const VideoDataProvider = ({ children }) => {
   const [exerciseData, setExerciseData] = useState([]);
+  const [copyExerciseData, setCopyExerciseData] = useState([]);
   const { userData } = useUserData();
   const { user } = useContext(UserContext);
   const [shouldRefetch, _refetch] = useState(true);
@@ -19,22 +20,31 @@ export const VideoDataProvider = ({ children }) => {
         try {
           const response = await axios.get("/api/exercises");
           setExerciseData(response);
+          setCopyExerciseData(response);
         } catch (error) {
           console.error("Error fetching Exercises data:", error);
         }
       };
       exercisesFromDB();
     }
-  }, [user, shouldRefetch]);
+  }, [user]);
+
+  // useEffect(() => {
+  //   if (exerciseData) {
+  //     sessionStorage.setItem(
+  //       "sessionedExerciseData",
+  //       JSON.stringify(exerciseData)
+  //     );
+  //   }
+  // }, [exerciseData, shouldRefetch]);
 
   useEffect(() => {
-    if (exerciseData) {
-      sessionStorage.setItem(
-        "sessionedExerciseData",
-        JSON.stringify(exerciseData)
-      );
-    }
-  }, [exerciseData, shouldRefetch]);
+    sessionStorage.setItem(
+      "sessionedExerciseData",
+      JSON.stringify(copyExerciseData)
+    );
+    setExerciseData(copyExerciseData);
+  }, [shouldRefetch, copyExerciseData]);
   return (
     <VideoDataContext.Provider
       value={{ exerciseData, setExerciseData, resetSearchVideoData }}
