@@ -11,11 +11,10 @@ nav {
 }
 
 .nav-container {
-	display: flex;
-	justify-content: center;
-	gap: 6.5vw;
-	align-items: baseline;
-	margin-top: -0.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    margin-top: -0.5rem;
 }
 
 .navItem {
