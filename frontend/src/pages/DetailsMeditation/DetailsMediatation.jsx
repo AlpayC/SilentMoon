@@ -38,6 +38,11 @@ const DetailsMusic = () => {
     setVisibleTracks((prevVisibleTracks) => prevVisibleTracks + 20);
   };
 
+  let shortenedPLaylistName = chosenPlaylist.name;
+  shortenedPLaylistName =
+    shortenedPLaylistName.length > 45
+      ? shortenedPLaylistName.slice(0, 45) + "..."
+      : shortenedPLaylistName;
   return (
     <>
       <div className="video-details">
@@ -57,7 +62,9 @@ const DetailsMusic = () => {
         {chosenPlaylist ? (
           <>
             <div className="left gap2">
-              <h1 className="playlistname-meditation">{chosenPlaylist.name}</h1>
+              <h1 className="playlistname-meditation">
+                {shortenedPLaylistName}
+              </h1>
               <p>PLAYLIST</p>
               <p className="subtitle">{chosenPlaylist.description}</p>
               <div className="statsContainerNew">

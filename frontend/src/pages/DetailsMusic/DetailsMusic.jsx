@@ -45,6 +45,7 @@ const DetailsMusic = () => {
   return (
     <div className="main-wrapper center">
       <Logo className={"logo-black"} />
+      <BackButton relativeClass={"back-btn-filled"} />
       {chosenPlaylist ? (
         <>
           <div className="gap3">
