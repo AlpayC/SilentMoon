@@ -1,3 +1,7 @@
 {
-  "cSpell.words": ["Millisec"]
+  "cSpell.words": ["Millisec"],
+  "editor.tokenColorCustomizations": {
+    "comments": "",
+    "textMateRules": []
+  }
 }
