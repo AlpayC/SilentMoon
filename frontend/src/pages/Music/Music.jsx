@@ -4,6 +4,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import "./Music.css";
 import { MusicDataContext } from "../../context/MusicDataContext";
 import { Link } from "react-router-dom";
+import BackButon from "../../components/BackButton/BackButton";
 
 const Music = () => {
   const { playlistData } = useContext(MusicDataContext);
@@ -12,6 +13,7 @@ const Music = () => {
     <div className="main-wrapper center">
       <div className="music-wrapper">
         <Logo className={"logo-black"} />
+        <BackButon relativeClass={"back-btn-filled"} />
         <h1 className="padding-top-bottom">Our Playlist Favorites</h1>
         <p>find your inner peace</p>
 
