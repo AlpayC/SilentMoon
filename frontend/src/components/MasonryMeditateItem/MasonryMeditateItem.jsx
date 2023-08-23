@@ -9,7 +9,10 @@ const MasonryMeditateItem = ({ item, height }) => {
       }}
     >
       <div
-        style={{ backgroundImage: `url(${item.images[0].url})`, height: height }}
+        style={{
+          backgroundImage: `url(${item.images[0].url})`,
+          height: height,
+        }}
         className="masonry-item"
       >
         {item.title}

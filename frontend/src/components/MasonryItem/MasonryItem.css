@@ -21,3 +21,11 @@
     -moz-column-break-inside: avoid;
     margin-bottom: 2rem;
 }
+
+a:nth-of-type(even) .masonry-item {
+    height: 240px;
+}
+
+a:nth-of-type(odd) .masonry-item {
+    height: 130px;
+}
