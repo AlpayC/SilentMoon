@@ -19,14 +19,13 @@
   --cream: #faf2da;
   --lightgreen: #8e9775;
   --darkgreen: #4a503d;
-  --middlegrey: #A0A3B1; 
+  --middlegrey: #a0a3b1;
   --pink: #e28f83;
   --lightcream: #fefcf8;
   --grey: #a1a4b2;
   --lightgrey: #a1a4b22e;
   --darkgrey: #3f414e;
   --white: #ffffff;
-
 }
 
 /* GENERAL STYLES */
@@ -161,3 +160,8 @@ form {
   color: var(--grey);
 }
 
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
