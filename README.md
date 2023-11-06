@@ -24,7 +24,7 @@ Welcome to the Silentmoon Full Stack MERN (MongoDB, Express, React, Node.js) App
 
 ## Demo
 
-You can view a live demo of the Silentmoon app at https://silentmoon-me61.onrender.com.
+You can view a live demo of the Silentmoon app at https://silentmoon.alpaycelik.dev.
 
 ## Features
 
