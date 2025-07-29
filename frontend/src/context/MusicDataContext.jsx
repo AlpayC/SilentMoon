@@ -32,6 +32,7 @@ export const MusicDataProvider = ({ children }) => {
         // setCopyPlaylistData(response);
         const filteredPlaylists = response.data.playlists.items.filter(
           (playlist) =>
+            playlist &&
             playlist.id !== "2TSqBzonsoTHZ8dXeu7gVF" &&
             playlist.id !== "3u3z3wxohxmsp3cOP1ffJ9"
         );

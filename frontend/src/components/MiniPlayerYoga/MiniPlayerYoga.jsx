@@ -2,13 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import PlayButton from "../PlayButton/PlayButton";
 import "./MiniPlayerYoga.css";
 import { VideoDataContext } from "../../context/VideoDataContext";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 import PlayBtn from "../../assets/img/Icons/PlayBtn.svg";
 import { Link } from "react-router-dom";
 
 const MiniPlayerYoga = props => {
 	const { exerciseData } = useContext(VideoDataContext);
-	const { playlistData } = useContext(MusicDataContext);
+	const { playlistData } = useContext(DeezerDataContext);
 
 	let newDate = new Date();
 	let date = newDate.getDate();
@@ -59,18 +59,19 @@ const MiniPlayerYoga = props => {
 				<h4 className='miniplayer-title'>
 					{props.category === "yoga"
 						? randomExercise?.title
-						: randomMediation?.name}
+						: randomMediation?.title}
 				</h4>
 				<p className='description-banner'>
 					{month} {date} • DAILY RECOMMENDATION
 				</p>
 			</div>
 			<Link
-				to={
-					props.category === "yoga"
-						? `/category/${props.category}/${randomExercise._id}`
-						: `/category/${props.category}/${randomMediation.id}`
-				}
+				to={props.category === "yoga"
+					? `/category/${props.category}/${randomExercise?._id || ''}`
+					: `/category/${props.category}/${randomMediation?.id || ''}`}
+				state={props.category === "meditation" && randomMediation 
+					? { playlistData: randomMediation } 
+					: undefined}
 			>
 				<div className='play-button'>
 					<img src={PlayBtn} alt='Play' />

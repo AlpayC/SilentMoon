@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { UserDataContext } from "../../context/UserDataContext";
 import { useContext } from "react";
 import { VideoDataContext } from "../../context/VideoDataContext";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 
 const BackButon = (props) => {
   // BUGFIX: Search wird zurückgesetzt 22.08
 
   const { resetSearchVideoData } = useContext(VideoDataContext);
   const { refetchData, userData } = useContext(UserDataContext);
-  const { resetSearchMusicData } = useContext(MusicDataContext);
+  const { resetSearchDeezerData } = useContext(DeezerDataContext);
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
@@ -27,7 +27,7 @@ const BackButon = (props) => {
     if (userId) {
       resetSearchVideoData();
       refetchData(userId);
-      resetSearchMusicData();
+      resetSearchDeezerData();
     }
   };
 

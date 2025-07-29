@@ -4,7 +4,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import SearchBar from "../../components/Search/Search";
 
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 import MasonryMeditateItem from "../../components/MasonryMeditateItem/MasonryMeditateItem";
 
 import "./CategoryMeditate.css";
@@ -20,7 +20,7 @@ const CategoryMeditate = () => {
     );
   };
 
-  const { playlistData } = useContext(MusicDataContext);
+  const { playlistData } = useContext(DeezerDataContext);
   const initialItemsToShow = 4; // Number of items to show initially
   const itemsPerLoad = 2; // Number of items to load per click
   const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
@@ -36,7 +36,7 @@ const CategoryMeditate = () => {
 
   //NEU
   const filteredPlaylists = playlistData?.data?.playlists?.items.filter(
-    (item) => item.name.toLowerCase().includes(searchInput.toLowerCase())
+    (item) => item.title.toLowerCase().includes(searchInput.toLowerCase())
   );
 
   useEffect(() => {
