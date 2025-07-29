@@ -3,6 +3,7 @@ import Logo from "../../components/Logo/Logo";
 import NavBar from "../../components/NavBar/NavBar";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 import SearchBar from "../../components/Search/Search";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import { DeezerDataContext } from "../../context/DeezerDataContext";
 import MasonryMeditateItem from "../../components/MasonryMeditateItem/MasonryMeditateItem";
@@ -20,7 +21,7 @@ const CategoryMeditate = () => {
     );
   };
 
-  const { playlistData } = useContext(DeezerDataContext);
+  const { playlistData, isLoadingPlaylists } = useContext(DeezerDataContext);
   const initialItemsToShow = 4; // Number of items to show initially
   const itemsPerLoad = 2; // Number of items to load per click
   const [visibleItems, setVisibleItems] = useState(initialItemsToShow);
@@ -64,7 +65,9 @@ const CategoryMeditate = () => {
         <MiniPlayerYoga category={"meditation"} />
         {/* NEU */}
         <div className="masonry-container">
-          {filteredPlaylists?.length > 0 ? (
+          {isLoadingPlaylists ? (
+            <LoadingSpinner text="Loading meditation playlists..." />
+          ) : filteredPlaylists?.length > 0 ? (
             filteredPlaylists
               ?.slice(0, visibleItems)
               .map((item) => (
@@ -79,7 +82,7 @@ const CategoryMeditate = () => {
           )}
         </div>
         {/* Bis HIER */}
-        {visibleItems < (filteredPlaylists?.length || 0) && (
+        {!isLoadingPlaylists && visibleItems < (filteredPlaylists?.length || 0) && (
           <LoadMoreButton onClick={loadMoreItems} />
         )}
 
