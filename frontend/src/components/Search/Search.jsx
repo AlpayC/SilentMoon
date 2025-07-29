@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import "./Search.css";
 import { VideoDataContext } from "../../context/VideoDataContext";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 
 const SearchBar = () => {
   const { exerciseData, setExerciseData } = useContext(VideoDataContext);
@@ -13,7 +13,7 @@ const SearchBar = () => {
   );
 
   const { playlistData, setPlaylistData, playlistDetails, setPlaylistDetails } =
-    useContext(MusicDataContext);
+    useContext(DeezerDataContext);
   const [searchInput, setSearchInput] = useState("");
   const [originalExerciseData, setOriginalExerciseData] = useState(
     exerciseData || storagedExerciseData
@@ -38,7 +38,7 @@ const SearchBar = () => {
       setExerciseData({ ...originalExerciseData, data: filteredExercises });
       const filteredPlaylists =
         originalPlaylistData.data.playlists.items.filter((playlist) =>
-          playlist.name.toLowerCase().includes(value.toLowerCase())
+          playlist.title.toLowerCase().includes(value.toLowerCase())
         );
       const updatedPlaylistData = {
         ...originalPlaylistData,
@@ -52,7 +52,7 @@ const SearchBar = () => {
       };
       setPlaylistData(updatedPlaylistData);
       const filteredPlaylistDetails = originalPlaylistDetails.filter(
-        (playlist) => playlist.name.toLowerCase().includes(value.toLowerCase())
+        (playlist) => playlist.title.toLowerCase().includes(value.toLowerCase())
       );
       setPlaylistDetails(filteredPlaylistDetails);
     }

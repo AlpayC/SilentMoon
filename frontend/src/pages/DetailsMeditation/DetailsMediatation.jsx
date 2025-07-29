@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import Stats from "../../components/Stats/Stats";
 import NavBar from "../../components/NavBar/NavBar";
 import BackButton from "../../components/BackButton/BackButton";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 import MusicItem from "../../components/MusicItem/MusicItem";
 import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
 
@@ -12,33 +12,40 @@ import "./DetailsMediatation.css";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
 
 const DetailsMusic = () => {
-  const { playlistData } = useContext(MusicDataContext);
+  const { playlistData } = useContext(DeezerDataContext);
   const [tracksData, setTracksData] = useState();
   const [visibleTracks, setVisibleTracks] = useState(20); // Number of tracks to show
   const params = useParams();
+  const location = useLocation();
 
-  const chosenPlaylist = playlistData?.data?.playlists?.items.find(
-    (playlist) => playlist.id === params.id
+  // Get playlist data from location state (passed from Link) or search in context data
+  const passedPlaylistData = location.state?.playlistData;
+  
+  const chosenPlaylist = passedPlaylistData || playlistData?.data?.playlists?.items?.find(
+    (playlist) => playlist && playlist.id.toString() === params.id
   );
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.post(`/api/spotify/tracks`, params);
+        const { data } = await axios.post(`/api/deezer/tracks`, params);
         setTracksData(data);
       } catch (error) {
         console.error("Error fetching tracks:", error);
       }
     };
-    fetchData();
+    
+    if (params.id) {
+      fetchData();
+    }
   }, [params]);
 
   // Load more tracks when the "Load More" button is clicked
   const loadMoreTracks = () => {
     setVisibleTracks((prevVisibleTracks) => prevVisibleTracks + 20);
   };
-
-  let shortenedPLaylistName = chosenPlaylist.name;
+  
+  let shortenedPLaylistName = chosenPlaylist?.title || "Loading...";
   shortenedPLaylistName =
     shortenedPLaylistName.length > 45
       ? shortenedPLaylistName.slice(0, 45) + "..."
@@ -55,7 +62,7 @@ const DetailsMusic = () => {
               categoryName={"meditation"}
             />
           </div>
-          <img className="header-image" src={chosenPlaylist.images[0].url} />
+          <img className="header-image" src={chosenPlaylist?.picture_medium || chosenPlaylist?.picture || ''} />
         </div>
       </div>
       <div className="main-wrapper center">
@@ -66,22 +73,23 @@ const DetailsMusic = () => {
                 {shortenedPLaylistName}
               </h1>
               <p>PLAYLIST</p>
-              <p className="subtitle">{chosenPlaylist.description}</p>
               <div className="statsContainerNew">
                 <Stats />
                 <h2 className="playlist-h2">Playlist</h2>
               </div>
             </div>
-            {tracksData?.items?.slice(0, visibleTracks).map((track) => (
+            {tracksData?.data?.slice(0, visibleTracks).map((track) => (
               <MusicItem
-                key={track.track.id}
-                link={track.track.id}
-                title={track.track.name}
-                duration={track.track.duration_ms}
+                key={track.id}
+                link={track.id}
+                title={track.title}
+                duration={track.duration * 1000}
+                hasPreview={!!track.preview}
               />
             ))}
-            {visibleTracks < tracksData?.items?.length}
-            <LoadMoreButton onClick={loadMoreTracks} />
+            {visibleTracks < tracksData?.data?.length && (
+              <LoadMoreButton onClick={loadMoreTracks} />
+            )}
             <NavBar />
           </>
         ) : (

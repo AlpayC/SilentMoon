@@ -8,7 +8,6 @@ import MeditationImage5 from "../../assets/img/BackupImage/meditation5.jpg";
 import MeditationImage6 from "../../assets/img/BackupImage/meditation6.jpg";
 
 const RandomHomeCardMeditation = props => {
-	console.log(props.data?.data?.playlists?.items);
 	const getRandomItem = array => {
 		if (!array || array.length === 0) {
 			return null;
@@ -32,11 +31,14 @@ const RandomHomeCardMeditation = props => {
 		<>
 			{/*  only render if the condition randomExercise is true */}
 			{randomMediation && (
-				<Link to={`/category/${props.category}/${randomMediation.id}`}>
+				<Link 
+					to={`/category/${props.category}/${randomMediation.id}`}
+					state={{ playlistData: randomMediation }}
+				>
 					<div className='random-img-container'>
 						<img src={randomImage} alt={props.category} />
 						<div className='random-img-content'>
-							<h3>{randomMediation.name}</h3>
+							<h3>{randomMediation.title}</h3>
 						</div>
 						<div className='random-img-content-bottom'>
 							<p className='subtitle-small'>3 - 10 MIN</p>

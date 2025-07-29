@@ -19,14 +19,15 @@ const MusicItem = props => {
 	const duration = convertMillisecondsToMinutesAndSeconds(props.duration);
 
 	return (
-		<Link to={`/meditationplayer/${props.link}`} key={props.key}>
-			<div className='music-item cloumn'>
+		<Link to={`/meditationplayer/${props.link}`}>
+			<div className={`music-item cloumn ${!props.hasPreview ? 'no-preview' : ''}`}>
 				<PlayButtonGrey />
 				<div>
 					<h4>{props.title}</h4>
 					<p className='subtitle-small'>
 						{duration.minutes}:{duration.seconds < 10 ? "0" : ""}
 						{duration.seconds} MIN
+						{!props.hasPreview && " • Preview unavailable"}
 					</p>
 				</div>
 			</div>

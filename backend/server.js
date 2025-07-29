@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 
 import { userRouter } from "./user/routes.js";
 import { spotifyRouter } from "./spotify/spotify.js";
+import { deezerRouter } from "./deezer/deezer.js";
 import { exercisesRouter } from "./exercises/routes.js";
 
 dotenv.config({
@@ -15,7 +16,8 @@ dotenv.config({
 await mongoose.connect(process.env.DB);
 await mongoose.connection.syncIndexes();
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
+// Force restart
 const app = express();
 
 const ReactAppDistPath = new URL("../frontend/dist/", import.meta.url);
@@ -26,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(ReactAppDistPath.pathname));
 app.use("/api/user", userRouter);
 app.use("/api/spotify", spotifyRouter);
+app.use("/api/deezer", deezerRouter);
 app.use("/api/exercises", exercisesRouter);
 
 /*

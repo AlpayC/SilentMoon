@@ -6,14 +6,14 @@ import SearchBar from "../../components/Search/Search";
 import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
 import Logo from "../../components/Logo/Logo";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 //import { UserDataContext } from "../../context/UserDataContext";
 import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
 import { UserContext } from "../../user/UserContext";
 
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
-  const { playlistDetails } = useContext(MusicDataContext);
+  const { playlistDetails } = useContext(DeezerDataContext);
   const { userData } = useUserData();
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
@@ -81,14 +81,15 @@ const Profile = () => {
                     key={item.id}
                     link={`/category/meditation/${item.id}`}
                     title={
-                      item.name.length > 20
-                        ? `${item.name.substring(0, 10)}`
-                        : item.name
+                      item.title && item.title.length > 20
+                        ? `${item.title.substring(0, 10)}`
+                        : item.title || 'Untitled'
                     }
                     playlist_id={item.id}
-                    image={item?.images[0].url}
-                    tracks={item?.tracks.total}
-                    owner={item?.owner.display_name}
+                    image={item?.picture_medium || item?.picture}
+                    tracks={item?.nb_tracks || 0}
+                    owner={item?.user?.name || 'Deezer'}
+                    playlistData={item}
                   />
                 ))
               ) : (

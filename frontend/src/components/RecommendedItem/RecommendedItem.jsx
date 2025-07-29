@@ -38,7 +38,10 @@ const RecommendedItem = props => {
 
 	return (
 		<div className='recommended-item'>
-			<Link to={props.link}>
+			<Link 
+				to={props.link}
+				state={props.playlistData ? { playlistData: props.playlistData } : undefined}
+			>
 				<img alt='Yoga Image' src={props.image ? props.image : randomImage} />
 				<h3>{props.title}</h3>
 				<div className='item-bottom'>

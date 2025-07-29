@@ -8,7 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./user/UserContext.jsx";
 import { VideoDataProvider } from "./context/VideoDataContext.jsx";
 import { UserDataProvider } from "./context/UserDataContext.jsx";
-import { MusicDataProvider } from "./context/MusicDataContext.jsx";
+import { DeezerDataProvider } from "./context/DeezerDataContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -16,9 +16,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <UserDataProvider>
         <UserProvider>
           <VideoDataProvider>
-            <MusicDataProvider>
+            <DeezerDataProvider>
               <App />
-            </MusicDataProvider>
+            </DeezerDataProvider>
           </VideoDataProvider>
         </UserProvider>
       </UserDataProvider>

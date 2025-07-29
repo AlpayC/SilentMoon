@@ -9,7 +9,7 @@ import { UserDataContext, useUserData } from "../../context/UserDataContext";
 import { useContext, useEffect } from "react";
 // BUGFIX: Search wird zurückgesetzt 22.08
 import { VideoDataContext } from "../../context/VideoDataContext";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
@@ -17,7 +17,7 @@ const NavBar = () => {
   // BUGFIX: Search wird zurückgesetzt 22.08
   const { resetSearchVideoData } = useContext(VideoDataContext);
   const { refetchData } = useContext(UserDataContext);
-  const { resetSearchMusicData } = useContext(MusicDataContext);
+  const { resetSearchDeezerData } = useContext(DeezerDataContext);
   const { userData } = useUserData();
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
@@ -28,7 +28,7 @@ const NavBar = () => {
   const resetSearchData = () => {
     resetSearchVideoData();
     refetchData(userId);
-    resetSearchMusicData();
+    resetSearchDeezerData();
   };
 
   return (

@@ -4,18 +4,17 @@ import { Link } from "react-router-dom";
 const MasonryMeditateItem = ({ item, height }) => {
   return (
     <Link
-      to={{
-        pathname: `/category/meditation/${item.id}`,
-      }}
+      to={`/category/meditation/${item.id}`}
+      state={{ playlistData: item }}
     >
       <div
         style={{
-          backgroundImage: `url(${item.images[0].url})`,
+          backgroundImage: `url(${item?.picture_medium || item?.picture || ''})`,
           height: height,
         }}
         className="masonry-item"
       >
-        {item.title}
+        {item?.title || 'Untitled'}
       </div>
     </Link>
   );

@@ -24,14 +24,15 @@ const ExerciseSliderMeditation = (props) => {
             key={item.id}
             link={`/category/${props.category}/${item.id}`}
             title={
-              item.name.length > 20
-                ? `${item.name.substring(0, 12)}`
-                : item.name
+              item.title.length > 20
+                ? `${item.title.substring(0, 12)}`
+                : item.title
             }
             playlist_id={item.id}
-            image={item.images[0].url}
-            tracks={item.tracks.total}
-            owner={item.owner.display_name}
+            image={item.picture_medium}
+            tracks={item.nb_tracks}
+            owner={item.user?.name || 'Deezer'}
+            playlistData={item}
           />
         ))
       ) : (

@@ -1,7 +1,7 @@
 import "./Home.css";
 import { useContext, useEffect, useState } from "react";
 import { VideoDataContext } from "../../context/VideoDataContext";
-import { MusicDataContext } from "../../context/MusicDataContext";
+import { DeezerDataContext } from "../../context/DeezerDataContext";
 
 import Logo from "../../components/Logo/Logo";
 import { UserDataContext } from "../../context/UserDataContext";
@@ -15,7 +15,7 @@ const Home = () => {
   const { exerciseData } = useContext(VideoDataContext);
   const { userData } = useContext(UserDataContext);
   const [greeting, setGreeting] = useState("");
-  const { playlistData } = useContext(MusicDataContext);
+  const { playlistData } = useContext(DeezerDataContext);
   const [searchInput, setSearchInput] = useState("");
   // generate greeting
   let newGreeting = "";
