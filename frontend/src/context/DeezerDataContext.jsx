@@ -21,13 +21,14 @@ export const DeezerDataProvider = ({ children }) => {
   const [copyPlaylistData, setCopyPlaylistData] = useState([]);
   const [copyPlaylistDetails, setCopyPlaylistDetails] = useState([]);
   const [isLoadingPlaylistDetails, setIsLoadingPlaylistDetails] = useState(false);
+  const [isLoadingPlaylists, setIsLoadingPlaylists] = useState(false);
 
   useEffect(() => {
     if (user !== null) {
       const fetchPlaylists = async () => {
+        setIsLoadingPlaylists(true);
         try {
           const response = await axios.get("/api/deezer/playlist");
-          console.log("Deezer playlists response:", response);
           
           // Transform Deezer data to match expected format
           const transformedResponse = {
@@ -38,11 +39,12 @@ export const DeezerDataProvider = ({ children }) => {
             }
           };
           
-          console.log("Transformed Deezer data:", transformedResponse);
           setPlaylistData(transformedResponse);
           setCopyPlaylistData(transformedResponse);
         } catch (error) {
           console.error("Error fetching Deezer playlists:", error);
+        } finally {
+          setIsLoadingPlaylists(false);
         }
       };
       fetchPlaylists();
@@ -119,6 +121,8 @@ export const DeezerDataProvider = ({ children }) => {
         setPlaylistData,
         setPlaylistDetails,
         resetSearchDeezerData,
+        isLoadingPlaylistDetails,
+        isLoadingPlaylists,
       }}
     >
       {children}

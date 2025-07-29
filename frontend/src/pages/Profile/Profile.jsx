@@ -7,13 +7,14 @@ import RecommendedItem from "../../components/RecommendedItem/RecommendedItem";
 import NavBar from "../../components/NavBar/NavBar";
 import Logo from "../../components/Logo/Logo";
 import { DeezerDataContext } from "../../context/DeezerDataContext";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 //import { UserDataContext } from "../../context/UserDataContext";
 import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
 import { UserContext } from "../../user/UserContext";
 
 const Profile = () => {
   const { exerciseData } = useContext(VideoDataContext);
-  const { playlistDetails } = useContext(DeezerDataContext);
+  const { playlistDetails, isLoadingPlaylistDetails } = useContext(DeezerDataContext);
   const { userData } = useUserData();
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
@@ -25,6 +26,7 @@ const Profile = () => {
     sessionStorage.getItem("sessionedPlaylistDetails")
   );
   const [searchInput, setSearchInput] = useState("");
+  const [isLoadingVideos, setIsLoadingVideos] = useState(true);
 
   const favoriteExercises = exerciseData?.data || storagedExerciseData?.data;
 
@@ -35,6 +37,12 @@ const Profile = () => {
   );
 
   const favoritePlaylists = playlistDetails || storagedPlaylistDetails;
+
+  useEffect(() => {
+    if (favoriteExercises) {
+      setIsLoadingVideos(false);
+    }
+  }, [favoriteExercises]);
 
   return (
     <>
@@ -58,7 +66,9 @@ const Profile = () => {
             />
             <h2 className="favorite-title">Favourite Yoga Sessions</h2>
             <section className="slider">
-              {favoriteVideos?.length > 0 ? (
+              {isLoadingVideos ? (
+                <LoadingSpinner text="Loading favorite yoga sessions..." />
+              ) : favoriteVideos?.length > 0 ? (
                 favoriteVideos?.map((item) => (
                   <RecommendedItem
                     key={item._id}
@@ -75,7 +85,9 @@ const Profile = () => {
             </section>
             <h2 className="favorite-title">Favourite Meditations</h2>
             <section className="slider">
-              {favoritePlaylists?.length > 0 ? (
+              {isLoadingPlaylistDetails ? (
+                <LoadingSpinner text="Loading favorite meditations..." />
+              ) : favoritePlaylists?.length > 0 ? (
                 favoritePlaylists?.map((item) => (
                   <RecommendedItem
                     key={item.id}
