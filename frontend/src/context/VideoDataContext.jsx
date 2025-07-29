@@ -11,18 +11,22 @@ export const VideoDataProvider = ({ children }) => {
   const { userData } = useUserData();
   const { user } = useContext(UserContext);
   const [shouldRefetch, _refetch] = useState(true);
+  const [isLoadingExercises, setIsLoadingExercises] = useState(false);
   const resetSearchVideoData = () => _refetch((prev) => !prev);
   // BUGFIX: Search wird zurückgesetzt 22.08
 
   useEffect(() => {
     if (user !== null) {
       const exercisesFromDB = async () => {
+        setIsLoadingExercises(true);
         try {
           const response = await axios.get("/api/exercises");
           setExerciseData(response);
           setCopyExerciseData(response);
         } catch (error) {
           console.error("Error fetching Exercises data:", error);
+        } finally {
+          setIsLoadingExercises(false);
         }
       };
       exercisesFromDB();
@@ -47,7 +51,7 @@ export const VideoDataProvider = ({ children }) => {
   }, [shouldRefetch, copyExerciseData]);
   return (
     <VideoDataContext.Provider
-      value={{ exerciseData, setExerciseData, resetSearchVideoData }}
+      value={{ exerciseData, setExerciseData, resetSearchVideoData, isLoadingExercises }}
     >
       {children}
     </VideoDataContext.Provider>

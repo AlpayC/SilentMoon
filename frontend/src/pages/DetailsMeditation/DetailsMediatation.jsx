@@ -7,6 +7,7 @@ import BackButton from "../../components/BackButton/BackButton";
 import { DeezerDataContext } from "../../context/DeezerDataContext";
 import MusicItem from "../../components/MusicItem/MusicItem";
 import FavoriteButton from "../../components/FavoriteButton/FavoriteButton";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 import "./DetailsMediatation.css";
 import LoadMoreButton from "../../components/LoadMoreButton/LoadMoreButton";
@@ -15,6 +16,7 @@ const DetailsMusic = () => {
   const { playlistData } = useContext(DeezerDataContext);
   const [tracksData, setTracksData] = useState();
   const [visibleTracks, setVisibleTracks] = useState(20); // Number of tracks to show
+  const [isLoadingTracks, setIsLoadingTracks] = useState(true);
   const params = useParams();
   const location = useLocation();
 
@@ -27,11 +29,14 @@ const DetailsMusic = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoadingTracks(true);
       try {
         const { data } = await axios.post(`/api/deezer/tracks`, params);
         setTracksData(data);
       } catch (error) {
         console.error("Error fetching tracks:", error);
+      } finally {
+        setIsLoadingTracks(false);
       }
     };
     
@@ -78,22 +83,28 @@ const DetailsMusic = () => {
                 <h2 className="playlist-h2">Playlist</h2>
               </div>
             </div>
-            {tracksData?.data?.slice(0, visibleTracks).map((track) => (
-              <MusicItem
-                key={track.id}
-                link={track.id}
-                title={track.title}
-                duration={track.duration * 1000}
-                hasPreview={!!track.preview}
-              />
-            ))}
-            {visibleTracks < tracksData?.data?.length && (
-              <LoadMoreButton onClick={loadMoreTracks} />
+            {isLoadingTracks ? (
+              <LoadingSpinner text="Loading playlist tracks..." />
+            ) : (
+              <>
+                {tracksData?.data?.slice(0, visibleTracks).map((track) => (
+                  <MusicItem
+                    key={track.id}
+                    link={track.id}
+                    title={track.title}
+                    duration={track.duration * 1000}
+                    hasPreview={!!track.preview}
+                  />
+                ))}
+                {visibleTracks < tracksData?.data?.length && (
+                  <LoadMoreButton onClick={loadMoreTracks} />
+                )}
+              </>
             )}
             <NavBar />
           </>
         ) : (
-          <p>Loading playlist details...</p>
+          <LoadingSpinner text="Loading playlist details..." />
         )}
       </div>
     </>
