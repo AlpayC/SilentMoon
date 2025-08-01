@@ -21,12 +21,15 @@ const MeditationPlayer = () => {
         const { data } = await axios.get(`/api/deezer/onetrack/${params.id}`);
         
         if (data.error) {
-          console.error("Deezer API returned error:", data.error, "Code:", data.code);
+          // Handle Deezer API errors gracefully
+          setTrackItemData({ error: data.error });
+          return;
         }
         
         setTrackItemData(data);
       } catch (error) {
-        console.error("Error fetching track:", error.response?.data || error.message);
+        // Handle network or other errors
+        setTrackItemData({ error: 'Failed to load track' });
       }
     };
     fetchData();

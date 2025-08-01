@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useContext } from "react";
+import { createContext, useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import { UserContext } from "../user/UserContext";
 import { useUserData } from "../context/UserDataContext";
@@ -11,9 +11,9 @@ export const MusicDataProvider = ({ children }) => {
   // BUGFIX: Search wird zurückgesetzt 22.08
 
   const [shouldRefetch, _refetch] = useState(true);
-  const resetSearchMusicData = () => _refetch((prev) => !prev);
+  const resetSearchMusicData = useCallback(() => _refetch((prev) => !prev), []);
   const [refreshPlaylistDetails, _refresh] = useState(true);
-  const refreshPlaylistData = () => _refresh((prev) => !prev);
+  const refreshPlaylistData = useCallback(() => _refresh((prev) => !prev), []);
   const storagedUserData = JSON.parse(
     sessionStorage.getItem("sessionedUserData")
   );
@@ -27,7 +27,6 @@ export const MusicDataProvider = ({ children }) => {
     if (user !== null) {
       const fetchTracks = async () => {
         const response = await axios.get("/api/spotify/playlist");
-        console.log(response);
         // setPlaylistData(response);
         // setCopyPlaylistData(response);
         const filteredPlaylists = response.data.playlists.items.filter(
@@ -44,9 +43,11 @@ export const MusicDataProvider = ({ children }) => {
             },
           },
         };
-        console.log(updatedResponse);
         setPlaylistData(updatedResponse);
         setCopyPlaylistData(updatedResponse);
+        
+        // Store in session storage immediately
+        sessionStorage.setItem("sessionedPlaylistData", JSON.stringify(updatedResponse));
       };
       fetchTracks();
     }
@@ -61,26 +62,27 @@ export const MusicDataProvider = ({ children }) => {
         });
         setPlaylistDetails(response.data);
         setCopyPlaylistDetails(response.data);
+        
+        // Store in session storage immediately
+        sessionStorage.setItem("sessionedPlaylistDetails", JSON.stringify(response.data));
       }
     };
     fetchData();
   }, [user, refreshPlaylistDetails]);
 
+  // Handle search reset - reapply the copy data to main data
   useEffect(() => {
-    sessionStorage.setItem(
-      "sessionedPlaylistData",
-      JSON.stringify(copyPlaylistData)
-    );
-    setPlaylistData(copyPlaylistData);
-  }, [shouldRefetch, copyPlaylistData]);
+    if (copyPlaylistData && Object.keys(copyPlaylistData).length > 0) {
+      setPlaylistData(copyPlaylistData);
+    }
+  }, [shouldRefetch]);
 
+  // Handle playlist details reset
   useEffect(() => {
-    sessionStorage.setItem(
-      "sessionedPlaylistDetails",
-      JSON.stringify(copyPlaylistDetails)
-    );
-    setPlaylistDetails(copyPlaylistDetails);
-  }, [shouldRefetch, copyPlaylistDetails]);
+    if (copyPlaylistDetails && copyPlaylistDetails.length > 0) {
+      setPlaylistDetails(copyPlaylistDetails);
+    }
+  }, [shouldRefetch]);
 
   return (
     <MusicDataContext.Provider

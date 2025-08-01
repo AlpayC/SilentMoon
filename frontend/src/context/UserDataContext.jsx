@@ -1,5 +1,5 @@
 // UserDataContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 export const UserDataContext = createContext();
 import axios from "axios";
@@ -9,13 +9,13 @@ export const UserDataProvider = ({ children }) => {
   const [shouldRefetch, _refetch] = useState(true);
   const [error, setError] = useState(null);
 
-  const refetchData = async (userId) => {
+  const refetchData = useCallback(async (userId) => {
     setError(null);
 
-    // BUGFIX: Richtige Generierung des Objekts für den Fetch
-    userId = { _id: userId };
+    // BUGFIX: Proper object generation for fetch
+    const userIdObj = { _id: userId };
     try {
-      const response = await axios.post("/api/user/getUserData", userId);
+      const response = await axios.post("/api/user/getUserData", userIdObj);
       const updatedUserObject = {
         name: response.data.name,
         lastname: response.data.lastname,
@@ -25,20 +25,19 @@ export const UserDataProvider = ({ children }) => {
         remindertime: response.data.remindertime,
         playlists: response.data.playlists,
         videos: response.data.videos,
-        // # ToDo: Evtl? profile picture, da auf der Detailsseite ein Profilbild angezeigt wird
+        // TODO: Profile picture if needed on details page
       };
       setUserData(updatedUserObject);
     } catch (e) {
-      console.log(e);
       setError("An Error occured, try again later");
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (userData) {
       sessionStorage.setItem("sessionedUserData", JSON.stringify(userData));
     }
-  }, [userData, refetchData]);
+  }, [userData]);
   return (
     <UserDataContext.Provider value={{ userData, setUserData, refetchData }}>
       {children}

@@ -21,10 +21,8 @@ export function authenticateToken(req, res, next) {
   if (!token) return res.sendStatus(401);
 
   jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-    console.log(err, user);
     if (err) return res.sendStatus(403);
     req.userEmail = user.email;
-
     next();
   });
 }
