@@ -37,7 +37,6 @@ spotifyRouter.post("/auth", async (req, res) => {
     if (response.status === 200) {
       const token = response.data;
       accessToken = token;
-      console.log(accessToken);
       res.send("Token generated");
       // res.send(accessToken);
     } else {
@@ -72,7 +71,6 @@ spotifyRouter.post("/tracks", async (req, res) => {
 
     if (response.status === 200) {
       const spotifyData = response.data;
-      console.log("SpotifyData", spotifyData);
       res.status(200).json(spotifyData);
     } else {
       res
@@ -104,7 +102,6 @@ spotifyRouter.post("/onetrack", async (req, res) => {
 
     if (response.status === 200) {
       const spotifyData = response.data;
-      console.log("SpotifyData", spotifyData);
       res.status(200).json(spotifyData);
     } else {
       res
@@ -159,7 +156,6 @@ spotifyRouter.post("/getPlaylistDetails", async (req, res) => {
 
     const { _id } = req.body;
     const { playlists } = await User.findOne({ _id });
-    console.log(playlists);
     const playlistIds = playlists.map((playlist) => playlist.playlist_id);
 
     const playlistDetails = await Promise.all(
@@ -178,7 +174,6 @@ spotifyRouter.post("/getPlaylistDetails", async (req, res) => {
 
     res.status(200).json(playlistDetails);
   } catch (error) {
-    console.error("Error fetching playlist details:", error);
     res.status(500).json({ error: "An error occurred" });
   }
 });

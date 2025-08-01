@@ -20,9 +20,7 @@ exercisesRouter.get("/details/:id", async (req, res) => {
   try {
     const exercise = await Video.findById(req.params.id);
     res.send(exercise);
-    console.log(exercise);
   } catch (err) {
-    console.log(err);
     res.sendStatus(500);
   }
 });
@@ -64,9 +62,7 @@ exercisesRouter.get("/filter", async (req, res) => {
 
     let responseData = await query.exec();
     res.json(responseData);
-    console.log(responseData.length);
   } catch (error) {
-    console.error("Fehler beim Verarbeiten der Anfrage:", error);
     res.status(500).send("Interner Serverfehler");
   }
 });

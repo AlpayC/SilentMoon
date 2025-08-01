@@ -37,11 +37,9 @@ export default function Signin() {
       password: "testuser",
     };
     try {
-      console.log(testUserLogin);
       const response = await axios.post("/api/user/login", testUserLogin);
       handleLoginResponse(response);
     } catch {
-      console.error();
       setError("An error occurred, try again later");
     }
   };
@@ -55,7 +53,6 @@ export default function Signin() {
       const response = await axios.post("/api/user/login", formData);
       handleLoginResponse(response);
     } catch (e) {
-      console.error(e);
       setError("An error occurred, try again later");
     }
   };

@@ -19,7 +19,7 @@ const Music = () => {
         {isLoadingPlaylists ? (
           <LoadingSpinner text="Loading playlists..." />
         ) : (
-          playlistData?.data?.playlists?.items.map((playlist) => (
+          playlistData?.data?.playlists?.items?.map((playlist) => (
             <Link 
               to={`/music/${playlist.id}`} 
               state={{ playlistData: playlist }}

@@ -5,8 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch .",
-    "dev2": "nodemon .",
+    "dev": "cross-env NODE_ENV=development node --watch .",
+    "dev2": "cross-env NODE_ENV=development nodemon .",
     "start": "node .",
     "debugging": "node --inspect-brk ."
   },
@@ -16,9 +16,13 @@
   "dependencies": {
     "cloudinary": "^1.40.0",
     "cookie-parser": "^1.4.6",
+    "cross-env": "^10.0.0",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
+    "express-rate-limit": "^8.0.1",
+    "express-validator": "^7.2.1",
     "form-data": "^4.0.0",
+    "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.1",
     "mailgun.js": "^9.2.0",
     "mongoose": "^7.4.1",

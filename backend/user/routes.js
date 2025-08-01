@@ -2,6 +2,15 @@ import { Router } from "express";
 import multer from "multer";
 import User from "./UserModel.js";
 import { authenticateToken, generateAccessToken } from "./authToken.js";
+import { 
+  validateSignup, 
+  validateLogin, 
+  validateExerciseId, 
+  validatePlaylistId, 
+  validateReminder,
+  handleValidationErrors 
+} from "../middleware/validation.js";
+import { authLimiter, dataModificationLimiter } from "../middleware/rateLimiting.js";
 
 export const userRouter = Router();
 
@@ -34,18 +43,17 @@ userRouter.post("/getUserData/", authenticateToken, async (req, res) => {
     res.send(user);
   } catch (err) {
     // Handle errors appropriately
-    console.log(err);
     res.sendStatus(500);
   }
 });
 
-userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
-  // Neuen User erstellen
+userRouter.post("/signup", authLimiter, multerMiddleware.none(), validateSignup, handleValidationErrors, async (req, res) => {
+  // Create new user
   const { name, email, lastname } = req.body;
   const newUser = new User({ name, lastname, email });
-  // user.setPassword (hash und salt setzen)
+  // Set password (hash and salt)
   newUser.setPassword(req.body.password);
-  // user speichern
+  // Save user
   try {
     await newUser.save();
     return res.send({
@@ -55,14 +63,12 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
       },
     });
   } catch (e) {
-    console.log(e);
     if (e.name === "ValidationError") {
       return res.status(400).send({ error: e });
     }
 
-    // Duplication Error email existiert bereits als user
+    // Duplication Error - email already exists as user
     if (e.name === "MongoServerError" && e.code === 11000) {
-      console.log("Account exists already");
       return res.status(400).send({
         error: { message: "Username and Password combination not valid" },
       });
@@ -72,16 +78,13 @@ userRouter.post("/signup", multerMiddleware.none(), async (req, res) => {
   }
 });
 
-userRouter.post("/login", multerMiddleware.none(), async (req, res) => {
+userRouter.post("/login", authLimiter, multerMiddleware.none(), validateLogin, handleValidationErrors, async (req, res) => {
   const { email, password } = req.body;
-  console.log({ email, password });
   const user = await User.findOne({ email }).select("+hash").select("+salt");
-  // dieses password würde den gleichen hash produzieren
-  // (wie der in der Datenbank)
+  // This password would produce the same hash as in the database
   const passwordIsValid = user.verifyPassword(password);
   if (passwordIsValid) {
     const token = generateAccessToken({ email });
-    console.log(token);
 
     res.cookie("auth", token, { httpOnly: true, maxAge: hoursInMillisec(4) });
 
@@ -102,33 +105,28 @@ userRouter.get("/logout", (req, res) => {
 });
 
 userRouter.get("/secure", authenticateToken, async (req, res) => {
-  console.log(req.userEmail);
   res.send({ email: req.userEmail });
 });
 
-userRouter.put("/addexercise", authenticateToken, async (req, res) => {
-  console.log(req.body);
+userRouter.put("/addexercise", dataModificationLimiter, authenticateToken, validateExerciseId, handleValidationErrors, async (req, res) => {
   try {
     const { _id } = req.body;
     const { exercise_id } = req.body;
     const user = await User.findOne({ _id });
 
     if (user.videos.includes(exercise_id)) {
-      console.log("video ist bereits vorhanden");
-      return res.send("Video ist bereits vorhanden");
+      return res.send("Video already exists");
     }
     user.videos.push(exercise_id);
     await user.save();
-    res.send("Video hinzugefügt");
-    console.log("Video hinzugefügt");
+    res.send("Video added");
   } catch (err) {
     console.log("Error:", err);
     res.status(500).send("There was an error.");
   }
 });
 
-userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
-  console.log(req.body);
+userRouter.put("/deleteexercise", dataModificationLimiter, authenticateToken, validateExerciseId, handleValidationErrors, async (req, res) => {
   try {
     const { _id } = req.body;
     const { exercise_id } = req.body;
@@ -136,10 +134,9 @@ userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
     if (user.videos.some((item) => item.equals(exercise_id))) {
       user.videos = user.videos.filter((item) => !item.equals(exercise_id));
       await user.save();
-      console.log("Video gelöscht");
-      return res.send("Video ist aus der Favoritenliste gelöscht");
+      return res.send("Video removed from favorites");
     } else {
-      res.send("Video ist nicht in der Favoritenliste");
+      res.send("Video is not in favorites");
     }
   } catch (err) {
     console.log("Error:", err);
@@ -147,12 +144,10 @@ userRouter.put("/deleteexercise", authenticateToken, async (req, res) => {
   }
 });
 
-userRouter.put("/addplaylist", authenticateToken, async (req, res) => {
-  console.log(req.body);
+userRouter.put("/addplaylist", dataModificationLimiter, authenticateToken, validatePlaylistId, handleValidationErrors, async (req, res) => {
 
   try {
-    console.log(req.body);
-    const { _id } = req.body;
+      const { _id } = req.body;
     const { playlist_id } = req.body;
     const user = await User.findOne({ _id });
     const playlistExists = user.playlists.some(
@@ -160,21 +155,18 @@ userRouter.put("/addplaylist", authenticateToken, async (req, res) => {
     );
 
     if (playlistExists) {
-      console.log("Playlist ist bereits vorhanden");
-      return res.status(200).send("Playlist vorhanden");
+      return res.status(200).send("Playlist exists");
     }
     user.playlists.push({ playlist_id });
     await user.save();
-    console.log("Playlist hinzugefügt");
-    res.status(201).send("Playlist hinzugefügt");
+    res.status(201).send("Playlist added");
   } catch (err) {
     console.log("Error:", err);
     res.status(500).send("There was an error.");
   }
 });
 
-userRouter.put("/deleteplaylist", authenticateToken, async (req, res) => {
-  console.log(req.body);
+userRouter.put("/deleteplaylist", dataModificationLimiter, authenticateToken, validatePlaylistId, handleValidationErrors, async (req, res) => {
   try {
     const { _id, playlist_id } = req.body;
     const user = await User.findOne({ _id });
@@ -186,11 +178,10 @@ userRouter.put("/deleteplaylist", authenticateToken, async (req, res) => {
     if (playlistIndex !== -1) {
       user.playlists.splice(playlistIndex, 1);
       await user.save();
-      console.log("Playlist gelöscht");
 
-      return res.send("Playlist ist aus der Favoritenliste gelöscht");
+      return res.send("Playlist removed from favorites");
     } else {
-      res.send("Playlist ist nicht in der Favoritenliste");
+      res.send("Playlist is not in favorites");
     }
   } catch (err) {
     console.log("Error:", err);
@@ -198,8 +189,7 @@ userRouter.put("/deleteplaylist", authenticateToken, async (req, res) => {
   }
 });
 
-userRouter.put("/updatereminder", authenticateToken, async (req, res) => {
-  console.log(req.body);
+userRouter.put("/updatereminder", dataModificationLimiter, authenticateToken, validateReminder, handleValidationErrors, async (req, res) => {
   try {
     const { _id, reminderdays, remindertime } = req.body;
     const user = await User.findByIdAndUpdate(
@@ -208,9 +198,9 @@ userRouter.put("/updatereminder", authenticateToken, async (req, res) => {
       { new: true }
     );
     if (user) {
-      return res.send("Reminderinformationen erfolgreich upgedated");
+      return res.send("Reminder information successfully updated");
     } else {
-      res.status(404).send("User nicht gefunden");
+      res.status(404).send("User not found");
     }
   } catch (err) {
     console.log("Error:", err);

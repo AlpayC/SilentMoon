@@ -1,11 +1,25 @@
+import React from "react";
 import "./Button.css";
 
-const Button = props => {
-	return (
-		<>
-			<button className='main-btn'>{props.text}</button>
-		</>
-	);
-};
+const Button = React.memo(({ 
+  text, 
+  onClick, 
+  type = "button", 
+  className = "main-btn", 
+  disabled = false 
+}) => {
+  return (
+    <button 
+      className={className}
+      onClick={onClick}
+      type={type}
+      disabled={disabled}
+    >
+      {text}
+    </button>
+  );
+});
+
+Button.displayName = "Button";
 
 export default Button;

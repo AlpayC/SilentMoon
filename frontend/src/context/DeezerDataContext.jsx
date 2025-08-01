@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState, useContext, useMemo } from "react";
+import { createContext, useEffect, useState, useContext, useMemo, useCallback } from "react";
 import axios from "axios";
 import { UserContext } from "../user/UserContext";
 import { useUserData } from "./UserDataContext";
@@ -14,42 +14,60 @@ export const DeezerDataProvider = ({ children }) => {
   const activeUser = useMemo(() => userData || user, [userData, user]);
 
   const [shouldRefetch, _refetch] = useState(true);
-  const resetSearchDeezerData = () => _refetch((prev) => !prev);
+  const resetSearchDeezerData = useCallback(() => _refetch((prev) => !prev), []);
 
-  const [playlistData, setPlaylistData] = useState([]);
-  const [playlistDetails, setPlaylistDetails] = useState([]);
-  const [copyPlaylistData, setCopyPlaylistData] = useState([]);
-  const [copyPlaylistDetails, setCopyPlaylistDetails] = useState([]);
+  // Initialize from session storage if available
+  const [playlistData, setPlaylistData] = useState(() => {
+    const stored = sessionStorage.getItem("sessionedPlaylistData");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [playlistDetails, setPlaylistDetails] = useState(() => {
+    const stored = sessionStorage.getItem("sessionedPlaylistDetails");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [copyPlaylistData, setCopyPlaylistData] = useState(() => {
+    const stored = sessionStorage.getItem("sessionedPlaylistData");
+    return stored ? JSON.parse(stored) : [];
+  });
+  const [copyPlaylistDetails, setCopyPlaylistDetails] = useState(() => {
+    const stored = sessionStorage.getItem("sessionedPlaylistDetails");
+    return stored ? JSON.parse(stored) : [];
+  });
   const [isLoadingPlaylistDetails, setIsLoadingPlaylistDetails] = useState(false);
   const [isLoadingPlaylists, setIsLoadingPlaylists] = useState(false);
 
-  useEffect(() => {
-    if (user !== null) {
-      const fetchPlaylists = async () => {
-        setIsLoadingPlaylists(true);
-        try {
-          const response = await axios.get("/api/deezer/playlist");
-          
-          // Transform Deezer data to match expected format
-          const transformedResponse = {
-            data: {
-              playlists: {
-                items: response.data.data.filter(playlist => playlist && playlist.id)
-              }
-            }
-          };
-          
-          setPlaylistData(transformedResponse);
-          setCopyPlaylistData(transformedResponse);
-        } catch (error) {
-          console.error("Error fetching Deezer playlists:", error);
-        } finally {
-          setIsLoadingPlaylists(false);
+  const fetchPlaylists = useCallback(async () => {
+    if (!user) return;
+    
+    setIsLoadingPlaylists(true);
+    try {
+      const response = await axios.get("/api/deezer/playlist");
+      
+      // Transform Deezer data to match expected format
+      const transformedResponse = {
+        data: {
+          playlists: {
+            items: response.data.data.filter(playlist => playlist && playlist.id)
+          }
         }
       };
-      fetchPlaylists();
+      
+      setPlaylistData(transformedResponse);
+      setCopyPlaylistData(transformedResponse);
+      
+      // Store in session storage immediately
+      sessionStorage.setItem("sessionedPlaylistData", JSON.stringify(transformedResponse));
+    } catch (error) {
+      setPlaylistData([]);
+      setCopyPlaylistData([]);
+    } finally {
+      setIsLoadingPlaylists(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    fetchPlaylists();
+  }, [fetchPlaylists]);
 
   // Memoize playlist IDs to prevent unnecessary API calls
   const playlistIds = useMemo(() => {
@@ -58,60 +76,61 @@ export const DeezerDataProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (activeUser && activeUser.playlists?.length > 0 && !isLoadingPlaylistDetails) {
-        setIsLoadingPlaylistDetails(true);
-        try {
-          // Get all playlist IDs
-          const playlistIdArray = activeUser.playlists.map(p => p.playlist_id);
-          
-          // Make single API call with all IDs
-          const response = await axios.post("/api/deezer/getPlaylistDetails", {
-            ids: playlistIdArray,
-          });
-          
-          if (response.data.error) {
-            console.error('API returned error:', response.data.error);
-            setPlaylistDetails([]);
-            setCopyPlaylistDetails([]);
-            return;
-          }
-          
-          // Response should already be an array of playlist details
-          const validPlaylists = Array.isArray(response.data) ? response.data : [];
-          
-          setPlaylistDetails(validPlaylists);
-          setCopyPlaylistDetails(validPlaylists);
-        } catch (error) {
-          console.error("Error fetching playlist details:", error);
-          setPlaylistDetails([]);
-          setCopyPlaylistDetails([]);
-        } finally {
-          setIsLoadingPlaylistDetails(false);
-        }
-      } else if (!isLoadingPlaylistDetails) {
+      if (!activeUser?.playlists?.length) {
         setPlaylistDetails([]);
         setCopyPlaylistDetails([]);
+        return;
+      }
+
+      if (isLoadingPlaylistDetails) return; // Prevent multiple calls
+
+      setIsLoadingPlaylistDetails(true);
+      try {
+        const playlistIdArray = activeUser.playlists.map(p => p.playlist_id);
+        
+        const response = await axios.post("/api/deezer/getPlaylistDetails", {
+          ids: playlistIdArray,
+        });
+        
+        if (response.data.error) {
+          setPlaylistDetails([]);
+          setCopyPlaylistDetails([]);
+          return;
+        }
+        
+        const validPlaylists = Array.isArray(response.data) ? response.data : [];
+        
+        setPlaylistDetails(validPlaylists);
+        setCopyPlaylistDetails(validPlaylists);
+        
+        // Store in session storage immediately
+        if (validPlaylists.length > 0) {
+          sessionStorage.setItem("sessionedPlaylistDetails", JSON.stringify(validPlaylists));
+        }
+      } catch (error) {
+        setPlaylistDetails([]);
+        setCopyPlaylistDetails([]);
+      } finally {
+        setIsLoadingPlaylistDetails(false);
       }
     };
 
     fetchData();
   }, [playlistIds]);
 
+  // Handle search reset - reapply the copy data to main data
   useEffect(() => {
-    sessionStorage.setItem(
-      "sessionedPlaylistData",
-      JSON.stringify(copyPlaylistData)
-    );
-    setPlaylistData(copyPlaylistData);
-  }, [shouldRefetch, copyPlaylistData]);
+    if (copyPlaylistData && Object.keys(copyPlaylistData).length > 0) {
+      setPlaylistData(copyPlaylistData);
+    }
+  }, [shouldRefetch]);
 
+  // Handle search reset for playlist details
   useEffect(() => {
-    sessionStorage.setItem(
-      "sessionedPlaylistDetails",
-      JSON.stringify(copyPlaylistDetails)
-    );
-    setPlaylistDetails(copyPlaylistDetails);
-  }, [shouldRefetch, copyPlaylistDetails]);
+    if (copyPlaylistDetails && copyPlaylistDetails.length > 0) {
+      setPlaylistDetails(copyPlaylistDetails);
+    }
+  }, [shouldRefetch]);
 
   return (
     <DeezerDataContext.Provider
