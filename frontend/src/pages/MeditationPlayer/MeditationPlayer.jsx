@@ -49,7 +49,12 @@ const MeditationPlayer = () => {
             </div>
             <div className="player-container">
               {preview_url ? (
-                <Player audioSrc={preview_url} />
+                <Player 
+                  audioSrc={preview_url} 
+                  contentId={params.id}
+                  contentTitle={name}
+                  contentType="meditation"
+                />
               ) : (
                 <div className="no-preview-message">
                   <p>No preview available for this track</p>

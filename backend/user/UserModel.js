@@ -37,6 +37,23 @@ export const userSchema = new Schema({
   reminderdays: [{ type: String }],
   videos: [{ type: mongoose.Types.ObjectId, ref: "Video" }],
   playlists: [{ type: Object }],
+  sessions: [{
+    date: { type: Date, default: Date.now },
+    duration: { type: Number, required: true }, // in minutes
+    type: { type: String, enum: ['yoga', 'meditation'], required: true },
+    contentId: { type: String }, // video or playlist ID
+    contentTitle: { type: String },
+    rating: { type: Number, min: 1, max: 5 }, // optional user rating
+    mood: { type: String, enum: ['calm', 'focused', 'relaxed', 'energized', 'peaceful'] }, // optional mood after session
+    completed: { type: Boolean, default: true }
+  }],
+  streaks: {
+    current: { type: Number, default: 0 },
+    longest: { type: Number, default: 0 },
+    lastSessionDate: { type: Date }
+  },
+  totalMinutes: { type: Number, default: 0 },
+  joinedDate: { type: Date, default: Date.now },
   salt: { type: String, required: true, select: false },
   hash: { type: String, required: true, select: false },
 });

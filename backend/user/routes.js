@@ -207,3 +207,158 @@ userRouter.put("/updatereminder", dataModificationLimiter, authenticateToken, va
     res.status(500).send("There was an error.");
   }
 });
+
+// Session tracking endpoints
+userRouter.post("/logsession", dataModificationLimiter, authenticateToken, async (req, res) => {
+  try {
+    const { _id, duration, type, contentId, contentTitle, rating, mood } = req.body;
+    
+    if (!_id || !duration || !type) {
+      return res.status(400).send("Missing required fields: _id, duration, type");
+    }
+
+    const user = await User.findById(_id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Create new session
+    const newSession = {
+      date: new Date(),
+      duration: parseInt(duration),
+      type,
+      contentId,
+      contentTitle,
+      rating: rating ? parseInt(rating) : undefined,
+      mood,
+      completed: true
+    };
+
+    // Add session to user
+    user.sessions.push(newSession);
+    
+    // Update total minutes
+    user.totalMinutes = (user.totalMinutes || 0) + parseInt(duration);
+
+    // Update streaks
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const lastSessionDate = user.streaks?.lastSessionDate ? new Date(user.streaks.lastSessionDate) : null;
+    
+    if (lastSessionDate) {
+      lastSessionDate.setHours(0, 0, 0, 0);
+      const daysDiff = Math.floor((today - lastSessionDate) / (1000 * 60 * 60 * 24));
+      
+      if (daysDiff === 1) {
+        // Consecutive day
+        user.streaks.current = (user.streaks.current || 0) + 1;
+      } else if (daysDiff > 1) {
+        // Streak broken, start over
+        user.streaks.current = 1;
+      }
+      // Same day (daysDiff === 0), don't increment streak
+    } else {
+      // First session ever
+      user.streaks = { current: 1, longest: 0 };
+    }
+
+    // Update longest streak if needed
+    if (user.streaks.current > (user.streaks.longest || 0)) {
+      user.streaks.longest = user.streaks.current;
+    }
+
+    user.streaks.lastSessionDate = new Date();
+
+    await user.save();
+    
+    res.status(201).send({
+      message: "Session logged successfully",
+      session: newSession,
+      totalMinutes: user.totalMinutes,
+      currentStreak: user.streaks.current
+    });
+
+  } catch (err) {
+    console.log("Error logging session:", err);
+    res.status(500).send("There was an error logging the session.");
+  }
+});
+
+userRouter.get("/analytics/:id", authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    // Calculate analytics
+    const sessions = user.sessions || [];
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+    const weekSessions = sessions.filter(s => new Date(s.date) >= weekAgo);
+    const monthSessions = sessions.filter(s => new Date(s.date) >= monthAgo);
+
+    const analytics = {
+      totalSessions: sessions.length,
+      totalMinutes: user.totalMinutes || 0,
+      currentStreak: user.streaks?.current || 0,
+      longestStreak: user.streaks?.longest || 0,
+      weekStats: {
+        sessions: weekSessions.length,
+        minutes: weekSessions.reduce((sum, s) => sum + (s.duration || 0), 0)
+      },
+      monthStats: {
+        sessions: monthSessions.length,
+        minutes: monthSessions.reduce((sum, s) => sum + (s.duration || 0), 0)
+      },
+      averageSessionLength: sessions.length > 0 
+        ? Math.round((user.totalMinutes || 0) / sessions.length) 
+        : 0,
+      favoriteType: sessions.length > 0 
+        ? sessions.reduce((acc, s) => {
+            acc[s.type] = (acc[s.type] || 0) + 1;
+            return acc;
+          }, {})
+        : {},
+      recentSessions: sessions.slice(-10).reverse(),
+      joinedDate: user.joinedDate
+    };
+
+    res.send(analytics);
+
+  } catch (err) {
+    console.log("Error fetching analytics:", err);
+    res.status(500).send("There was an error fetching analytics.");
+  }
+});
+
+userRouter.get("/stats/:id", authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const stats = {
+      totalMinutes: user.totalMinutes || 0,
+      totalSessions: user.sessions?.length || 0,
+      currentStreak: user.streaks?.current || 0,
+      longestStreak: user.streaks?.longest || 0,
+      favorites: user.videos?.length || 0,
+      playlists: user.playlists?.length || 0
+    };
+
+    res.send(stats);
+
+  } catch (err) {
+    console.log("Error fetching stats:", err);
+    res.status(500).send("There was an error fetching stats.");
+  }
+});

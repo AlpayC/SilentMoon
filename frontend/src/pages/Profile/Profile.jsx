@@ -8,6 +8,9 @@ import NavBar from "../../components/NavBar/NavBar";
 import Logo from "../../components/Logo/Logo";
 import { DeezerDataContext } from "../../context/DeezerDataContext";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+import ProgressChart from "../../components/ProgressChart/ProgressChart";
+import Stats from "../../components/Stats/Stats";
+import AnalyticsProvider from "../../components/AnalyticsProvider/AnalyticsProvider";
 //import { UserDataContext } from "../../context/UserDataContext";
 import LogoutBtn from "../../assets/img/Icons/logoutBtn.png";
 import { UserContext } from "../../user/UserContext";
@@ -57,6 +60,9 @@ const Profile = () => {
                 <img src={LogoutBtn} alt="logout button" />
               </button>
             </div>
+            {/* Progress Analytics - Single request for both components */}
+            <AnalyticsProvider timeframe="week" />
+            
             {/*  NEU */}
             <SearchBar
               value={searchInput}
