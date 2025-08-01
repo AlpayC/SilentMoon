@@ -33,6 +33,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'"],
       scriptSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:"],
+      mediaSrc: ["'self'", "https://res.cloudinary.com", "https://cdnt-preview.dzcdn.net"],
       connectSrc: ["'self'", "https://api.deezer.com", "https://api.spotify.com"],
     },
   },
