@@ -3,7 +3,7 @@
 <div style="display: flex; justify-content: center;">
   <img src="./screenshots/applogo.jpg" alt="Silentmoon Logo" height="500">
 </div>
-Welcome to the Silentmoon Full Stack MERN (MongoDB, Express, React, Node.js) App repository! Silentmoon is a platform dedicated to providing users with a tranquil and enriching yoga and meditation experience. Users can register, explore a variety of yoga videos and playlists, create and manage their own playlists, and immerse themselves in soothing meditation music sourced from the Spotify API. This README file will guide you through the installation, features, and technologies used in the app.
+Welcome to the Silentmoon Full Stack MERN (MongoDB, Express, React, Node.js) App repository! Silentmoon is a comprehensive meditation companion that provides users with a tranquil and enriching yoga and meditation experience. Users can register, explore a variety of yoga videos and meditation playlists, track their meditation progress with detailed analytics, build meditation streaks, and immerse themselves in soothing meditation music sourced from the Deezer API. This README file will guide you through the installation, features, and technologies used in the app.
 
 ## Table of Contents 📑
 
@@ -30,16 +30,32 @@ You can view a live demo of the Silentmoon app at https://silentmoon.alpaycelik.
 
 The Silentmoon app has the following features:
 
-- **User Registration**: Users can create accounts to personalize their experience.
-- **Video & Playlist Exploration**: Users can browse a collection of yoga videos and playlists.
-- **Playlist Management**: Registered users can create, edit, and delete their own playlists.
-- **Spotify Integration**: The app features meditation music from the Spotify API.
-- **Mobile-based**: The app is accessible on mobile with minimal loss of functionality.
-- **Reminder**: Users can set a reminder for their next yoga session.
-- **High Quality Videos**: The videos are hosted on Cloudinary and are of high quality.
-- **Filter**: Users can filter the videos by mood and several categories.
-- **Search**: Users can search for videos and playlists by title.
-- **Favorites**: Users can add videos to their favorites.
+### 🧘‍♀️ **Core Meditation Experience**
+- **User Registration**: Users can create accounts to personalize their meditation journey.
+- **Video & Playlist Exploration**: Users can browse a curated collection of yoga videos and meditation playlists.
+- **Deezer Integration**: The app features high-quality meditation music and ambient sounds from the Deezer API.
+- **High Quality Videos**: Yoga videos are hosted on Cloudinary in HD quality.
+- **Mobile-Responsive**: Optimized for mobile devices with full functionality.
+
+### 📊 **Progress Analytics & Tracking**
+- **Real-Time Session Tracking**: Automatically logs meditation sessions with duration, type, and completion.
+- **Meditation Streaks**: Build and maintain daily meditation streaks to stay motivated.
+- **Progress Dashboard**: Visual analytics showing weekly/monthly meditation statistics.
+- **Personal Insights**: Track total meditation minutes, average session length, and favorite meditation types.
+- **Goal Tracking**: Weekly progress bars with 150-minute meditation goals.
+- **Session History**: View recent meditation sessions with dates and details.
+
+### 🎯 **Personalization Features**
+- **Favorites Management**: Save favorite yoga videos and meditation playlists.
+- **Custom Reminders**: Set personalized reminders for meditation sessions.
+- **Search & Filter**: Find content by title, mood, and categories.
+- **User Profile**: Comprehensive profile with real progress data and achievements.
+
+### 🔒 **Security & Performance**
+- **Optimized Performance**: Single-request profile loading (reduced from 6 to 1 API call).
+- **Secure Content Delivery**: Content Security Policy for safe media streaming.
+- **Rate Limiting**: Protection against API abuse with intelligent rate limiting.
+- **Input Validation**: Server-side validation for all user inputs.
 
 <div style="display: flex; justify-content: center;">
   <img src="./screenshots/mockups.jpg" alt="Silentmoon Logo" height="500">
@@ -49,16 +65,39 @@ The Silentmoon app has the following features:
 
 The Silentmoon app uses the following technologies:
 
-- **Frontend**: React, HTML, CSS
-- **Backend**: Node.js, Express
-- **Database**: MongoDB
-- **API Integration**: Spotify API
-- **Design Tools**: Canva, Figma
-- **Version Control**: Git
-- **Deployment**: Render.com
-- **Communication**: Discord
-- **HTTP Client**: Axios
-- **Project Management**: Trello
+### **Frontend**
+- **React**: Modern UI with hooks and context API
+- **HTML5 & CSS3**: Responsive design and animations
+- **React Router**: Single-page application routing
+- **Axios**: HTTP client for API communication
+
+### **Backend**
+- **Node.js**: Server-side JavaScript runtime
+- **Express.js**: Web application framework
+- **Helmet**: Security middleware with CSP configuration
+- **Express Rate Limit**: API rate limiting and abuse protection
+- **Express Validator**: Input validation and sanitization
+
+### **Database & Authentication**
+- **MongoDB**: NoSQL database with Mongoose ODM
+- **JWT**: JSON Web Token authentication
+- **Crypto**: Password hashing and secure token generation
+
+### **API Integrations**
+- **Deezer API**: Meditation music and ambient sound streaming
+- **Cloudinary**: High-quality video hosting and delivery
+
+### **Development & Deployment**
+- **Render.com**: Cloud hosting platform
+- **Git**: Version control with feature branch workflow
+- **Cross-env**: Environment variable management
+- **Nodemon**: Development server with hot reload
+
+### **Security & Performance**
+- **Content Security Policy**: Media source whitelisting
+- **CORS**: Cross-origin resource sharing configuration
+- **Rate Limiting**: Request throttling and abuse prevention
+- **Input Validation**: Server-side data sanitization
 
 <div style="display: flex; justify-content: center;">
   <img src="./screenshots/techstack.jpg" alt="Silentmoon Logo" height="400">
@@ -115,42 +154,79 @@ To run Silentmoon on your local machine, follow these steps:
 
 5. To stop the server, press `Ctrl + C`.
 
-## API Integration
+## API Integration & Environment Setup
 
-The Silentmoon app integrates with the Spotify API to provide meditation music. To set up Spotify integration:
+The Silentmoon app integrates with multiple APIs to provide a comprehensive meditation experience:
 
-1. Create a Spotify Developer account and create a new app to get your API credentials.
+### **Environment Variables**
 
-2. In the `root` directory, create a `.env` file and add your Spotify API credentials:
+Create a `.env` file in the root directory with the following variables:
 
-   ```
-   SPOTIFY_ID=your_client_id
-   SPOTIFY_=your_client_secret
-   ```
+#### **Database & Authentication**
+```env
+# MongoDB connection
+DB=your_mongodb_connection_string
+PORT=3002
 
-3. Add the following credentials `.env` file for the JWT token with `require("crypto").randomBytes(64).toString("hex")`:
+# JWT Authentication
+TOKEN_SECRET=your_jwt_secret_key
+```
 
-   ```
-   TOKEN_SECRET= your_token_secret
-   ```
+#### **API Integrations**
+```env
+# Deezer API (primary music source)
+DEEZER_APP_ID=your_deezer_app_id
+DEEZER_SECRET=your_deezer_secret
 
-4. Add the following credentials `.env` file for the MongoDB connection:
+# Spotify API (legacy support)
+SPOTIFY_ID=your_spotify_client_id
+SPOTIFY_SECRET=your_spotify_client_secret
+```
 
-   ```
-   DB=your_mongodb_connection string (e.g. mongodb://localhost:27017/silentmoon)
-   PORT=3000
-   ```
+#### **Deployment Configuration**
+```env
+# Environment mode (development/production)
+NODE_ENV=production
 
-5. Later add the following credentials `.env` file for the Render connection within the Node server:
+# Render.com deployment
+VITE_BACKEND_URL=your_backend_url
+RENDER_EXTERNAL_URL=your_render_url
+```
 
-   ```
-   VITE_BACKEND_URL
-   RENDER_EXTERNAL_URL
-   ```
+### **API Setup Instructions**
+
+1. **MongoDB**: Create a database cluster on [MongoDB Atlas](https://cloud.mongodb.com/)
+2. **JWT Secret**: Generate with `require("crypto").randomBytes(64).toString("hex")`
+3. **Deezer API**: Register at [Deezer Developers](https://developers.deezer.com/)
+4. **Cloudinary**: Set up account for video hosting (configured separately)
 
 ## Database
 
-The Silentmoon app uses MongoDB to store user data. The database is hosted on MongoDB Atlas. The app uses the `mongoose` library to connect to the database. The app uses the `dotenv` library to load environment variables from the `.env` file. The app uses the `nodemon` library to automatically restart the server when changes are made to the code. The app uses the `morgan` library to log HTTP requests. The Videos are stored on `cloudinary`.
+The Silentmoon app uses MongoDB to store comprehensive user data including:
+
+- **User profiles** with authentication credentials
+- **Meditation sessions** with tracking data (duration, type, completion)
+- **Progress analytics** including streaks and total minutes
+- **Favorite content** (yoga videos and meditation playlists)
+- **User preferences** and reminder settings
+
+The database is hosted on MongoDB Atlas with Mongoose ODM for data modeling. Videos are stored on Cloudinary for optimized delivery.
+
+## Performance & Security Enhancements
+
+### **Performance Optimizations** ⚡
+- **Request Reduction**: Profile page optimized from 6 API calls to 1 comprehensive request
+- **Infinite Loop Prevention**: Fixed React context dependency loops that caused excessive re-renders
+- **Smart Caching**: Utilizes session storage for offline data availability
+- **Optimized Components**: React.memo, useCallback, and useMemo for efficient rendering
+
+### **Security Features** 🔒
+- **Content Security Policy**: Configured CSP headers allowing trusted media sources only
+- **Rate Limiting**: Intelligent API rate limiting with development mode bypass
+- **Input Validation**: Server-side validation using express-validator
+- **Authentication**: JWT tokens with secure cookie storage
+- **Password Security**: Crypto-based password hashing with salt
+- **CORS Protection**: Configured cross-origin resource sharing policies
 
 ## Authentication
 
@@ -158,35 +234,44 @@ The Silentmoon app uses JWT authentication. The app generates a JWT token when a
 
 ## Backend Routes
 
-The Silentmoon app uses the following routes:
+The Silentmoon app uses the following API endpoints:
 
-**USER**
+### **User Management**
+- `GET /api/user` - Get all users
+- `POST /api/user/getUserData` - Fetch authenticated user data
+- `POST /api/user/signup` - User registration
+- `POST /api/user/login` - User authentication
+- `GET /api/user/logout` - User logout
+- `GET /api/user/secure` - Verify authentication token
 
-- `/api/user` - User routes
-- `/api/user/secure` - Authentication routes
-- `/api/user/getUserData` - Fetch User data routes
-- `/api/user/signup` - Signup routes
-- `/api/user/login` - Login routes
-- `/api/user/logout` - Logout routes
-- `/api/user/addexercise` - Add exercise routes
-- `/api/user/deleteexercise` - Delete exercise routes
-- `/api/user/addplaylist` - Add playlist routes
-- `/api/user/deleteplaylist` - Delete playlist routes
-- `/api/user/updatereminder` - Update reminder routes
+### **Progress Analytics** 🆕
+- `POST /api/user/logsession` - Log meditation session with duration and type
+- `GET /api/user/analytics/:id` - Get comprehensive user analytics and insights
+- `GET /api/user/stats/:id` - Get basic user statistics
+- `GET /api/user/profile/:id` - Get complete profile data (single optimized request)
 
-**MUSIC**
+### **Favorites Management**
+- `PUT /api/user/addexercise` - Add yoga video to favorites
+- `PUT /api/user/deleteexercise` - Remove yoga video from favorites
+- `PUT /api/user/addplaylist` - Add meditation playlist to favorites
+- `PUT /api/user/deleteplaylist` - Remove meditation playlist from favorites
 
-- `/api/spotify` - Spotify routes
-- `/api/spotify/playlist` - All Playlist routes
-- `/api/spotify/playlist/:id` - Playlist by id routes
-- `/api/spotify/onetrack/` - One Track by Id routes
-- `/api/spotify/getPlaylistDetails` - Playlist Details routes
+### **User Settings**
+- `PUT /api/user/updatereminder` - Update meditation reminder preferences
 
-**VIDEOS**
+### **Music & Meditation Content**
+- `GET /api/deezer/playlist` - Get meditation playlists from Deezer
+- `POST /api/deezer/tracks` - Get tracks from specific playlist
+- `GET /api/deezer/onetrack/:id` - Get single track details
+- `POST /api/deezer/getPlaylistDetails` - Get detailed playlist information
 
-- `/api/exercises` - Video routes
-- `/api/exercises/details:id` - Video by id routes
-- `/api/exercises/filter` - Filter routes by query
+### **Yoga Videos**
+- `GET /api/exercises` - Get all yoga videos
+- `GET /api/exercises/details/:id` - Get specific video details
+- `GET /api/exercises/filter` - Filter videos by category and mood
+
+### **System**
+- `GET /api/status` - Server health check
 
 ## Design
 
@@ -194,23 +279,64 @@ The app's UI/UX was designed and Figma The app's wireframes were designed using 
 
 ## Deployment
 
-The app is deployed using Render.com. Continuous deployment is set up to automatically deploy the app when changes are pushed to the `main` branch. The app is deployed at https://silentmoon-grpw.onrender.com/. On Render the app uses the following environment variables: `SPOTIFY_ID`, `SPOTIFY_SECRET`, `TOKEN_SECRET`, `DB`, `PORT`, `VITE_BACKEND_URL`, `RENDER_EXTERNAL_URL`.
+The app is deployed using Render.com with continuous deployment from the `main` branch.
+
+**Live Demo**: https://silentmoon.alpaycelik.dev
+
+### **Production Environment Variables**
+```env
+# Database & Auth
+DB=mongodb_atlas_connection_string
+TOKEN_SECRET=production_jwt_secret
+PORT=3002
+
+# API Keys
+DEEZER_APP_ID=production_deezer_id
+SPOTIFY_ID=production_spotify_id
+SPOTIFY_SECRET=production_spotify_secret
+
+# Deployment
+NODE_ENV=production
+VITE_BACKEND_URL=https://your-backend.onrender.com
+RENDER_EXTERNAL_URL=https://your-app.onrender.com
+```
+
+### **Build Process**
+1. Frontend built with Vite for optimized production bundle
+2. Backend serves static files from `frontend/dist`
+3. Security headers and CSP automatically applied in production
+4. Rate limiting enabled for production environment
 
 ## Third-Party Libraries & Tools
 
-The Silentmoon app uses the following third-party libraries:
+### **Frontend Dependencies**
+- `react` - Modern UI library with hooks and context
+- `react-router-dom` - Client-side routing for single-page application
+- `axios` - Promise-based HTTP client for API communication
+- `react-ios-time-picker` - iOS-style time picker component
 
-- `axios` - Promise based HTTP client for the browser and node.js
-- `bcrypt` - A library to help you hash passwords
-- `cors` - CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
-- `dotenv` - Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env.
-- `express` - Fast, unopinionated, minimalist web framework for node.
-- `jsonwebtoken` - An implementation of JSON Web Tokens.
-- `mongoose` - Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment.
-- `morgan` - HTTP request logger middleware for node.js
-- `nodemon` - Nodemon is a utility that will monitor for any changes in your source and automatically restart your server.
-- `react-router-dom` - DOM bindings for React Router.
-- `cloudinary` - Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline.
+### **Backend Dependencies**
+- `express` - Fast, minimalist web framework for Node.js
+- `mongoose` - MongoDB object modeling tool with validation
+- `jsonwebtoken` - JWT implementation for authentication
+- `helmet` - Security middleware with CSP configuration
+- `express-rate-limit` - Rate limiting middleware for API protection
+- `express-validator` - Input validation and sanitization middleware
+- `cookie-parser` - Parse HTTP request cookies
+- `cors` - Cross-Origin Resource Sharing middleware
+- `dotenv` - Environment variable management
+- `multer` - Multipart form data handling
+
+### **Development Tools**
+- `nodemon` - Development server with automatic restart
+- `cross-env` - Cross-platform environment variable setting
+- `vite` - Fast build tool and development server
+
+### **External Services**
+- `cloudinary` - Video hosting and delivery optimization
+- `mongodb atlas` - Cloud database hosting
+- `deezer api` - Meditation music streaming
+- `render.com` - Application hosting and deployment
 
 ## Contributors
 
