@@ -4,6 +4,13 @@
 	gap: 2rem;
 }
 
+/* Die Kacheln teilen sich die verfuegbare Breite, statt sie mit festen
+   vw-Werten zu ueberschreiten. min-width haelt die Links schrumpffaehig. */
+.suggestions > a {
+	flex: 1 1 0;
+	min-width: 0;
+}
+
 .home-wrapper {
 	text-align: left;
 }
