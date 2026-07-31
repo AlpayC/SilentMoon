@@ -18,6 +18,11 @@ const isEmbedded =
   new URLSearchParams(window.location.search).has("embedded") ||
   window.self !== window.top;
 
+// Markiert das Dokument im Rahmen, damit index.css die Scrollbalken ausblendet.
+if (isEmbedded) {
+  document.documentElement.classList.add("embedded");
+}
+
 const app = (
   <BrowserRouter>
     <UserDataProvider>

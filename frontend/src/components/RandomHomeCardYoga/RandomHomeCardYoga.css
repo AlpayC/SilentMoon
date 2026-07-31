@@ -1,6 +1,6 @@
 .random-img-container {
 	position: relative;
-	width: 45vw;
+	width: 100%;
 	overflow: hidden;
 	margin-bottom: 3rem;
 }

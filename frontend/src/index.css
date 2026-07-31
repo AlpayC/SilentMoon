@@ -39,6 +39,19 @@ html {
   font-size: 62.5%;
 }
 
+/* Im iPhone-Rahmen (?embedded) keine Desktop-Scrollbalken zeigen. Gescrollt
+   wird weiterhin, nur ohne sichtbare Leiste - wie auf einem echten Geraet. */
+html.embedded,
+html.embedded * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html.embedded::-webkit-scrollbar,
+html.embedded *::-webkit-scrollbar {
+  display: none;
+}
+
 a {
   color: var(--pink);
   text-decoration: none;
