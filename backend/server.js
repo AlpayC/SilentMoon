@@ -22,6 +22,13 @@ const PORT = process.env.PORT || 3002;
 // Force restart
 const app = express();
 
+// Hinter dem Reverse Proxy (Traefik bei Coolify) steht die echte Client-IP in
+// X-Forwarded-For. Ohne diese Einstellung sieht express-rate-limit nur die
+// Proxy-IP und zaehlt alle Nutzer als einen. Bewusst 1 statt true: true wuerde
+// der gesamten Kette vertrauen, sodass Clients den Header faelschen und das
+// Rate Limiting umgehen koennten.
+app.set("trust proxy", 1);
+
 const ReactAppDistPath = new URL("../frontend/dist/", import.meta.url);
 const ReactAppIndex = new URL("../frontend/dist/index.html", import.meta.url);
 
