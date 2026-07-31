@@ -11,6 +11,7 @@ import {
   handleValidationErrors 
 } from "../middleware/validation.js";
 import { authLimiter, dataModificationLimiter } from "../middleware/rateLimiting.js";
+import { logger } from "../middleware/logger.js";
 
 export const userRouter = Router();
 
@@ -121,7 +122,7 @@ userRouter.put("/addexercise", dataModificationLimiter, authenticateToken, valid
     await user.save();
     res.send("Video added");
   } catch (err) {
-    console.log("Error:", err);
+    logger.error("User request failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error.");
   }
 });
@@ -139,7 +140,7 @@ userRouter.put("/deleteexercise", dataModificationLimiter, authenticateToken, va
       res.send("Video is not in favorites");
     }
   } catch (err) {
-    console.log("Error:", err);
+    logger.error("User request failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error.");
   }
 });
@@ -161,7 +162,7 @@ userRouter.put("/addplaylist", dataModificationLimiter, authenticateToken, valid
     await user.save();
     res.status(201).send("Playlist added");
   } catch (err) {
-    console.log("Error:", err);
+    logger.error("User request failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error.");
   }
 });
@@ -184,7 +185,7 @@ userRouter.put("/deleteplaylist", dataModificationLimiter, authenticateToken, va
       res.send("Playlist is not in favorites");
     }
   } catch (err) {
-    console.log("Error:", err);
+    logger.error("User request failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error.");
   }
 });
@@ -203,7 +204,7 @@ userRouter.put("/updatereminder", dataModificationLimiter, authenticateToken, va
       res.status(404).send("User not found");
     }
   } catch (err) {
-    console.log("Error:", err);
+    logger.error("User request failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error.");
   }
 });
@@ -280,7 +281,10 @@ userRouter.post("/logsession", dataModificationLimiter, authenticateToken, async
     });
 
   } catch (err) {
-    console.log("Error logging session:", err);
+    logger.error("Logging meditation session failed", {
+      error: err,
+      reqId: req.id,
+    });
     res.status(500).send("There was an error logging the session.");
   }
 });
@@ -332,7 +336,7 @@ userRouter.get("/analytics/:id", authenticateToken, async (req, res) => {
     res.send(analytics);
 
   } catch (err) {
-    console.log("Error fetching analytics:", err);
+    logger.error("Fetching analytics failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error fetching analytics.");
   }
 });
@@ -358,7 +362,7 @@ userRouter.get("/stats/:id", authenticateToken, async (req, res) => {
     res.send(stats);
 
   } catch (err) {
-    console.log("Error fetching stats:", err);
+    logger.error("Fetching stats failed", { error: err, reqId: req.id });
     res.status(500).send("There was an error fetching stats.");
   }
 });

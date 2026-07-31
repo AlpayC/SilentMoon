@@ -1,5 +1,6 @@
 import { Router } from "express";
 import axios from "axios";
+import { logger } from "../middleware/logger.js";
 
 export const deezerRouter = Router();
 
@@ -15,7 +16,7 @@ deezerRouter.get("/playlist", async (req, res) => {
     
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching Deezer playlists:", error);
+    logger.error("Fetching Deezer playlists failed", { error, reqId: req.id });
     res.status(500).json({ error: "Failed to fetch playlists" });
   }
 });
@@ -26,7 +27,7 @@ deezerRouter.post("/tracks", async (req, res) => {
     const response = await axios.get(`${DEEZER_BASE_URL}/playlist/${id}/tracks`);
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching Deezer tracks:", error);
+    logger.error("Fetching Deezer tracks failed", { error, reqId: req.id });
     res.status(500).json({ error: "Failed to fetch tracks" });
   }
 });
@@ -37,7 +38,7 @@ deezerRouter.get("/onetrack/:id", async (req, res) => {
     const response = await axios.get(`${DEEZER_BASE_URL}/track/${id}`);
     res.json(response.data);
   } catch (error) {
-    console.error("Error fetching Deezer track:", error);
+    logger.error("Fetching Deezer track failed", { error, reqId: req.id });
     res.status(500).json({ error: "Failed to fetch track" });
   }
 });
@@ -88,7 +89,7 @@ deezerRouter.post("/getPlaylistDetails", async (req, res) => {
       res.status(400).json({ error: "Either 'id' or 'ids' parameter is required" });
     }
   } catch (error) {
-    console.error("Error fetching Deezer playlist details:", error);
+    logger.error("Fetching Deezer playlist details failed", { error, reqId: req.id });
     res.status(500).json({ error: "Failed to fetch playlist details" });
   }
 });
