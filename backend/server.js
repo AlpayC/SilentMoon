@@ -22,7 +22,10 @@ process.on("unhandledRejection", (reason) => {
 });
 process.on("uncaughtException", (err) => {
   logger.error("Uncaught exception - shutting down", { error: err });
-  process.exit(1);
+  // Im Container sind stdout/stderr Pipes und schreiben asynchron. Ein
+  // sofortiges process.exit() wuerde ausgerechnet diese letzte Zeile
+  // verschlucken - also dem Schreibvorgang kurz Zeit lassen.
+  setTimeout(() => process.exit(1), 100).unref();
 });
 
 mongoose.connection.on("disconnected", () => {
